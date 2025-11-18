@@ -1,2 +1,7 @@
+torch
+torchvision
+deepspeed
+flash_attn
+triton
 wheel
 flash-attn
