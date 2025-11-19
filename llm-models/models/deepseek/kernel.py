@@ -1,9 +1,9 @@
 from typing import Tuple, Optional
 
-import torch
-import triton
-import triton.language as tl
-from triton import Config
+import torch 
+import triton # type: ignore
+import triton.language as tl # type: ignore
+from triton import Config # type: ignore
 
 
 @triton.jit
@@ -53,12 +53,12 @@ def act_quant(x: torch.Tensor, block_size: int = 128, scale_fmt: Optional[str] =
     y = torch.empty_like(x, dtype=torch.float8_e4m3fn)
     s = x.new_empty(*x.size()[:-1], x.size(-1) // block_size, dtype=torch.float32)
     grid = lambda meta: (triton.cdiv(x.numel(), meta['BLOCK_SIZE']), )
-    act_quant_kernel[grid](x, y, s, BLOCK_SIZE=block_size, scale_fmt=scale_fmt)
+    act_quant_kernel[grid](x, y, s, BLOCK_SIZE=block_size, scale_fmt=scale_fmt)  # type: ignore
     return y, s
 
 
 @triton.jit
-def weight_dequant_kernel(x_ptr, s_ptr, y_ptr, M, N, BLOCK_SIZE: tl.constexpr):
+def weight_dequant_kernel(x_ptr, s_ptr, y_ptr, M, N, BLOCK_SIZE: tl.constexpr) -> None:
     """
     Dequantizes weights using the provided scaling factors and stores the result.
 
@@ -106,7 +106,7 @@ def weight_dequant(x: torch.Tensor, s: torch.Tensor, block_size: int = 128) -> t
     M, N = x.size()
     y = torch.empty_like(x, dtype=torch.get_default_dtype())
     grid = lambda meta: (triton.cdiv(M, meta['BLOCK_SIZE']), triton.cdiv(N, meta['BLOCK_SIZE']))
-    weight_dequant_kernel[grid](x, s, y, M, N, BLOCK_SIZE=block_size)
+    weight_dequant_kernel[grid](x, s, y, M, N, BLOCK_SIZE=block_size)  # type: ignore
     return y
 
 
@@ -192,5 +192,5 @@ def fp8_gemm(a: torch.Tensor, a_s: torch.Tensor, b: torch.Tensor, b_s: torch.Ten
     N = b.size(0)
     c = a.new_empty(*a.size()[:-1], N, dtype=torch.get_default_dtype())
     grid = lambda META: (triton.cdiv(M, META['BLOCK_SIZE_M']), triton.cdiv(N, META['BLOCK_SIZE_N']))
-    fp8_gemm_kernel[grid](a, b, c, a_s, b_s, M, N, K)
+    fp8_gemm_kernel[grid](a, b, c, a_s, b_s, M, N, K) # type: ignore
     return c

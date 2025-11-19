@@ -21,7 +21,7 @@ from kernel import act_quant, weight_dequant
 class TrainingArgs:
     """Training configuration parameters."""
     # Model
-    model_args: ModelArgs = None
+    model_args: ModelArgs = None # type: ignore
     
     # Training
     batch_size: int = 4

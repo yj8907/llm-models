@@ -8,7 +8,7 @@ import torch.nn.functional as F
 import torch.distributed as dist
 
 from kernel import act_quant, weight_dequant, fp8_gemm
-
+from enum import Enum
 
 world_size = 1
 rank = 0
@@ -16,8 +16,37 @@ block_size = 128
 gemm_impl: Literal["bf16", "fp8"] = "bf16"
 attn_impl: Literal["naive", "absorb"] = "absorb"
 
+class ExpertType(Enum):
+    Regular = 1
+    Block = 2
+
 @dataclass
-class ModelArgs:
+class DefaultArgs:
+    """
+    Default Attributes for standard transformer (deepseek)
+    """
+    # hidden sizes
+    dim: int = 2048
+    inter_dim: int = 10944
+    moe_inter_dim: int = 1408
+    n_layers: int = 27
+    n_dense_layers: int = 1
+    n_heads: int = 16
+    # mla
+    q_lora_rank: int = 0
+    kv_lora_rank: int = 512
+    qk_nope_head_dim: int = 128
+    qk_rope_head_dim: int = 64
+    v_head_dim: int = 128
+
+@dataclass 
+class BlockArgs(DefaultArgs):
+    """
+    Attributes for mini transformer blocks as experts
+    """
+
+@dataclass
+class ModelArgs(DefaultArgs):
     """
     Data class for defining model arguments and hyperparameters.
 
@@ -57,12 +86,8 @@ class ModelArgs:
     dtype: Literal["bf16", "fp8"] = "bf16"
     scale_fmt: Optional[str] = None
     vocab_size: int = 102400
-    dim: int = 2048
-    inter_dim: int = 10944
-    moe_inter_dim: int = 1408
-    n_layers: int = 27
-    n_dense_layers: int = 1
-    n_heads: int = 16
+    # hidden sizes
+    # inherit from DefaultArgs
     # moe
     n_routed_experts: int = 64
     n_shared_experts: int = 2
@@ -71,12 +96,11 @@ class ModelArgs:
     n_limited_groups: int = 1
     score_func: Literal["softmax", "sigmoid"] = "softmax"
     route_scale: float = 1.
+    enable_moe = True
+    expert_type: ExpertType = ExpertType.Regular
+    expert_block_args: BlockArgs = BlockArgs()
     # mla
-    q_lora_rank: int = 0
-    kv_lora_rank: int = 512
-    qk_nope_head_dim: int = 128
-    qk_rope_head_dim: int = 64
-    v_head_dim: int = 128
+    # inherit from DefaultArgs
     # yarn
     original_seq_len: int = 4096
     rope_theta: float = 10000.0
@@ -128,7 +152,8 @@ class ParallelEmbedding(nn.Module):
         return y
 
 
-def linear(x: torch.Tensor, weight: torch.Tensor, bias: Optional[torch.Tensor] = None, scale_fmt: Optional[str] = None) -> torch.Tensor:
+def linear(x: torch.Tensor, weight: torch.Tensor, scale: Optional[torch.Tensor] = None,
+            bias: Optional[torch.Tensor] = None, scale_fmt: Optional[str] = None) -> torch.Tensor:
     """
     Applies a linear transformation to the incoming data: y = xA^T + b.
     This function supports specialized implementations based on quantization
@@ -152,12 +177,12 @@ def linear(x: torch.Tensor, weight: torch.Tensor, bias: Optional[torch.Tensor] =
     """
     if weight.element_size() > 1:
         return F.linear(x, weight, bias)
-    elif gemm_impl == "bf16":
-        weight = weight_dequant(weight, weight.scale)
+    elif gemm_impl == "bf16" and scale != None:
+        weight = weight_dequant(weight, scale)
         return F.linear(x, weight, bias)
     else:
         x, scale = act_quant(x, block_size, scale_fmt)
-        y = fp8_gemm(x, scale, weight, weight.scale)
+        y = fp8_gemm(x, scale, weight, scale)
         if bias is not None:
             y += bias
         return y
@@ -181,10 +206,12 @@ class Linear(nn.Module):
         self.in_features = in_features
         self.out_features = out_features
         self.weight = nn.Parameter(torch.empty(out_features, in_features, dtype=dtype or Linear.dtype))
+        nn.init.kaiming_uniform_(self.weight, a=math.sqrt(5))
+
         if self.weight.element_size() == 1:
             scale_out_features = (out_features + block_size - 1) // block_size
             scale_in_features = (in_features + block_size - 1) // block_size
-            self.weight.scale = self.scale = nn.Parameter(torch.empty(scale_out_features, scale_in_features, dtype=torch.float32))
+            self.scale = nn.Parameter(torch.empty(scale_out_features, scale_in_features, dtype=torch.float32))
         else:
             self.register_parameter("scale", None)
         if bias:
@@ -196,13 +223,13 @@ class Linear(nn.Module):
         """
         Forward pass for the custom linear layer.
 
-        Args:
+        Args:s
             x (torch.Tensor): Input tensor.
 
         Returns:
             torch.Tensor: Transformed tensor after linear computation.
         """
-        return linear(x, self.weight, self.bias, self.scale_fmt)
+        return linear(x, self.weight, self.scale, self.bias, self.scale_fmt)
 
 
 class ColumnParallelLinear(Linear):
@@ -418,20 +445,26 @@ class MLA(nn.Module):
         self.kv_lora_rank = args.kv_lora_rank
         self.qk_nope_head_dim = args.qk_nope_head_dim
         self.qk_rope_head_dim = args.qk_rope_head_dim
-        self.qk_head_dim = args.qk_nope_head_dim + args.qk_rope_head_dim
+        # query, key share the same dimension
+        self.qk_head_dim = self.qk_nope_head_dim + self.qk_rope_head_dim
         self.v_head_dim = args.v_head_dim
 
         if self.q_lora_rank == 0:
             self.wq = ColumnParallelLinear(self.dim, self.n_heads * self.qk_head_dim)
         else:
+            # low rank projection a
             self.wq_a = Linear(self.dim, self.q_lora_rank)
             self.q_norm = RMSNorm(self.q_lora_rank)
+            # projection from low rank to multiheads
             self.wq_b = ColumnParallelLinear(self.q_lora_rank, self.n_heads * self.qk_head_dim)
+
         self.wkv_a = Linear(self.dim, self.kv_lora_rank + self.qk_rope_head_dim)
         self.kv_norm = RMSNorm(self.kv_lora_rank)
         self.wkv_b = ColumnParallelLinear(self.kv_lora_rank, self.n_heads * (self.qk_nope_head_dim + self.v_head_dim))
+
         self.wo = RowParallelLinear(self.n_heads * self.v_head_dim, self.dim)
         self.softmax_scale = self.qk_head_dim ** -0.5
+
         if args.max_seq_len > args.original_seq_len:
             mscale = 0.1 * args.mscale * math.log(args.rope_factor) + 1.0
             self.softmax_scale = self.softmax_scale * mscale * mscale
@@ -461,39 +494,54 @@ class MLA(nn.Module):
         if self.q_lora_rank == 0:
             q = self.wq(x)
         else:
+            # low rank projections
             q = self.wq_b(self.q_norm(self.wq_a(x)))
+
         q = q.view(bsz, seqlen, self.n_local_heads, self.qk_head_dim)
         q_nope, q_pe = torch.split(q, [self.qk_nope_head_dim, self.qk_rope_head_dim], dim=-1)
         q_pe = apply_rotary_emb(q_pe, freqs_cis)
-        kv = self.wkv_a(x)
-        kv, k_pe = torch.split(kv, [self.kv_lora_rank, self.qk_rope_head_dim], dim=-1)
+
+        # kv projections
+        kv_proj = self.wkv_a(x)
+        # pe: position encoded
+        kv_lora, k_pe = torch.split(kv_proj, [self.kv_lora_rank, self.qk_rope_head_dim], dim=-1)
         k_pe = apply_rotary_emb(k_pe.unsqueeze(2), freqs_cis)
+
         if attn_impl == "naive":
+            # q dim: qk_nope + qk_rope
             q = torch.cat([q_nope, q_pe], dim=-1)
-            kv = self.wkv_b(self.kv_norm(kv))
-            kv = kv.view(bsz, seqlen, self.n_local_heads, self.qk_nope_head_dim + self.v_head_dim)
-            k_nope, v = torch.split(kv, [self.qk_nope_head_dim, self.v_head_dim], dim=-1)
+
+            # kv hidden dimension: self.n_heads * (self.qk_nope_head_dim + self.v_head_dim)
+            kv_nope = self.wkv_b(self.kv_norm(kv_lora))
+            kv_nope = kv_nope.view(bsz, seqlen, self.n_local_heads, self.qk_nope_head_dim + self.v_head_dim)
+            k_nope, v = torch.split(kv_nope, [self.qk_nope_head_dim, self.v_head_dim], dim=-1)
+
+            # k dim: qk_nope + qk_rope
             k = torch.cat([k_nope, k_pe.expand(-1, -1, self.n_local_heads, -1)], dim=-1)
-            self.k_cache[:bsz, start_pos:end_pos] = k
-            self.v_cache[:bsz, start_pos:end_pos] = v
-            scores = torch.einsum("bshd,bthd->bsht", q, self.k_cache[:bsz, :end_pos]) * self.softmax_scale
+            print(self.k_cache)
+            self.k_cache[:bsz, start_pos:end_pos] = k # type: ignore
+            self.v_cache[:bsz, start_pos:end_pos] = v # type: ignore
+            # b: batch, s: sequence, h: number of heads, d: head dim. sum along d
+            scores = torch.einsum("bshd,bthd->bsht", q, self.k_cache[:bsz, :end_pos]) * self.softmax_scale # type: ignore
         else:
             wkv_b = self.wkv_b.weight if self.wkv_b.scale is None else weight_dequant(self.wkv_b.weight, self.wkv_b.scale, block_size) 
             wkv_b = wkv_b.view(self.n_local_heads, -1, self.kv_lora_rank)
             q_nope = torch.einsum("bshd,hdc->bshc", q_nope, wkv_b[:, :self.qk_nope_head_dim])
-            self.kv_cache[:bsz, start_pos:end_pos] = self.kv_norm(kv)
-            self.pe_cache[:bsz, start_pos:end_pos] = k_pe.squeeze(2)
-            scores = (torch.einsum("bshc,btc->bsht", q_nope, self.kv_cache[:bsz, :end_pos]) +
-                      torch.einsum("bshr,btr->bsht", q_pe, self.pe_cache[:bsz, :end_pos])) * self.softmax_scale
+            self.kv_cache[:bsz, start_pos:end_pos] = self.kv_norm(kv_lora) # type: ignore
+            self.pe_cache[:bsz, start_pos:end_pos] = k_pe.squeeze(2) # type: ignore
+            scores = (torch.einsum("bshc,btc->bsht", q_nope, self.kv_cache[:bsz, :end_pos]) + # type: ignore
+                      torch.einsum("bshr,btr->bsht", q_pe, self.pe_cache[:bsz, :end_pos])) * self.softmax_scale # type: ignore
         if mask is not None:
             scores += mask.unsqueeze(1)
         scores = scores.softmax(dim=-1, dtype=torch.float32).type_as(x)
         if attn_impl == "naive":
-            x = torch.einsum("bsht,bthd->bshd", scores, self.v_cache[:bsz, :end_pos])
+            x = torch.einsum("bsht,bthd->bshd", scores, self.v_cache[:bsz, :end_pos]) # type: ignore
         else:
-            x = torch.einsum("bsht,btc->bshc", scores, self.kv_cache[:bsz, :end_pos])
+            x = torch.einsum("bsht,btc->bshc", scores, self.kv_cache[:bsz, :end_pos]) # type: ignore
             x = torch.einsum("bshc,hdc->bshd", x, wkv_b[:, -self.v_head_dim:])
+
         x = self.wo(x.flatten(2))
+
         return x
 
 
@@ -588,7 +636,7 @@ class Gate(nn.Module):
             else:
                 group_scores = scores.topk(2, dim=-1)[0].sum(dim=-1)
             indices = group_scores.topk(self.topk_groups, dim=-1)[1]
-            mask = scores.new_ones(x.size(0), self.n_groups, dtype=bool).scatter_(1, indices, False)
+            mask = scores.new_ones(x.size(0), self.n_groups, dtype=torch.bool).scatter_(1, indices, False)
             scores = scores.masked_fill_(mask.unsqueeze(-1), float("-inf")).flatten(1)
         indices = torch.topk(scores, self.topk, dim=-1)[1]
         weights = original_scores.gather(1, indices)
@@ -597,6 +645,13 @@ class Gate(nn.Module):
         weights *= self.route_scale
         return weights.type_as(x), indices
 
+class IdetityModule(nn.Module):
+
+    def __init__(self):
+        return
+    
+    def forward(self, x: torch.Tensor):
+        return x
 
 class Expert(nn.Module):
     """
@@ -607,7 +662,7 @@ class Expert(nn.Module):
         w2 (nn.Module): Linear layer for hidden-to-output transformation.
         w3 (nn.Module): Additional linear layer for feature transformation.
     """
-    def __init__(self, dim: int, inter_dim: int):
+    def __init__(self, args: ModelArgs):
         """
         Initializes the Expert layer.
 
@@ -616,9 +671,13 @@ class Expert(nn.Module):
             inter_dim (int): Hidden layer dimensionality.
         """
         super().__init__()
-        self.w1 = Linear(dim, inter_dim)
-        self.w2 = Linear(inter_dim, dim)
-        self.w3 = Linear(dim, inter_dim)
+        if args.expert_type == ExpertType.Regular:
+            self.w1 = Linear(args.dim, args.inter_dim)
+            self.w2 = Linear(args.inter_dim, args.dim)
+            self.w3 = Linear(args.dim, args.inter_dim)
+        else:
+            # make layer_id -1 so that block embedded in expert doesn't include MoE again
+            self.block = Block(layer_id=-1, args = ModelArgs(**args.expert_block_args.__dict__))
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -662,7 +721,7 @@ class MoE(nn.Module):
         self.experts_start_idx = rank * self.n_local_experts
         self.experts_end_idx = self.experts_start_idx + self.n_local_experts
         self.gate = Gate(args)
-        self.experts = nn.ModuleList([Expert(args.dim, args.moe_inter_dim) if self.experts_start_idx <= i < self.experts_end_idx else None
+        self.experts = nn.ModuleList([Expert(args) if self.experts_start_idx <= i < self.experts_end_idx else IdetityModule()
                                       for i in range(self.n_routed_experts)])
         self.shared_experts = MLP(args.dim, args.n_shared_experts * args.moe_inter_dim)
 
@@ -783,7 +842,7 @@ class Transformer(nn.Module):
         """
         seqlen = tokens.size(1)
         h = self.embed(tokens)
-        freqs_cis = self.freqs_cis[start_pos:start_pos+seqlen]
+        freqs_cis = self.freqs_cis[start_pos:start_pos+seqlen] # type: ignore
         mask = None
         if seqlen > 1:
             mask = torch.full((seqlen, seqlen), float("-inf"), device=tokens.device).triu_(1)
