@@ -44,6 +44,7 @@ class BlockArgs(DefaultArgs):
     """
     Attributes for mini transformer blocks as experts
     """
+    num_prior_seq = 4
 
 @dataclass
 class ModelArgs(DefaultArgs):
@@ -399,6 +400,7 @@ def precompute_freqs_cis(args: ModelArgs) -> torch.Tensor:
     t = torch.arange(seqlen)
     freqs = torch.outer(t, freqs)
     freqs_cis = torch.polar(torch.ones_like(freqs), freqs)
+
     return freqs_cis
 
 
@@ -418,7 +420,7 @@ def apply_rotary_emb(x: torch.Tensor, freqs_cis: torch.Tensor) -> torch.Tensor:
     freqs_cis = freqs_cis.view(1, x.size(1), 1, x.size(-1))
     y = torch.view_as_real(x * freqs_cis).flatten(3)
     return y.to(dtype)
-
+    
 
 class MLA(nn.Module):
     """
@@ -544,6 +546,120 @@ class MLA(nn.Module):
 
         return x
 
+
+class ExpertMLA(MLA):
+    """
+    Multi-Head Latent Attention (MLA) Layer for Expert.
+s
+        dim (int): Dimensionality of the input features.
+        n_heads (int): Number of attention heads.
+        n_local_heads (int): Number of local attention heads for distributed systems.
+        q_lora_rank (int): Rank for low-rank query projection.
+        kv_lora_rank (int): Rank for low-rank key/value projection.
+        qk_nope_head_dim (int): Dimensionality of non-positional query/key projections.
+        qk_rope_head_dim (int): Dimensionality of rotary-positional query/key projections.
+        qk_head_dim (int): Total dimensionality of query/key projections.
+        v_head_dim (int): Dimensionality of value projections.
+        softmax_scale (float): Scaling factor for softmax in attention computation.
+    """
+    def __init__(self, args: ModelArgs):
+        super().__init__(args)
+
+        if self.q_lora_rank == 0:
+            self.wq = Linear(self.dim, self.n_heads * self.qk_head_dim)
+        else:
+            # low rank projection a
+            self.wq_a = Linear(self.dim, self.q_lora_rank)
+            self.q_norm = RMSNorm(self.q_lora_rank)
+            # projection from low rank to multiheads
+            self.wq_b = Linear(self.q_lora_rank, self.n_heads * self.qk_head_dim)
+
+        self.wkv_a = Linear(self.dim, self.kv_lora_rank + self.qk_rope_head_dim)
+        self.kv_norm = RMSNorm(self.kv_lora_rank)
+        self.wkv_b = Linear(self.kv_lora_rank, self.n_heads * (self.qk_nope_head_dim + self.v_head_dim))
+
+        self.wo = Linear(self.n_heads * self.v_head_dim, self.dim)
+        self.softmax_scale = self.qk_head_dim ** -0.5
+
+        if args.max_seq_len > args.original_seq_len:
+            mscale = 0.1 * args.mscale * math.log(args.rope_factor) + 1.0
+            self.softmax_scale = self.softmax_scale * mscale * mscale
+        
+        self.num_prior_seq = args.expert_block_args.num_prior_seq
+        # learnable kv cache
+        self.learnable_kv_cache = nn.Parameter(torch.zeros((self.num_prior_seq, self.n_heads, self.qk_head_dim)))
+        full_dim = self.n_heads*self.qk_head_dim
+        nn.init.uniform_(self.learnable_kv_cache, -1.0/math.sqrt(full_dim), 1.0/math.sqrt(full_dim))
+
+    def forward(self, x: torch.Tensor, start_pos: int, freqs_cis: torch.Tensor, mask: Optional[torch.Tensor]):
+        """
+        Forward pass for the Multi-Head Latent Attention (MLA) Layer.
+
+        Args:
+            x (torch.Tensor): Input tensor of shape (batch_size, seq_len, dim).
+            start_pos (int): Starting position in the sequence for caching.
+            freqs_cis (torch.Tensor): Precomputed complex exponential values for rotary embeddings.
+            mask (Optional[torch.Tensor]): Mask tensor to exclude certain positions from attention.
+
+        Returns:
+            torch.Tensor: Output tensor with the same shape as the input.
+        """
+        bsz, seqlen, _ = x.size()
+        assert seqlen == 1
+        end_pos = start_pos + seqlen
+        if self.q_lora_rank == 0:
+            q = self.wq(x)
+        else:
+            # low rank projections
+            q = self.wq_b(self.q_norm(self.wq_a(x)))
+
+        q = q.view(bsz, seqlen, self.n_local_heads, self.qk_head_dim)
+        q_nope, q_pe = torch.split(q, [self.qk_nope_head_dim, self.qk_rope_head_dim], dim=-1)
+        q_pe = apply_rotary_emb(q_pe, freqs_cis)
+
+        # kv projections
+        kv_proj = self.wkv_a(x)
+        # pe: position encoded
+        kv_lora, k_pe = torch.split(kv_proj, [self.kv_lora_rank, self.qk_rope_head_dim], dim=-1)
+        k_pe = apply_rotary_emb(k_pe.unsqueeze(2), freqs_cis)
+
+        if attn_impl == "naive":
+            # q dim: qk_nope + qk_rope
+            q = torch.cat([q_nope, q_pe], dim=-1)
+
+            # kv hidden dimension: self.n_heads * (self.qk_nope_head_dim + self.v_head_dim)
+            kv_nope = self.wkv_b(self.kv_norm(kv_lora))
+            kv_nope = kv_nope.view(bsz, seqlen, self.n_local_heads, self.qk_nope_head_dim + self.v_head_dim)
+            k_nope, v = torch.split(kv_nope, [self.qk_nope_head_dim, self.v_head_dim], dim=-1)
+
+            # k dim: qk_nope + qk_rope
+            k = torch.cat([k_nope, k_pe.expand(-1, -1, self.n_local_heads, -1)], dim=-1)
+            print(self.k_cache)
+            self.k_cache[:bsz, start_pos:end_pos] = k # type: ignore
+            self.v_cache[:bsz, start_pos:end_pos] = v # type: ignore
+            # b: batch, s: sequence, h: number of heads, d: head dim. sum along d
+            scores = torch.einsum("bshd,bthd->bsht", q, self.k_cache[:bsz, :end_pos]) * self.softmax_scale # type: ignore
+        else:
+            wkv_b = self.wkv_b.weight if self.wkv_b.scale is None else weight_dequant(self.wkv_b.weight, self.wkv_b.scale, block_size) 
+            wkv_b = wkv_b.view(self.n_local_heads, -1, self.kv_lora_rank)
+            q_nope = torch.einsum("bshd,hdc->bshc", q_nope, wkv_b[:, :self.qk_nope_head_dim])
+            self.kv_cache[:bsz, start_pos:end_pos] = self.kv_norm(kv_lora) # type: ignore
+            self.pe_cache[:bsz, start_pos:end_pos] = k_pe.squeeze(2) # type: ignore
+            scores = (torch.einsum("bshc,btc->bsht", q_nope, self.kv_cache[:bsz, :end_pos]) + # type: ignore
+                      torch.einsum("bshr,btr->bsht", q_pe, self.pe_cache[:bsz, :end_pos])) * self.softmax_scale # type: ignore
+        if mask is not None:
+            scores += mask.unsqueeze(1)
+        scores = scores.softmax(dim=-1, dtype=torch.float32).type_as(x)
+        if attn_impl == "naive":
+            x = torch.einsum("bsht,bthd->bshd", scores, self.v_cache[:bsz, :end_pos]) # type: ignore
+        else:
+            x = torch.einsum("bsht,btc->bshc", scores, self.kv_cache[:bsz, :end_pos]) # type: ignore
+            x = torch.einsum("bshc,hdc->bshd", x, wkv_b[:, -self.v_head_dim:])
+
+        x = self.wo(x.flatten(2))
+
+        return x
+    
 
 class MLP(nn.Module):
     """
@@ -750,7 +866,7 @@ class MoE(nn.Module):
         if world_size > 1:
             dist.all_reduce(y)
         return (y + z).view(shape)
-
+    
 
 class Block(nn.Module):
     """
