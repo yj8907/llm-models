@@ -550,7 +550,7 @@ class MLA(nn.Module):
 class ExpertMLA(MLA):
     """
     Multi-Head Latent Attention (MLA) Layer for Expert.
-s
+
         dim (int): Dimensionality of the input features.
         n_heads (int): Number of attention heads.
         n_local_heads (int): Number of local attention heads for distributed systems.
@@ -586,10 +586,23 @@ s
             self.softmax_scale = self.softmax_scale * mscale * mscale
         
         self.num_prior_seq = args.expert_block_args.num_prior_seq
-        # learnable kv cache
-        self.learnable_kv_cache = nn.Parameter(torch.zeros((self.num_prior_seq, self.n_heads, self.qk_head_dim)))
-        full_dim = self.n_heads*self.qk_head_dim
-        nn.init.uniform_(self.learnable_kv_cache, -1.0/math.sqrt(full_dim), 1.0/math.sqrt(full_dim))
+        if attn_impl == "naive":
+            # learnable kv cache
+            self.learnable_k_cache = nn.Parameter(torch.zeros((self.num_prior_seq, self.n_heads, self.qk_head_dim)))
+            self.learnable_v_cache = nn.Parameter(torch.zeros((self.num_prior_seq, self.n_heads, self.qk_head_dim)))
+
+            full_dim = self.n_heads*self.qk_head_dim
+            nn.init.uniform_(self.learnable_k_cache, -1.0/math.sqrt(full_dim), 1.0/math.sqrt(full_dim))
+            nn.init.uniform_(self.learnable_v_cache, -1.0/math.sqrt(full_dim), 1.0/math.sqrt(full_dim))
+        else:
+            # learnable compressed kv cache
+            self.learnable_kv_cache = nn.Parameter(torch.zeros((self.num_prior_seq, self.kv_lora_rank)))
+            self.learnable_pe_cache = nn.Parameter(torch.zeros((self.num_prior_seq, self.qk_rope_head_dim)))
+
+            full_dim = self.kv_lora_rank
+            nn.init.uniform_(self.learnable_k_cache, -1.0/math.sqrt(full_dim), 1.0/math.sqrt(full_dim))
+            full_dim = self.qk_rope_head_dim
+            nn.init.uniform_(self.learnable_v_cache, -1.0/math.sqrt(full_dim), 1.0/math.sqrt(full_dim))
 
     def forward(self, x: torch.Tensor, start_pos: int, freqs_cis: torch.Tensor, mask: Optional[torch.Tensor]):
         """
@@ -637,23 +650,23 @@ s
             print(self.k_cache)
             self.k_cache[:bsz, start_pos:end_pos] = k # type: ignore
             self.v_cache[:bsz, start_pos:end_pos] = v # type: ignore
+
             # b: batch, s: sequence, h: number of heads, d: head dim. sum along d
-            scores = torch.einsum("bshd,bthd->bsht", q, self.k_cache[:bsz, :end_pos]) * self.softmax_scale # type: ignore
+            scores = torch.einsum("bshd,bthd->bsht", q, self.learnable_k_cache) * self.softmax_scale # type: ignore
         else:
             wkv_b = self.wkv_b.weight if self.wkv_b.scale is None else weight_dequant(self.wkv_b.weight, self.wkv_b.scale, block_size) 
             wkv_b = wkv_b.view(self.n_local_heads, -1, self.kv_lora_rank)
             q_nope = torch.einsum("bshd,hdc->bshc", q_nope, wkv_b[:, :self.qk_nope_head_dim])
-            self.kv_cache[:bsz, start_pos:end_pos] = self.kv_norm(kv_lora) # type: ignore
-            self.pe_cache[:bsz, start_pos:end_pos] = k_pe.squeeze(2) # type: ignore
-            scores = (torch.einsum("bshc,btc->bsht", q_nope, self.kv_cache[:bsz, :end_pos]) + # type: ignore
-                      torch.einsum("bshr,btr->bsht", q_pe, self.pe_cache[:bsz, :end_pos])) * self.softmax_scale # type: ignore
+            scores = (torch.einsum("bshc,btc->bsht", q_nope, self.learnable_kv_cache) + # type: ignore
+                      torch.einsum("bshr,btr->bsht", q_pe, self.learnable_pe_cache)) * self.softmax_scale # type: ignore
+            
         if mask is not None:
             scores += mask.unsqueeze(1)
         scores = scores.softmax(dim=-1, dtype=torch.float32).type_as(x)
         if attn_impl == "naive":
-            x = torch.einsum("bsht,bthd->bshd", scores, self.v_cache[:bsz, :end_pos]) # type: ignore
+            x = torch.einsum("bsht,bthd->bshd", scores, self.learnable_v_cache) # type: ignore
         else:
-            x = torch.einsum("bsht,btc->bshc", scores, self.kv_cache[:bsz, :end_pos]) # type: ignore
+            x = torch.einsum("bsht,btc->bshc", scores, self.learnable_kv_cache) # type: ignore
             x = torch.einsum("bshc,hdc->bshd", x, wkv_b[:, -self.v_head_dim:])
 
         x = self.wo(x.flatten(2))
@@ -787,13 +800,14 @@ class Expert(nn.Module):
             inter_dim (int): Hidden layer dimensionality.
         """
         super().__init__()
+        self.expert_type = ExpertType.Regular
         if args.expert_type == ExpertType.Regular:
             self.w1 = Linear(args.dim, args.inter_dim)
             self.w2 = Linear(args.inter_dim, args.dim)
             self.w3 = Linear(args.dim, args.inter_dim)
         else:
             # make layer_id -1 so that block embedded in expert doesn't include MoE again
-            self.block = Block(layer_id=-1, args = ModelArgs(**args.expert_block_args.__dict__))
+            self.block = Block(layer_id=-1, args = args, learnable_attection=True)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -805,7 +819,10 @@ class Expert(nn.Module):
         Returns:
             torch.Tensor: Output tensor after expert computation.
         """
-        return self.w2(F.silu(self.w1(x)) * self.w3(x))
+        if self.expert_type == ExpertType.Regular:
+            return self.w2(F.silu(self.w1(x)) * self.w3(x))
+        else:
+            return self.block(x)
 
 
 class MoE(nn.Module):
@@ -878,7 +895,7 @@ class Block(nn.Module):
         attn_norm (nn.Module): Layer normalization for attention.
         ffn_norm (nn.Module): Layer normalization for feed-forward network.
     """
-    def __init__(self, layer_id: int, args: ModelArgs):
+    def __init__(self, layer_id: int, args: ModelArgs, learnable_attection: bool = False):
         """
         Initializes the Transformer block.
 
@@ -887,7 +904,10 @@ class Block(nn.Module):
             args (ModelArgs): Model arguments containing block parameters.
         """
         super().__init__()
-        self.attn = MLA(args)
+        if learnable_attection:
+            self.attn = ExpertMLA(args)
+        else:
+            self.attn = MLA(args)
         self.ffn = MLP(args.dim, args.inter_dim) if layer_id < args.n_dense_layers else MoE(args)
         self.attn_norm = RMSNorm(args.dim)
         self.ffn_norm = RMSNorm(args.dim)
