@@ -1,5 +1,5 @@
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Tuple, Optional, Literal
 
 import torch
@@ -7,7 +7,7 @@ from torch import nn
 import torch.nn.functional as F
 import torch.distributed as dist
 
-from kernel import act_quant, weight_dequant, fp8_gemm
+from .kernel import act_quant, weight_dequant, fp8_gemm
 from enum import Enum
 
 world_size = 1
@@ -99,7 +99,7 @@ class ModelArgs(DefaultArgs):
     route_scale: float = 1.
     enable_moe = True
     expert_type: ExpertType = ExpertType.Regular
-    expert_block_args: BlockArgs = BlockArgs()
+    expert_block_args: BlockArgs = field(default_factory=BlockArgs)
     # mla
     # inherit from DefaultArgs
     # yarn
