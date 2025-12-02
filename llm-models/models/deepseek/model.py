@@ -15,6 +15,7 @@ rank = 0
 block_size = 128
 gemm_impl: Literal["bf16", "fp8"] = "bf16"
 attn_impl: Literal["naive", "absorb"] = "absorb"
+expert_attn_impl: Literal["naive", "absorb"] = "naive"
 
 class ExpertType(Enum):
     Regular = 1
@@ -586,13 +587,14 @@ class ExpertMLA(MLA):
             self.softmax_scale = self.softmax_scale * mscale * mscale
         
         self.num_prior_seq = args.expert_block_args.num_prior_seq
-        if attn_impl == "naive":
+        if expert_attn_impl == "naive":
             # learnable kv cache
             self.learnable_k_cache = nn.Parameter(torch.zeros((self.num_prior_seq, self.n_heads, self.qk_head_dim)))
-            self.learnable_v_cache = nn.Parameter(torch.zeros((self.num_prior_seq, self.n_heads, self.qk_head_dim)))
+            self.learnable_v_cache = nn.Parameter(torch.zeros((self.num_prior_seq, self.n_heads, self.v_head_dim)))
 
             full_dim = self.n_heads*self.qk_head_dim
             nn.init.uniform_(self.learnable_k_cache, -1.0/math.sqrt(full_dim), 1.0/math.sqrt(full_dim))
+            full_dim = self.n_heads*self.v_head_dim
             nn.init.uniform_(self.learnable_v_cache, -1.0/math.sqrt(full_dim), 1.0/math.sqrt(full_dim))
         else:
             # learnable compressed kv cache
@@ -600,11 +602,11 @@ class ExpertMLA(MLA):
             self.learnable_pe_cache = nn.Parameter(torch.zeros((self.num_prior_seq, self.qk_rope_head_dim)))
 
             full_dim = self.kv_lora_rank
-            nn.init.uniform_(self.learnable_k_cache, -1.0/math.sqrt(full_dim), 1.0/math.sqrt(full_dim))
+            nn.init.uniform_(self.learnable_kv_cache, -1.0/math.sqrt(full_dim), 1.0/math.sqrt(full_dim))
             full_dim = self.qk_rope_head_dim
-            nn.init.uniform_(self.learnable_v_cache, -1.0/math.sqrt(full_dim), 1.0/math.sqrt(full_dim))
+            nn.init.uniform_(self.learnable_pe_cache, -1.0/math.sqrt(full_dim), 1.0/math.sqrt(full_dim))
 
-    def forward(self, x: torch.Tensor, start_pos: int, freqs_cis: torch.Tensor, mask: Optional[torch.Tensor]):
+    def forward(self, x: torch.Tensor, freqs_cis: torch.Tensor, mask: Optional[torch.Tensor]):
         """
         Forward pass for the Multi-Head Latent Attention (MLA) Layer.
 
@@ -619,7 +621,6 @@ class ExpertMLA(MLA):
         """
         bsz, seqlen, _ = x.size()
         assert seqlen == 1
-        end_pos = start_pos + seqlen
         if self.q_lora_rank == 0:
             q = self.wq(x)
         else:
@@ -636,7 +637,7 @@ class ExpertMLA(MLA):
         kv_lora, k_pe = torch.split(kv_proj, [self.kv_lora_rank, self.qk_rope_head_dim], dim=-1)
         k_pe = apply_rotary_emb(k_pe.unsqueeze(2), freqs_cis)
 
-        if attn_impl == "naive":
+        if expert_attn_impl == "naive":
             # q dim: qk_nope + qk_rope
             q = torch.cat([q_nope, q_pe], dim=-1)
 
@@ -647,26 +648,23 @@ class ExpertMLA(MLA):
 
             # k dim: qk_nope + qk_rope
             k = torch.cat([k_nope, k_pe.expand(-1, -1, self.n_local_heads, -1)], dim=-1)
-            print(self.k_cache)
-            self.k_cache[:bsz, start_pos:end_pos] = k # type: ignore
-            self.v_cache[:bsz, start_pos:end_pos] = v # type: ignore
 
             # b: batch, s: sequence, h: number of heads, d: head dim. sum along d
-            scores = torch.einsum("bshd,bthd->bsht", q, self.learnable_k_cache) * self.softmax_scale # type: ignore
+            scores = torch.einsum("bshd,thd->bsht", q, self.learnable_k_cache) * self.softmax_scale # type: ignore
         else:
             wkv_b = self.wkv_b.weight if self.wkv_b.scale is None else weight_dequant(self.wkv_b.weight, self.wkv_b.scale, block_size) 
             wkv_b = wkv_b.view(self.n_local_heads, -1, self.kv_lora_rank)
             q_nope = torch.einsum("bshd,hdc->bshc", q_nope, wkv_b[:, :self.qk_nope_head_dim])
-            scores = (torch.einsum("bshc,btc->bsht", q_nope, self.learnable_kv_cache) + # type: ignore
-                      torch.einsum("bshr,btr->bsht", q_pe, self.learnable_pe_cache)) * self.softmax_scale # type: ignore
+            scores = (torch.einsum("bshc,tc->bsht", q_nope, self.learnable_kv_cache) + # type: ignore
+                      torch.einsum("bshr,tr->bsht", q_pe, self.learnable_pe_cache)) * self.softmax_scale # type: ignore
             
         if mask is not None:
             scores += mask.unsqueeze(1)
         scores = scores.softmax(dim=-1, dtype=torch.float32).type_as(x)
-        if attn_impl == "naive":
-            x = torch.einsum("bsht,bthd->bshd", scores, self.learnable_v_cache) # type: ignore
+        if expert_attn_impl == "naive":
+            x = torch.einsum("bsht,thd->bshd", scores, self.learnable_v_cache) # type: ignore
         else:
-            x = torch.einsum("bsht,btc->bshc", scores, self.learnable_kv_cache) # type: ignore
+            x = torch.einsum("bsht,tc->bshc", scores, self.learnable_kv_cache) # type: ignore
             x = torch.einsum("bshc,hdc->bshd", x, wkv_b[:, -self.v_head_dim:])
 
         x = self.wo(x.flatten(2))

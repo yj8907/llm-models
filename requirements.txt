@@ -1,7 +1,11 @@
+numpy
 torch
 torchvision
 deepspeed
-flash_attn
+packaging
+ninja
+psutil
+flash-attn
 triton
 wheel
 flash-attn
