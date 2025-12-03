@@ -606,7 +606,7 @@ class ExpertMLA(MLA):
             full_dim = self.qk_rope_head_dim
             nn.init.uniform_(self.learnable_pe_cache, -1.0/math.sqrt(full_dim), 1.0/math.sqrt(full_dim))
 
-    def forward(self, x: torch.Tensor, freqs_cis: torch.Tensor, mask: Optional[torch.Tensor]):
+    def forward(self, x: torch.Tensor, start_pos: int, freqs_cis: torch.Tensor, mask: Optional[torch.Tensor]):
         """
         Forward pass for the Multi-Head Latent Attention (MLA) Layer.
 
@@ -798,8 +798,8 @@ class Expert(nn.Module):
             inter_dim (int): Hidden layer dimensionality.
         """
         super().__init__()
-        self.expert_type = ExpertType.Regular
-        if args.expert_type == ExpertType.Regular:
+        self.expert_type = args.expert_type
+        if self.expert_type == ExpertType.Regular:
             self.w1 = Linear(args.dim, args.inter_dim)
             self.w2 = Linear(args.inter_dim, args.dim)
             self.w3 = Linear(args.dim, args.inter_dim)
@@ -807,7 +807,9 @@ class Expert(nn.Module):
             # make layer_id -1 so that block embedded in expert doesn't include MoE again
             self.block = Block(layer_id=-1, args = args, learnable_attection=True)
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, 
+            start_pos:Optional[int] = None, freqs_cis: Optional[torch.Tensor]=None, 
+            mask: Optional[torch.Tensor] = None) -> torch.Tensor:
         """
         Forward pass for the Expert layer.
 
@@ -820,7 +822,7 @@ class Expert(nn.Module):
         if self.expert_type == ExpertType.Regular:
             return self.w2(F.silu(self.w1(x)) * self.w3(x))
         else:
-            return self.block(x)
+            return self.block(x, start_pos, freqs_cis, mask)
 
 
 class MoE(nn.Module):
@@ -902,12 +904,16 @@ class Block(nn.Module):
             args (ModelArgs): Model arguments containing block parameters.
         """
         super().__init__()
+        print('step1')
         if learnable_attection:
             self.attn = ExpertMLA(args)
         else:
             self.attn = MLA(args)
+            print('step4')
         self.ffn = MLP(args.dim, args.inter_dim) if layer_id < args.n_dense_layers else MoE(args)
+        print('step2')
         self.attn_norm = RMSNorm(args.dim)
+        print('step3')
         self.ffn_norm = RMSNorm(args.dim)
 
     def forward(self, x: torch.Tensor, start_pos: int, freqs_cis: torch.Tensor, mask: Optional[torch.Tensor]) -> torch.Tensor:
