@@ -1,11 +1,13 @@
 numpy
 torch
 torchvision
+datasets
 deepspeed
 packaging
 ninja
 psutil
-flash-attn
 triton
 wheel
+notebook
 flash-attn
+nvidia-ml-py

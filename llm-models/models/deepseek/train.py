@@ -13,9 +13,8 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.utils.data import Dataset, DataLoader
 from torch.utils.data.distributed import DistributedSampler
 
-from model import Transformer, ModelArgs, Linear
-from kernel import act_quant, weight_dequant
-
+from .model import Transformer, ModelArgs, Linear
+from .kernel import act_quant, weight_dequant
 
 @dataclass
 class TrainingArgs:
@@ -59,29 +58,6 @@ class TrainingArgs:
             self.model_args = ModelArgs()
 
 
-class TextDataset(Dataset):
-    """
-    Dataset for loading pre-tokenized text data.
-    Expects data in the format of .bin files containing tokenized sequences.
-    """
-    def __init__(self, data_path: str, seq_len: int):
-        self.seq_len = seq_len
-        self.data = torch.from_numpy(
-            torch.load(data_path) if data_path.endswith('.pt') 
-            else torch.ByteTensor(torch.ByteStorage.from_file(data_path, shared=False))
-        ).long()
-        
-    def __len__(self):
-        return len(self.data) // self.seq_len - 1
-    
-    def __getitem__(self, idx):
-        start_idx = idx * self.seq_len
-        end_idx = start_idx + self.seq_len + 1
-        chunk = self.data[start_idx:end_idx]
-        x = chunk[:-1]
-        y = chunk[1:]
-        return x, y
-
 
 class Trainer:
     """Main training class for DeepSeek model."""
@@ -105,6 +81,9 @@ class Trainer:
         """Initialize distributed training."""
         if self.args.ddp:
             assert torch.cuda.is_available(), "CUDA required for distributed training"
+
+            os.environ['MASTER_ADDR'] = 'localhost'
+            os.environ['MASTER_PORT'] = '12355'
             dist.init_process_group(backend='nccl')
             self.world_size = dist.get_world_size()
             self.rank = dist.get_rank()
@@ -175,15 +154,8 @@ class Trainer:
     
     def setup_data(self):
         """Initialize data loaders."""
-        train_dataset = TextDataset(
-            os.path.join(self.args.data_dir, 'train.bin'),
-            self.args.model_args.max_seq_len
-        )
-        
-        val_dataset = TextDataset(
-            os.path.join(self.args.data_dir, 'val.bin'),
-            self.args.model_args.max_seq_len
-        )
+        train_dataset = TinyStoriesDataset('train')
+        val_dataset = TinyStoriesDataset('validation')
         
         train_sampler = DistributedSampler(
             train_dataset,

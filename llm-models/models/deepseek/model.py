@@ -45,7 +45,7 @@ class BlockArgs(DefaultArgs):
     """
     Attributes for mini transformer blocks as experts
     """
-    num_prior_seq = 4
+    num_prior_seq = 32
 
 @dataclass
 class ModelArgs(DefaultArgs):
@@ -805,7 +805,7 @@ class Expert(nn.Module):
             self.w3 = Linear(args.dim, args.inter_dim)
         else:
             # make layer_id -1 so that block embedded in expert doesn't include MoE again
-            self.block = Block(layer_id=-1, args = args, learnable_attection=True)
+            self.block = Block(layer_id=-1, args = args, learnable_attention=True)
 
     def forward(self, x: torch.Tensor, 
             start_pos:Optional[int] = None, freqs_cis: Optional[torch.Tensor]=None, 
@@ -895,7 +895,7 @@ class Block(nn.Module):
         attn_norm (nn.Module): Layer normalization for attention.
         ffn_norm (nn.Module): Layer normalization for feed-forward network.
     """
-    def __init__(self, layer_id: int, args: ModelArgs, learnable_attection: bool = False):
+    def __init__(self, layer_id: int, args: ModelArgs, learnable_attention: bool = False):
         """
         Initializes the Transformer block.
 
@@ -904,17 +904,16 @@ class Block(nn.Module):
             args (ModelArgs): Model arguments containing block parameters.
         """
         super().__init__()
-        print('step1')
-        if learnable_attection:
+        self.learnable_attention = learnable_attention
+        print('block')
+        if self.learnable_attention:
             self.attn = ExpertMLA(args)
         else:
             self.attn = MLA(args)
-            print('step4')
-        self.ffn = MLP(args.dim, args.inter_dim) if layer_id < args.n_dense_layers else MoE(args)
-        print('step2')
+            self.ffn = MLP(args.dim, args.inter_dim) if layer_id < args.n_dense_layers else MoE(args)
+            self.ffn_norm = RMSNorm(args.dim)
+
         self.attn_norm = RMSNorm(args.dim)
-        print('step3')
-        self.ffn_norm = RMSNorm(args.dim)
 
     def forward(self, x: torch.Tensor, start_pos: int, freqs_cis: torch.Tensor, mask: Optional[torch.Tensor]) -> torch.Tensor:
         """
@@ -930,7 +929,9 @@ class Block(nn.Module):
             torch.Tensor: Output tensor after block computation.
         """
         x = x + self.attn(self.attn_norm(x), start_pos, freqs_cis, mask)
-        x = x + self.ffn(self.ffn_norm(x))
+        if not self.learnable_attention:
+            x = x + self.ffn(self.ffn_norm(x))
+
         return x
 
 
