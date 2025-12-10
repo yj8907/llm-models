@@ -15,6 +15,9 @@ from torch.utils.data.distributed import DistributedSampler
 
 from .model import Transformer, ModelArgs, Linear
 from .kernel import act_quant, weight_dequant
+from .data import TinyStoriesTokenizedDataset
+
+from enum import Enum
 
 @dataclass
 class TrainingArgs:
@@ -58,6 +61,14 @@ class TrainingArgs:
             self.model_args = ModelArgs()
 
 
+def enum_to_value(obj):
+    if isinstance(obj, Enum):
+        return obj.value
+    elif isinstance(obj, dict):
+        return {k: enum_to_value(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [enum_to_value(v) for v in obj]
+    return obj
 
 class Trainer:
     """Main training class for DeepSeek model."""
@@ -84,7 +95,8 @@ class Trainer:
 
             os.environ['MASTER_ADDR'] = 'localhost'
             os.environ['MASTER_PORT'] = '12355'
-            dist.init_process_group(backend='nccl')
+            if not dist.is_initialized():
+                dist.init_process_group(backend='nccl')
             self.world_size = dist.get_world_size()
             self.rank = dist.get_rank()
             self.local_rank = int(os.environ.get('LOCAL_RANK', 0))
@@ -154,8 +166,8 @@ class Trainer:
     
     def setup_data(self):
         """Initialize data loaders."""
-        train_dataset = TinyStoriesDataset('train')
-        val_dataset = TinyStoriesDataset('validation')
+        train_dataset = TinyStoriesTokenizedDataset('train')
+        val_dataset = TinyStoriesTokenizedDataset('validation')
         
         train_sampler = DistributedSampler(
             train_dataset,
@@ -344,7 +356,7 @@ class Trainer:
             'global_step': self.global_step,
             'tokens_seen': self.tokens_seen,
             'best_val_loss': self.best_val_loss,
-            'args': asdict(self.args)
+            'args': enum_to_value(asdict(self.args))
         }
         
         torch.save(checkpoint, checkpoint_path)
@@ -372,7 +384,7 @@ class Trainer:
         """Save training configuration."""
         config_path = os.path.join(self.args.checkpoint_dir, 'config.json')
         with open(config_path, 'w') as f:
-            json.dump(asdict(self.args), f, indent=2)
+            json.dump(enum_to_value(asdict(self.args)), f, indent=2)
 
 
 def main():

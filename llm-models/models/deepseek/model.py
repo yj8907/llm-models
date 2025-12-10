@@ -17,6 +17,7 @@ gemm_impl: Literal["bf16", "fp8"] = "bf16"
 attn_impl: Literal["naive", "absorb"] = "absorb"
 expert_attn_impl: Literal["naive", "absorb"] = "naive"
 
+
 class ExpertType(Enum):
     Regular = 1
     Block = 2

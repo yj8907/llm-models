@@ -9,5 +9,6 @@ psutil
 triton
 wheel
 notebook
-flash-attn
+transformers
+#flash-attn
 nvidia-ml-py

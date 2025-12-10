@@ -1,2 +1,5 @@
 llm
 **/*.pyc
+data
+**/*checkpoint.ipynb
+**/checkpoints/*
