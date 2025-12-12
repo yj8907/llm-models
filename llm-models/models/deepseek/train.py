@@ -224,7 +224,7 @@ class Trainer:
                 ignore_index=-1
             )
             loss = loss / self.args.gradient_accumulation_steps
-        
+        print('loss')
         # Backward pass
         self.scaler.scale(loss).backward()
         
@@ -273,6 +273,9 @@ class Trainer:
         running_loss = 0.0
         start_time = time.time()
         
+        # Initialize optimizer state
+        self.optimizer.zero_grad(set_to_none=True)
+
         for epoch in range(1000):  # Large number, will stop at max_steps
             if self.train_sampler is not None:
                 self.train_sampler.set_epoch(epoch)

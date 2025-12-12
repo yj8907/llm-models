@@ -522,7 +522,7 @@ class MLA(nn.Module):
 
             # k dim: qk_nope + qk_rope
             k = torch.cat([k_nope, k_pe.expand(-1, -1, self.n_local_heads, -1)], dim=-1)
-            print(self.k_cache)
+
             self.k_cache[:bsz, start_pos:end_pos] = k # type: ignore
             self.v_cache[:bsz, start_pos:end_pos] = v # type: ignore
             # b: batch, s: sequence, h: number of heads, d: head dim. sum along d
@@ -620,6 +620,11 @@ class ExpertMLA(MLA):
         Returns:
             torch.Tensor: Output tensor with the same shape as the input.
         """
+        assert len(x.shape) == 2
+
+        # only consider one token as initial testing
+        x = torch.unsqueeze(x, 1)
+        
         bsz, seqlen, _ = x.size()
         assert seqlen == 1
         if self.q_lora_rank == 0:
@@ -661,6 +666,7 @@ class ExpertMLA(MLA):
             
         if mask is not None:
             scores += mask.unsqueeze(1)
+
         scores = scores.softmax(dim=-1, dtype=torch.float32).type_as(x)
         if expert_attn_impl == "naive":
             x = torch.einsum("bsht,thd->bshd", scores, self.learnable_v_cache) # type: ignore
@@ -669,7 +675,7 @@ class ExpertMLA(MLA):
             x = torch.einsum("bshc,hdc->bshd", x, wkv_b[:, -self.v_head_dim:])
 
         x = self.wo(x.flatten(2))
-
+        x = torch.squeeze(x, axis=1)
         return x
     
 
@@ -858,6 +864,7 @@ class MoE(nn.Module):
         self.experts = nn.ModuleList([Expert(args) if self.experts_start_idx <= i < self.experts_end_idx else IdetityModule()
                                       for i in range(self.n_routed_experts)])
         self.shared_experts = MLP(args.dim, args.n_shared_experts * args.moe_inter_dim)
+        self.register_buffer("freqs_cis", precompute_freqs_cis(args), persistent=False)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -879,10 +886,17 @@ class MoE(nn.Module):
                 continue
             expert = self.experts[i]
             idx, top = torch.where(indices == i)
-            y[idx] += expert(x[idx]) * weights[idx, top, None]
+            # we may be able to pass start_pos and seqlen later
+            start_pos = 0
+            seqlen = 1
+            freqs_cis = self.freqs_cis[start_pos:start_pos+seqlen]
+            output = expert(x[idx], start_pos, freqs_cis)
+            output = torch.squeeze(output,axis=1)
+            y[idx] += output * weights[idx, top, None]
         z = self.shared_experts(x)
         if world_size > 1:
             dist.all_reduce(y)
+
         return (y + z).view(shape)
     
 
@@ -906,7 +920,7 @@ class Block(nn.Module):
         """
         super().__init__()
         self.learnable_attention = learnable_attention
-        print('block')
+        # print('block')
         if self.learnable_attention:
             self.attn = ExpertMLA(args)
         else:
@@ -970,7 +984,6 @@ class Transformer(nn.Module):
         self.head = ColumnParallelLinear(args.dim, args.vocab_size, dtype=torch.get_default_dtype())
         self.register_buffer("freqs_cis", precompute_freqs_cis(args), persistent=False)
 
-    @torch.inference_mode()
     def forward(self, tokens: torch.Tensor, start_pos: int = 0):
         """
         Forward pass for the Transformer model.
@@ -990,7 +1003,9 @@ class Transformer(nn.Module):
             mask = torch.full((seqlen, seqlen), float("-inf"), device=tokens.device).triu_(1)
         for layer in self.layers:
             h = layer(h, start_pos, freqs_cis, mask)
-        h = self.norm(h)[:, -1]
+
+        # this is not inference mode. 
+        h = self.norm(h)
         logits = self.head(h)
         if world_size > 1:
             all_logits = [torch.empty_like(logits) for _ in range(world_size)]

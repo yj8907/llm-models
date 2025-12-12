@@ -197,10 +197,8 @@ class TinyStoriesTokenizedDataset(Dataset):
         
         # Convert the lists of integers (token IDs) into PyTorch Tensors
         # These are the necessary keys for Causal Language Modeling training
-        return {
-            'input_ids': torch.tensor(example['input_ids'], dtype=torch.long),
-            'labels': torch.tensor(example['labels'], dtype=torch.long)
-        }
+        return torch.tensor(example['input_ids'], dtype=torch.long), \
+            torch.tensor(example['labels'], dtype=torch.long)
 
 # Example Usage:
 # train_dataset = TinyStoriesTokenizedDataset(split="train")
