@@ -17,7 +17,13 @@ from .model import Transformer, ModelArgs, Linear
 from .kernel import act_quant, weight_dequant
 from .data import TinyStoriesTokenizedDataset
 
+from torch.profiler import profile, ProfilerActivity, record_function
+
 from enum import Enum
+
+import logging
+import socket
+from datetime import datetime, timedelta
 
 @dataclass
 class TrainingArgs:
@@ -70,6 +76,20 @@ def enum_to_value(obj):
         return [enum_to_value(v) for v in obj]
     return obj
 
+def trace_handler(prof: torch.profiler.profile):
+   # Prefix for file names.
+
+   TIME_FORMAT_STR: str = "%b_%d_%H_%M_%S"
+   host_name = socket.gethostname()
+   timestamp = datetime.now().strftime(TIME_FORMAT_STR)
+   file_prefix = f"{host_name}_{timestamp}"
+
+   # Construct the trace file.
+   prof.export_chrome_trace(f"{file_prefix}.json.gz")
+
+   # Construct the memory timeline file.
+   prof.export_memory_timeline(f"{file_prefix}.html", device="cuda:0")
+
 class Trainer:
     """Main training class for DeepSeek model."""
     
@@ -79,7 +99,8 @@ class Trainer:
         self.setup_model()
         self.setup_optimizer()
         self.setup_data()
-        
+        self.setup_profiler()
+
         self.global_step = 0
         self.tokens_seen = 0
         self.best_val_loss = float('inf')
@@ -88,6 +109,15 @@ class Trainer:
             os.makedirs(args.checkpoint_dir, exist_ok=True)
             self.save_config()
     
+    def setup_profiler(self):
+        self.prof = torch.profiler.profile(
+            activities=[torch.profiler.ProfilerActivity.CPU, torch.profiler.ProfilerActivity.CUDA],
+            record_shapes=True,
+            profile_memory=True,
+            # with_stack=True,
+            # on_trace_ready=trace_handler
+            )
+
     def setup_distributed(self):
         """Initialize distributed training."""
         if self.args.ddp:
@@ -162,7 +192,8 @@ class Trainer:
         )
         
         # GradScaler for mixed precision training
-        self.scaler = torch.cuda.amp.GradScaler(enabled=self.args.use_amp)
+        self.scaler = torch.cuda.amp.GradScaler(enabled=self.args.use_amp 
+                and torch.get_default_dtype() != torch.bfloat16 )
     
     def setup_data(self):
         """Initialize data loaders."""
@@ -215,18 +246,20 @@ class Trainer:
         y = y.to(self.device, non_blocking=True)
         
         # Forward pass with mixed precision
-        with torch.cuda.amp.autocast(enabled=self.args.use_amp, dtype=torch.bfloat16):
+        with torch.amp.autocast('cuda',enabled=self.args.use_amp, dtype=torch.bfloat16):
             # For training, we need to modify the model to return loss
-            logits = self.model(x, start_pos=0)
-            loss = F.cross_entropy(
-                logits.view(-1, logits.size(-1)),
-                y.view(-1),
-                ignore_index=-1
-            )
-            loss = loss / self.args.gradient_accumulation_steps
-        print('loss')
+            with record_function("## forward ##"):
+                logits = self.model(x, start_pos=0)
+                loss = F.cross_entropy(
+                    logits.view(-1, logits.size(-1)),
+                    y.view(-1),
+                    ignore_index=-1
+                )
+                loss = loss / self.args.gradient_accumulation_steps
+
         # Backward pass
-        self.scaler.scale(loss).backward()
+        with record_function("## backward ##"):
+            self.scaler.scale(loss).backward()
         
         return loss.item()
     
@@ -242,7 +275,7 @@ class Trainer:
             x = x.to(self.device, non_blocking=True)
             y = y.to(self.device, non_blocking=True)
             
-            with torch.cuda.amp.autocast(enabled=self.args.use_amp, dtype=torch.bfloat16):
+            with torch.amp.autocast('cuda',enabled=self.args.use_amp, dtype=torch.bfloat16):
                 logits = self.model(x, start_pos=0)
                 loss = F.cross_entropy(
                     logits.view(-1, logits.size(-1)),
@@ -264,17 +297,20 @@ class Trainer:
             dist.all_reduce(loss_tensor, op=dist.ReduceOp.AVG)
             avg_loss = loss_tensor.item()
         
-        self.model.train()
         return avg_loss
     
-    def train(self):
+    def train(self, backend='inductor', run_profile=False):
         """Main training loop."""
-        self.model.train()
+
         running_loss = 0.0
+        self.trainer.model.compile(backend=backend)
         start_time = time.time()
         
         # Initialize optimizer state
         self.optimizer.zero_grad(set_to_none=True)
+
+        if run_profile:
+            self.prof.start()
 
         for epoch in range(1000):  # Large number, will stop at max_steps
             if self.train_sampler is not None:
@@ -293,6 +329,7 @@ class Trainer:
                 # Update weights after accumulation steps
                 if (step + 1) % self.args.gradient_accumulation_steps == 0:
                     # Gradient clipping
+                    
                     self.scaler.unscale_(self.optimizer)
                     torch.nn.utils.clip_grad_norm_(
                         self.model.parameters(),
@@ -300,9 +337,10 @@ class Trainer:
                     )
                     
                     # Optimizer step
-                    self.scaler.step(self.optimizer)
-                    self.scaler.update()
-                    self.optimizer.zero_grad(set_to_none=True)
+                    with record_function("## optimizer ##"):
+                        self.scaler.step(self.optimizer)
+                        self.scaler.update()
+                        self.optimizer.zero_grad(set_to_none=True)
                     
                     self.global_step += 1
                     self.tokens_seen += (
@@ -324,7 +362,10 @@ class Trainer:
                               f"Tokens/sec: {tokens_per_sec:.0f}")
                         
                         running_loss = 0.0
-                    
+
+                    if self.global_step +1 == 80:
+                        return
+
                     # Evaluation
                     if self.global_step % self.args.eval_interval == 0:
                         val_loss = self.evaluate()
@@ -345,6 +386,11 @@ class Trainer:
                             print("Training complete!")
                             self.save_checkpoint('final')
                         return
+
+                self.prof.step()
+
+            self.prof.stop()
+
     
     def save_checkpoint(self, name: str):
         """Save model checkpoint."""

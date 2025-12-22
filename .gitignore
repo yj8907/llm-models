@@ -3,3 +3,4 @@ llm
 data
 **/*checkpoint.ipynb
 **/checkpoints/*
+**/torch_compile_debug/*

@@ -523,25 +523,26 @@ class MLA(nn.Module):
             # k dim: qk_nope + qk_rope
             k = torch.cat([k_nope, k_pe.expand(-1, -1, self.n_local_heads, -1)], dim=-1)
 
-            self.k_cache[:bsz, start_pos:end_pos] = k # type: ignore
-            self.v_cache[:bsz, start_pos:end_pos] = v # type: ignore
+            # self.k_cache[:bsz, start_pos:end_pos] = k # type: ignore
+            # self.v_cache[:bsz, start_pos:end_pos] = v # type: ignore
             # b: batch, s: sequence, h: number of heads, d: head dim. sum along d
-            scores = torch.einsum("bshd,bthd->bsht", q, self.k_cache[:bsz, :end_pos]) * self.softmax_scale # type: ignore
+            
+            scores = torch.einsum("bshd,bthd->bsht", q, k) * self.softmax_scale # type: ignore
         else:
             wkv_b = self.wkv_b.weight if self.wkv_b.scale is None else weight_dequant(self.wkv_b.weight, self.wkv_b.scale, block_size) 
             wkv_b = wkv_b.view(self.n_local_heads, -1, self.kv_lora_rank)
             q_nope = torch.einsum("bshd,hdc->bshc", q_nope, wkv_b[:, :self.qk_nope_head_dim])
-            self.kv_cache[:bsz, start_pos:end_pos] = self.kv_norm(kv_lora) # type: ignore
-            self.pe_cache[:bsz, start_pos:end_pos] = k_pe.squeeze(2) # type: ignore
-            scores = (torch.einsum("bshc,btc->bsht", q_nope, self.kv_cache[:bsz, :end_pos]) + # type: ignore
-                      torch.einsum("bshr,btr->bsht", q_pe, self.pe_cache[:bsz, :end_pos])) * self.softmax_scale # type: ignore
+            # self.kv_cache[:bsz, start_pos:end_pos] = self.kv_norm(kv_lora) # type: ignore
+            # self.pe_cache[:bsz, start_pos:end_pos] = k_pe.squeeze(2) # type: ignore
+            scores = (torch.einsum("bshc,btc->bsht", q_nope, self.kv_norm(kv_lora)) + # type: ignore
+                      torch.einsum("bshr,btr->bsht", q_pe, k_pe.squeeze(2))) * self.softmax_scale # type: ignore
         if mask is not None:
             scores += mask.unsqueeze(1)
         scores = scores.softmax(dim=-1, dtype=torch.float32).type_as(x)
         if attn_impl == "naive":
-            x = torch.einsum("bsht,bthd->bshd", scores, self.v_cache[:bsz, :end_pos]) # type: ignore
+            x = torch.einsum("bsht,bthd->bshd", scores, v) # type: ignore
         else:
-            x = torch.einsum("bsht,btc->bshc", scores, self.kv_cache[:bsz, :end_pos]) # type: ignore
+            x = torch.einsum("bsht,btc->bshc", scores, self.kv_norm(kv_lora)) # type: ignore
             x = torch.einsum("bshc,hdc->bshd", x, wkv_b[:, -self.v_head_dim:])
 
         x = self.wo(x.flatten(2))

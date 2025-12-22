@@ -1,6 +1,6 @@
 numpy
-torch
-torchvision
+# torch==2.9.0+cu130
+# torchvision
 datasets
 deepspeed
 packaging
