@@ -18,6 +18,7 @@ from .kernel import act_quant, weight_dequant
 from .data import TinyStoriesTokenizedDataset
 
 from torch.profiler import profile, ProfilerActivity, record_function
+import deepspeed
 
 from enum import Enum
 
@@ -120,6 +121,8 @@ class Trainer:
 
     def setup_distributed(self):
         """Initialize distributed training."""
+        deepspeed.init_distributed()
+
         if self.args.ddp:
             assert torch.cuda.is_available(), "CUDA required for distributed training"
 
@@ -239,6 +242,15 @@ class Trainer:
         else:
             return self.args.min_learning_rate
     
+    def collect_moe_aux_loss(self) -> float:
+
+        moe_aux_loss = 0.0
+        for name, module in self.model.named_modules():
+            if isinstance(module, MOELayer) and hasattr(module, '_moe_aux_loss'):
+                moe_aux_loss += module._moe_aux_loss
+
+        return moe_aux_loss
+
     def train_step(self, batch: Tuple[torch.Tensor, torch.Tensor]) -> float:
         """Execute a single training step."""
         x, y = batch
@@ -255,7 +267,8 @@ class Trainer:
                     y.view(-1),
                     ignore_index=-1
                 )
-                loss = loss / self.args.gradient_accumulation_steps
+                aux_loss = self.collect_moe_aux_loss()
+                loss = (loss + aux_loss) / self.args.gradient_accumulation_steps
 
         # Backward pass
         with record_function("## backward ##"):
