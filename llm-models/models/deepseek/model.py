@@ -10,7 +10,11 @@ import torch.distributed as dist
 from .kernel import act_quant, weight_dequant, fp8_gemm
 from enum import Enum
 
+import deepspeed
+
 world_size = 1
+ep_world_size = 1
+
 rank = 0
 block_size = 128
 gemm_impl: Literal["bf16", "fp8"] = "bf16"
@@ -621,10 +625,9 @@ class ExpertMLA(MLA):
         Returns:
             torch.Tensor: Output tensor with the same shape as the input.
         """
-        assert len(x.shape) == 2
-
         # only consider one token as initial testing
-        x = torch.unsqueeze(x, 1)
+        input_shape = x.shape
+        x = x.view(-1, 1, input_shape[-1])
         
         bsz, seqlen, _ = x.size()
         assert seqlen == 1
@@ -676,7 +679,9 @@ class ExpertMLA(MLA):
             x = torch.einsum("bshc,hdc->bshd", x, wkv_b[:, -self.v_head_dim:])
 
         x = self.wo(x.flatten(2))
-        x = torch.squeeze(x, axis=1)
+
+        x = x.view(input_shape)
+
         return x
     
 
@@ -815,6 +820,8 @@ class Expert(nn.Module):
             # make layer_id -1 so that block embedded in expert doesn't include MoE again
             self.block = Block(layer_id=-1, args = args, learnable_attention=True)
 
+        self.register_buffer("freqs_cis", precompute_freqs_cis(args), persistent=False)
+
     def forward(self, x: torch.Tensor, 
             start_pos:Optional[int] = None, freqs_cis: Optional[torch.Tensor]=None, 
             mask: Optional[torch.Tensor] = None) -> torch.Tensor:
@@ -830,6 +837,9 @@ class Expert(nn.Module):
         if self.expert_type == ExpertType.Regular:
             return self.w2(F.silu(self.w1(x)) * self.w3(x))
         else:
+            start_pos = 0
+            seqlen = 1
+            freqs_cis = self.freqs_cis[start_pos:start_pos+seqlen]
             return self.block(x, start_pos, freqs_cis, mask)
 
 
@@ -861,11 +871,12 @@ class MoE(nn.Module):
         self.n_activated_experts = args.n_activated_experts
         self.experts_start_idx = rank * self.n_local_experts
         self.experts_end_idx = self.experts_start_idx + self.n_local_experts
-        self.gate = Gate(args)
-        self.experts = nn.ModuleList([Expert(args) if self.experts_start_idx <= i < self.experts_end_idx else IdetityModule()
-                                      for i in range(self.n_routed_experts)])
+
+        self.experts = deepspeed.moe.layer.MoE(hidden_size=args.dim, expert=Expert(args), num_experts=self.n_routed_experts, 
+            ep_size=ep_world_size, k=2)
         self.shared_experts = MLP(args.dim, args.n_shared_experts * args.moe_inter_dim)
         self.register_buffer("freqs_cis", precompute_freqs_cis(args), persistent=False)
+        self._moe_aux_loss = None
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -879,21 +890,9 @@ class MoE(nn.Module):
         """
         shape = x.size()
         x = x.view(-1, self.dim)
-        weights, indices = self.gate(x)
-        y = torch.zeros_like(x)
-        counts = torch.bincount(indices.flatten(), minlength=self.n_routed_experts).tolist()
-        for i in range(self.experts_start_idx, self.experts_end_idx):
-            if counts[i] == 0:
-                continue
-            expert = self.experts[i]
-            idx, top = torch.where(indices == i)
-            # we may be able to pass start_pos and seqlen later
-            start_pos = 0
-            seqlen = 1
-            freqs_cis = self.freqs_cis[start_pos:start_pos+seqlen]
-            output = expert(x[idx], start_pos, freqs_cis)
-            output = torch.squeeze(output,axis=1)
-            y[idx] += output * weights[idx, top, None]
+        y, aux_loss, _ = self.experts(x)
+        self._moe_aux_loss = aux_loss
+
         z = self.shared_experts(x)
         if world_size > 1:
             dist.all_reduce(y)
@@ -984,6 +983,7 @@ class Transformer(nn.Module):
         self.norm = RMSNorm(args.dim)
         self.head = ColumnParallelLinear(args.dim, args.vocab_size, dtype=torch.get_default_dtype())
         self.register_buffer("freqs_cis", precompute_freqs_cis(args), persistent=False)
+        self.register_buffer("mask", torch.full((args.original_seq_len, args.original_seq_len), float("-inf")).triu_(1), persistent=False)
 
     def forward(self, tokens: torch.Tensor, start_pos: int = 0):
         """
@@ -999,11 +999,8 @@ class Transformer(nn.Module):
         seqlen = tokens.size(1)
         h = self.embed(tokens)
         freqs_cis = self.freqs_cis[start_pos:start_pos+seqlen] # type: ignore
-        mask = None
-        if seqlen > 1:
-            mask = torch.full((seqlen, seqlen), float("-inf"), device=tokens.device).triu_(1)
         for layer in self.layers:
-            h = layer(h, start_pos, freqs_cis, mask)
+            h = layer(h, start_pos, freqs_cis, self.mask)
 
         # this is not inference mode. 
         h = self.norm(h)
