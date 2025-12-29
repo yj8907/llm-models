@@ -4,3 +4,5 @@ data
 **/*checkpoint.ipynb
 **/checkpoints/*
 **/torch_compile_debug/*
+**/*.egg-info
+**/*trace*.json

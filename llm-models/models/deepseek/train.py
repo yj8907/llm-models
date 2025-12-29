@@ -19,6 +19,7 @@ from .data import TinyStoriesTokenizedDataset
 
 from torch.profiler import profile, ProfilerActivity, record_function
 import deepspeed
+from models.deepseek.model import MoE
 
 from enum import Enum
 
@@ -246,7 +247,8 @@ class Trainer:
 
         moe_aux_loss = 0.0
         for name, module in self.model.named_modules():
-            if isinstance(module, MOELayer) and hasattr(module, '_moe_aux_loss'):
+            if isinstance(module, MoE) and hasattr(module, '_moe_aux_loss') \
+                    and module._moe_aux_loss is not None:
                 moe_aux_loss += module._moe_aux_loss
 
         return moe_aux_loss

@@ -872,11 +872,19 @@ class MoE(nn.Module):
         self.experts_start_idx = rank * self.n_local_experts
         self.experts_end_idx = self.experts_start_idx + self.n_local_experts
 
-        self.experts = deepspeed.moe.layer.MoE(hidden_size=args.dim, expert=Expert(args), num_experts=self.n_routed_experts, 
+        self.experts = deepspeed.moe.layer.MoE(hidden_size=args.dim, 
+            expert=torch.compile(Expert(args)), 
+            num_experts=self.n_routed_experts, 
             ep_size=ep_world_size, k=2)
         self.shared_experts = MLP(args.dim, args.n_shared_experts * args.moe_inter_dim)
         self.register_buffer("freqs_cis", precompute_freqs_cis(args), persistent=False)
         self._moe_aux_loss = None
+
+    @torch.compiler.disable
+    def run_moe_eager(self, x: torch.Tensor) -> torch.Tensor:
+        y, aux_loss, _ = self.experts(x)
+        self._moe_aux_loss = aux_loss
+        return y
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -889,9 +897,7 @@ class MoE(nn.Module):
             torch.Tensor: Output tensor after expert routing and computation.
         """
         shape = x.size()
-        x = x.view(-1, self.dim)
-        y, aux_loss, _ = self.experts(x)
-        self._moe_aux_loss = aux_loss
+        y = self.run_moe_eager(x)
 
         z = self.shared_experts(x)
         if world_size > 1:
