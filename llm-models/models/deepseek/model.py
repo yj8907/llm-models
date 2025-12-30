@@ -18,7 +18,7 @@ ep_world_size = 1
 rank = 0
 block_size = 128
 gemm_impl: Literal["bf16", "fp8"] = "bf16"
-attn_impl: Literal["naive", "absorb"] = "absorb"
+attn_impl: Literal["naive", "absorb"] = "naive"
 expert_attn_impl: Literal["naive", "absorb"] = "naive"
 
 
@@ -477,12 +477,12 @@ class MLA(nn.Module):
             mscale = 0.1 * args.mscale * math.log(args.rope_factor) + 1.0
             self.softmax_scale = self.softmax_scale * mscale * mscale
 
-        if attn_impl == "naive":
-            self.register_buffer("k_cache", torch.zeros(args.max_batch_size, args.max_seq_len, self.n_local_heads, self.qk_head_dim), persistent=False)
-            self.register_buffer("v_cache", torch.zeros(args.max_batch_size, args.max_seq_len, self.n_local_heads, self.v_head_dim), persistent=False)
-        else:
-            self.register_buffer("kv_cache", torch.zeros(args.max_batch_size, args.max_seq_len, self.kv_lora_rank), persistent=False)
-            self.register_buffer("pe_cache", torch.zeros(args.max_batch_size, args.max_seq_len, self.qk_rope_head_dim), persistent=False)
+        # if attn_impl == "naive":
+        #     self.register_buffer("k_cache", torch.zeros(args.max_batch_size, args.max_seq_len, self.n_local_heads, self.qk_head_dim), persistent=False)
+        #     self.register_buffer("v_cache", torch.zeros(args.max_batch_size, args.max_seq_len, self.n_local_heads, self.v_head_dim), persistent=False)
+        # else:
+        #     self.register_buffer("kv_cache", torch.zeros(args.max_batch_size, args.max_seq_len, self.kv_lora_rank), persistent=False)
+        #     self.register_buffer("pe_cache", torch.zeros(args.max_batch_size, args.max_seq_len, self.qk_rope_head_dim), persistent=False)
 
     def forward(self, x: torch.Tensor, start_pos: int, freqs_cis: torch.Tensor, mask: Optional[torch.Tensor]):
         """
@@ -531,7 +531,8 @@ class MLA(nn.Module):
             # self.v_cache[:bsz, start_pos:end_pos] = v # type: ignore
             # b: batch, s: sequence, h: number of heads, d: head dim. sum along d
             
-            scores = torch.einsum("bshd,bthd->bsht", q, k) * self.softmax_scale # type: ignore
+            x = F.scaled_dot_product_attention(q, k, v, attn_mask=None, is_causal=True, scale=self.softmax_scale)
+
         else:
             wkv_b = self.wkv_b.weight if self.wkv_b.scale is None else weight_dequant(self.wkv_b.weight, self.wkv_b.scale, block_size) 
             wkv_b = wkv_b.view(self.n_local_heads, -1, self.kv_lora_rank)
@@ -540,14 +541,10 @@ class MLA(nn.Module):
             # self.pe_cache[:bsz, start_pos:end_pos] = k_pe.squeeze(2) # type: ignore
             scores = (torch.einsum("bshc,btc->bsht", q_nope, self.kv_norm(kv_lora)) + # type: ignore
                       torch.einsum("bshr,btr->bsht", q_pe, k_pe.squeeze(2))) * self.softmax_scale # type: ignore
-        if mask is not None:
-            scores += mask.unsqueeze(1)
-        scores = scores.softmax(dim=-1, dtype=torch.float32).type_as(x)
-        if attn_impl == "naive":
-            x = torch.einsum("bsht,bthd->bshd", scores, v) # type: ignore
-        else:
+
             x = torch.einsum("bsht,btc->bshc", scores, self.kv_norm(kv_lora)) # type: ignore
             x = torch.einsum("bshc,hdc->bshd", x, wkv_b[:, -self.v_head_dim:])
+
 
         x = self.wo(x.flatten(2))
 
@@ -660,26 +657,18 @@ class ExpertMLA(MLA):
             k = torch.cat([k_nope, k_pe.expand(-1, -1, self.n_local_heads, -1)], dim=-1)
 
             # b: batch, s: sequence, h: number of heads, d: head dim. sum along d
-            scores = torch.einsum("bshd,thd->bsht", q, self.learnable_k_cache) * self.softmax_scale # type: ignore
+            x = F.scaled_dot_product_attention(q, k, v, attn_mask=None, is_causal=True, scale=self.softmax_scale)
+
         else:
             wkv_b = self.wkv_b.weight if self.wkv_b.scale is None else weight_dequant(self.wkv_b.weight, self.wkv_b.scale, block_size) 
             wkv_b = wkv_b.view(self.n_local_heads, -1, self.kv_lora_rank)
             q_nope = torch.einsum("bshd,hdc->bshc", q_nope, wkv_b[:, :self.qk_nope_head_dim])
             scores = (torch.einsum("bshc,tc->bsht", q_nope, self.learnable_kv_cache) + # type: ignore
                       torch.einsum("bshr,tr->bsht", q_pe, self.learnable_pe_cache)) * self.softmax_scale # type: ignore
-            
-        if mask is not None:
-            scores += mask.unsqueeze(1)
-
-        scores = scores.softmax(dim=-1, dtype=torch.float32).type_as(x)
-        if expert_attn_impl == "naive":
-            x = torch.einsum("bsht,thd->bshd", scores, self.learnable_v_cache) # type: ignore
-        else:
             x = torch.einsum("bsht,tc->bshc", scores, self.learnable_kv_cache) # type: ignore
             x = torch.einsum("bshc,hdc->bshd", x, wkv_b[:, -self.v_head_dim:])
 
         x = self.wo(x.flatten(2))
-
         x = x.view(input_shape)
 
         return x

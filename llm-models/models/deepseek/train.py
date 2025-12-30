@@ -20,6 +20,7 @@ from .data import TinyStoriesTokenizedDataset
 from torch.profiler import profile, ProfilerActivity, record_function
 import deepspeed
 from models.deepseek.model import MoE
+from flash_attn.losses.cross_entropy import CrossEntropyLoss
 
 from enum import Enum
 
@@ -264,11 +265,9 @@ class Trainer:
             # For training, we need to modify the model to return loss
             with record_function("## forward ##"):
                 logits = self.model(x, start_pos=0)
-                loss = F.cross_entropy(
-                    logits.view(-1, logits.size(-1)),
-                    y.view(-1),
-                    ignore_index=-1
-                )
+                criterion = CrossEntropyLoss(inplace_backward=True)
+                loss = criterion(logits.view(-1, logits.size(-1)), y.view(-1))
+
                 aux_loss = self.collect_moe_aux_loss()
                 loss = (loss + aux_loss) / self.args.gradient_accumulation_steps
 
