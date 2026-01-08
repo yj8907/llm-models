@@ -19,7 +19,11 @@ from .data import TinyStoriesTokenizedDataset
 
 from torch.profiler import profile, ProfilerActivity, record_function
 import deepspeed
+
 from models.deepseek.model import MoE
+from models.deepseek import data
+from models.deepseek import model
+
 from flash_attn.losses.cross_entropy import CrossEntropyLoss
 
 from enum import Enum
@@ -260,6 +264,7 @@ class Trainer:
         x = x.to(self.device, non_blocking=True)
         y = y.to(self.device, non_blocking=True)
         
+        aux_loss_w = 0.01
         # Forward pass with mixed precision
         with torch.amp.autocast('cuda',enabled=self.args.use_amp, dtype=torch.bfloat16):
             # For training, we need to modify the model to return loss
@@ -269,7 +274,8 @@ class Trainer:
                 loss = criterion(logits.view(-1, logits.size(-1)), y.view(-1))
 
                 aux_loss = self.collect_moe_aux_loss()
-                loss = (loss + aux_loss) / self.args.gradient_accumulation_steps
+                print(f'aux_loss: {aux_loss}')
+                loss = (loss + aux_loss*aux_loss_w) / self.args.gradient_accumulation_steps
 
         # Backward pass
         with record_function("## backward ##"):
@@ -317,7 +323,7 @@ class Trainer:
         """Main training loop."""
 
         running_loss = 0.0
-        self.trainer.model.compile(backend=backend)
+        self.model.compile(backend=backend)
         start_time = time.time()
         
         # Initialize optimizer state
@@ -377,9 +383,6 @@ class Trainer:
                         
                         running_loss = 0.0
 
-                    if self.global_step +1 == 80:
-                        return
-
                     # Evaluation
                     if self.global_step % self.args.eval_interval == 0:
                         val_loss = self.evaluate()
@@ -401,16 +404,17 @@ class Trainer:
                             self.save_checkpoint('final')
                         return
 
-                self.prof.step()
-
-            self.prof.stop()
+                if run_profile:
+                    self.prof.step()
+            if run_profile:
+                self.prof.stop()
 
     
     def save_checkpoint(self, name: str):
         """Save model checkpoint."""
         checkpoint_path = os.path.join(self.args.checkpoint_dir, f'{name}.pt')
         
-        model_state = self.model.module.state_dict() if self.args.ddp else self.model.state_dict()
+        model_state = self.model.state_dict() if self.args.ddp else self.model.state_dict()
         
         checkpoint = {
             'model': model_state,
@@ -430,7 +434,7 @@ class Trainer:
         checkpoint = torch.load(checkpoint_path, map_location=self.device)
         
         if self.args.ddp:
-            self.model.module.load_state_dict(checkpoint['model'])
+            self.model.load_state_dict(checkpoint['model'])
         else:
             self.model.load_state_dict(checkpoint['model'])
         
@@ -453,19 +457,18 @@ class Trainer:
 def main():
     """Main entry point for training."""
     # Initialize training arguments
-    model_args = ModelArgs(
-        max_batch_size=8,
-        max_seq_len=2048,
-        dtype="bf16",
-        vocab_size=102400,
-        dim=2048,
-        n_layers=27,
-    )
+    scale = 4
+    model_args = ModelArgs(expert_type=model.ExpertType(1),
+                             dim=128*scale, inter_dim=341*scale, moe_inter_dim=64*scale,
+                             kv_lora_rank=32*scale, qk_nope_head_dim=8*scale, qk_rope_head_dim=4*scale, 
+                             v_head_dim=8*scale, 
+                             n_routed_experts=32, n_layers=4*scale,
+                                original_seq_len=data.CONTEXT_LENGTH)
     
     training_args = TrainingArgs(
         model_args=model_args,
-        batch_size=4,
-        gradient_accumulation_steps=8,
+        batch_size=8,
+        gradient_accumulation_steps=16,
         max_steps=100000,
         learning_rate=3e-4,
         checkpoint_dir="./checkpoints",

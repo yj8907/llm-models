@@ -531,7 +531,9 @@ class MLA(nn.Module):
             # self.v_cache[:bsz, start_pos:end_pos] = v # type: ignore
             # b: batch, s: sequence, h: number of heads, d: head dim. sum along d
             
-            x = F.scaled_dot_product_attention(q, k, v, attn_mask=None, is_causal=True, scale=self.softmax_scale)
+            x = F.scaled_dot_product_attention(q.transpose(1,2), 
+                k.transpose(1,2), v.transpose(1,2), attn_mask=None, is_causal=True, scale=self.softmax_scale)
+            x = x.transpose(1,2)                
 
         else:
             wkv_b = self.wkv_b.weight if self.wkv_b.scale is None else weight_dequant(self.wkv_b.weight, self.wkv_b.scale, block_size) 
@@ -592,8 +594,8 @@ class ExpertMLA(MLA):
         self.num_prior_seq = args.expert_block_args.num_prior_seq
         if expert_attn_impl == "naive":
             # learnable kv cache
-            self.learnable_k_cache = nn.Parameter(torch.zeros((self.num_prior_seq, self.n_heads, self.qk_head_dim)))
-            self.learnable_v_cache = nn.Parameter(torch.zeros((self.num_prior_seq, self.n_heads, self.v_head_dim)))
+            self.learnable_k_cache = nn.Parameter(torch.zeros((1, self.num_prior_seq, self.n_heads, self.qk_head_dim)))
+            self.learnable_v_cache = nn.Parameter(torch.zeros((1, self.num_prior_seq, self.n_heads, self.v_head_dim)))
 
             full_dim = self.n_heads*self.qk_head_dim
             nn.init.uniform_(self.learnable_k_cache, -1.0/math.sqrt(full_dim), 1.0/math.sqrt(full_dim))
@@ -634,6 +636,7 @@ class ExpertMLA(MLA):
             # low rank projections
             q = self.wq_b(self.q_norm(self.wq_a(x)))
 
+        # q shape: b, 1, H, E
         q = q.view(bsz, seqlen, self.n_local_heads, self.qk_head_dim)
         q_nope, q_pe = torch.split(q, [self.qk_nope_head_dim, self.qk_rope_head_dim], dim=-1)
         q_pe = apply_rotary_emb(q_pe, freqs_cis)
@@ -657,7 +660,10 @@ class ExpertMLA(MLA):
             k = torch.cat([k_nope, k_pe.expand(-1, -1, self.n_local_heads, -1)], dim=-1)
 
             # b: batch, s: sequence, h: number of heads, d: head dim. sum along d
-            x = F.scaled_dot_product_attention(q, k, v, attn_mask=None, is_causal=True, scale=self.softmax_scale)
+            q = q.view(seqlen, bsz, self.n_local_heads, self.qk_head_dim)
+            x = F.scaled_dot_product_attention(q.transpose(1,2), 
+                self.learnable_k_cache.transpose(1,2), self.learnable_v_cache.transpose(1,2), is_causal=False, scale=self.softmax_scale)
+            x = x.transpose(1,2).view(bsz, seqlen, self.n_local_heads, self.v_head_dim)
 
         else:
             wkv_b = self.wkv_b.weight if self.wkv_b.scale is None else weight_dequant(self.wkv_b.weight, self.wkv_b.scale, block_size) 
