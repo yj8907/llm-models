@@ -273,7 +273,9 @@ class Trainer:
             with record_function("## forward ##"):
                 logits = self.model(x, start_pos=0)
                 criterion = CrossEntropyLoss(inplace_backward=True)
-                loss = criterion(logits.view(-1, logits.size(-1)), y.view(-1))
+                loss = criterion(
+                        logits[:, :-1, :].contiguous().view(-1, logits.size(-1)), 
+                        y[:, 1:].contiguous().view(-1))
 
                 aux_loss = self.collect_moe_aux_loss()
                 print(f'aux_loss: {aux_loss}')
@@ -300,8 +302,8 @@ class Trainer:
             with torch.amp.autocast('cuda',enabled=self.args.use_amp, dtype=train_dtype):
                 logits = self.model(x, start_pos=0)
                 loss = F.cross_entropy(
-                    logits.view(-1, logits.size(-1)),
-                    y.view(-1),
+                    logits[:, :-1, :].contiguous().view(-1, logits.size(-1)),
+                    y[:, 1:].contiguous().view(-1),
                     ignore_index=-1
                 )
             
