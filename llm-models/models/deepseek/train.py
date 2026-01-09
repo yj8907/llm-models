@@ -32,6 +32,8 @@ import logging
 import socket
 from datetime import datetime, timedelta
 
+train_dtype = torch.bfloat16
+
 @dataclass
 class TrainingArgs:
     """Training configuration parameters."""
@@ -151,7 +153,7 @@ class Trainer:
     
     def setup_model(self):
         """Initialize model and move to device."""
-        torch.set_default_dtype(torch.bfloat16)
+        torch.set_default_dtype(train_dtype)
         torch.manual_seed(42 + self.rank)
         
         self.model = Transformer(self.args.model_args)
@@ -202,7 +204,7 @@ class Trainer:
         
         # GradScaler for mixed precision training
         self.scaler = torch.cuda.amp.GradScaler(enabled=self.args.use_amp 
-                and torch.get_default_dtype() != torch.bfloat16 )
+                and torch.get_default_dtype() != train_dtype )
     
     def setup_data(self):
         """Initialize data loaders."""
@@ -266,7 +268,7 @@ class Trainer:
         
         aux_loss_w = 0.01
         # Forward pass with mixed precision
-        with torch.amp.autocast('cuda',enabled=self.args.use_amp, dtype=torch.bfloat16):
+        with torch.amp.autocast('cuda',enabled=self.args.use_amp, dtype=train_dtype):
             # For training, we need to modify the model to return loss
             with record_function("## forward ##"):
                 logits = self.model(x, start_pos=0)
@@ -295,7 +297,7 @@ class Trainer:
             x = x.to(self.device, non_blocking=True)
             y = y.to(self.device, non_blocking=True)
             
-            with torch.amp.autocast('cuda',enabled=self.args.use_amp, dtype=torch.bfloat16):
+            with torch.amp.autocast('cuda',enabled=self.args.use_amp, dtype=train_dtype):
                 logits = self.model(x, start_pos=0)
                 loss = F.cross_entropy(
                     logits.view(-1, logits.size(-1)),
@@ -457,7 +459,7 @@ class Trainer:
 def main():
     """Main entry point for training."""
     # Initialize training arguments
-    scale = 4
+    scale = 2
     model_args = ModelArgs(expert_type=model.ExpertType(1),
                              dim=128*scale, inter_dim=341*scale, moe_inter_dim=64*scale,
                              kv_lora_rank=32*scale, qk_nope_head_dim=8*scale, qk_rope_head_dim=4*scale, 

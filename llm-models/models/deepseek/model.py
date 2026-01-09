@@ -134,6 +134,7 @@ class ParallelEmbedding(nn.Module):
         self.vocab_start_idx = rank * self.part_vocab_size
         self.vocab_end_idx = self.vocab_start_idx + self.part_vocab_size
         self.weight = nn.Parameter(torch.empty(self.part_vocab_size, self.dim))
+        nn.init.normal_(self.weight, mean=0.0, std=1.0/math.sqrt(self.dim))
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
