@@ -12,3 +12,4 @@ notebook
 transformers
 #flash-attn
 nvidia-ml-py
+mpi4py
