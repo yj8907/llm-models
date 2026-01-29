@@ -6,3 +6,4 @@ data
 **/torch_compile_debug/*
 **/*.egg-info
 **/*trace*.json
+**/*ckpt*

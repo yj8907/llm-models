@@ -612,6 +612,8 @@ class ExpertMLA(MLA):
             full_dim = self.qk_rope_head_dim
             nn.init.uniform_(self.learnable_pe_cache, -1.0/math.sqrt(full_dim), 1.0/math.sqrt(full_dim))
 
+        self.register_buffer("attention_score", None, persistent=False)
+
     def forward(self, x: torch.Tensor, start_pos: int, freqs_cis: torch.Tensor, mask: Optional[torch.Tensor]):
         """
         Forward pass for the Multi-Head Latent Attention (MLA) Layer.
@@ -665,6 +667,7 @@ class ExpertMLA(MLA):
             x = F.scaled_dot_product_attention(q.transpose(1,2), 
                 self.learnable_k_cache.transpose(1,2), self.learnable_v_cache.transpose(1,2), is_causal=False, scale=self.softmax_scale)
             x = x.transpose(1,2).view(bsz, seqlen, self.n_local_heads, self.v_head_dim)
+            self.attention_score = torch.einsum('shd,qbhd->sqbh', torch.squeeze(self.learnable_k_cache, 0), q).detach()
 
         else:
             wkv_b = self.wkv_b.weight if self.wkv_b.scale is None else weight_dequant(self.wkv_b.weight, self.wkv_b.scale, block_size) 

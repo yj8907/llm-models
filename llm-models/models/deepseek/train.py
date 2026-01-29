@@ -27,7 +27,7 @@ from flash_attn.losses.cross_entropy import CrossEntropyLoss
 
 from enum import Enum
 
-import logging
+import logging, argparse
 import socket
 from datetime import datetime, timedelta
 
@@ -478,6 +478,37 @@ class Trainer:
             json.dump(enum_to_value(asdict(self.args)), f, indent=2)
 
 
+def save_args(args, output_dir):
+    os.makedirs(output_dir, exist_ok=True)
+
+    args_dict = vars(args)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    path = os.path.join(output_dir, f"args_{timestamp}.json")
+
+    with open(path, "w") as f:
+        json.dump(args_dict, f, indent=2)
+
+    print(f"[INFO] Saved args to {path}")
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Train model")
+
+    # Core scaling / model size
+    parser.add_argument("--scale", type=int, default=4, help="Model scale factor")
+
+    # Training hyperparameters
+    parser.add_argument("--batch-size", type=int, default=8)
+    parser.add_argument("--grad-accum", type=int, default=16)
+    parser.add_argument("--max-steps", type=int, default=100_000)
+    parser.add_argument("--lr", type=float, default=3e-4)
+
+    # Paths
+    parser.add_argument("--checkpoint-dir", type=str, default="./checkpoints")
+    parser.add_argument("--data-dir", type=str, default="./data")
+
+    return parser.parse_args()
+
 def main():
     """Main entry point for training."""
     # Parse DeepSpeed arguments
@@ -490,31 +521,25 @@ def main():
     args = parser.parse_args()
     
     # Initialize training arguments
-    scale = 2
-    model_args = ModelArgs(
-        expert_type=model.ExpertType(1),
-        dim=128*scale, 
-        inter_dim=341*scale, 
-        moe_inter_dim=64*scale,
-        kv_lora_rank=32*scale, 
-        qk_nope_head_dim=8*scale, 
-        qk_rope_head_dim=4*scale, 
-        v_head_dim=8*scale, 
-        n_routed_experts=32, 
-        n_layers=4*scale,
-        original_seq_len=data.CONTEXT_LENGTH
-    )
+    args = parse_args()
+    save_args(args, args.checkpoint_dir)
+
+    scale = args.scale
+    model_args = ModelArgs(expert_type=model.ExpertType(2),
+                             dim=128*scale, inter_dim=341*scale, moe_inter_dim=64*scale,
+                             kv_lora_rank=32*scale, qk_nope_head_dim=8*scale, qk_rope_head_dim=4*scale, 
+                             v_head_dim=8*scale, 
+                             n_routed_experts=32, n_layers=4*scale,
+                                original_seq_len=data.CONTEXT_LENGTH)
     
     training_args = TrainingArgs(
         model_args=model_args,
-        batch_size=8,
-        gradient_accumulation_steps=16,
-        max_steps=100000,
-        learning_rate=3e-4,
-        checkpoint_dir="./checkpoints",
-        data_dir="./data",
-        deepspeed_config=args.deepspeed_config,
-        local_rank=args.local_rank
+        batch_size=args.batch_size,
+        gradient_accumulation_steps=args.grad_accum,
+        max_steps=args.max_steps,
+        learning_rate=args.lr,
+        checkpoint_dir=args.checkpoint_dir,
+        data_dir=args.data_dir
     )
     
     # Initialize trainer
