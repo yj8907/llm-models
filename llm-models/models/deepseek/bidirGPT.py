@@ -201,9 +201,9 @@ def get_bidirectinoal_gpt_layer_with_transformer_engine_spec(
                             },
                     submodules=BidirMLASelfAttentionSubmodules(
                         linear_q_proj=backend.column_parallel_linear(),
-                        linear_q_down_proj=backend.linear(),
+                        linear_q_down_proj=backend.linear(), # type: ignore
                         linear_q_up_proj=linear_q_up_proj,
-                        linear_kv_down_proj=backend.linear(),
+                        linear_kv_down_proj=backend.linear(), # type: ignore
                         linear_kv_up_proj=linear_kv_up_proj,
                         core_attention_backward=backend.core_attention(),
                         bidir_attention_forward=FlexDotProductAttention,

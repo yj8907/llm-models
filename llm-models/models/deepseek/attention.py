@@ -48,21 +48,21 @@ except ImportError:
     HAVE_EINOPS = False
 
 
-@dataclass
-class BidirMLASelfAttentionSubmodules:
+@dataclass 
+class BidirMLASelfAttentionSubmodules: # type: ignore
     """Submodules for the MLA self-attention layer."""
 
-    linear_q_proj: Union[ModuleSpec, type] = None
-    linear_q_down_proj: Union[ModuleSpec, type] = None
-    linear_q_up_proj: Union[ModuleSpec, type] = None
-    linear_kv_down_proj: Union[ModuleSpec, type] = None
-    linear_kv_up_proj: Union[ModuleSpec, type] = None
-    core_attention_backward: Union[ModuleSpec, type] = None
-    bidir_attention_forward: Union[ModuleSpec, type] = None
-    bidir_attention_backward: Union[ModuleSpec, type] = None
-    linear_proj: Union[ModuleSpec, type] = None
-    q_layernorm: Union[ModuleSpec, type] = None
-    kv_layernorm: Union[ModuleSpec, type] = None
+    linear_q_proj: Union[ModuleSpec, type] = None  # type: ignore
+    linear_q_down_proj: Union[ModuleSpec, type] = None # type: ignore
+    linear_q_up_proj: Union[ModuleSpec, type] = None # type: ignore
+    linear_kv_down_proj: Union[ModuleSpec, type] = None # type: ignore
+    linear_kv_up_proj: Union[ModuleSpec, type] = None # type: ignore
+    core_attention_backward: Union[ModuleSpec, type] = None # type: ignore
+    bidir_attention_forward: Union[ModuleSpec, type] = None # type: ignore
+    bidir_attention_backward: Union[ModuleSpec, type] = None # type: ignore
+    linear_proj: Union[ModuleSpec, type] = None # type: ignore
+    q_layernorm: Union[ModuleSpec, type] = None # type: ignore
+    kv_layernorm: Union[ModuleSpec, type] = None # type: ignore
 
 @dataclass
 class AttentionKey:
@@ -96,19 +96,67 @@ class BidirMLASelfAttention(MLASelfAttention):
     
     def __init__(self,
         config: MLATransformerConfig,
-        submodules: MLASelfAttentionSubmodules,
+        submodules: BidirMLASelfAttentionSubmodules,
         layer_number: int,
         attn_mask_type=AttnMaskType.padding,
+        bidir_forward_attn_mask_type=BidirAttnMaskType.bidir_forward,
+        bidir_backward_attn_mask_type=BidirAttnMaskType.bidir_backward,
         cp_comm_type: Optional[str] = None,
         pg_collection: ProcessGroupCollection = None,
         ):
-            super().__init__(config=config,
-            submodules=submodules,
-            layer_number=layer_number,
-            attn_mask_type=attn_mask_type,
-            attention_type="self",
-            cp_comm_type=cp_comm_type,
-            pg_collection=pg_collection,
+            # Create a compatible submodules object for parent class
+            # The parent MLASelfAttention expects MLASelfAttentionSubmodules
+            parent_submodules = MLASelfAttentionSubmodules(
+                linear_q_proj=submodules.linear_q_proj,
+                linear_q_down_proj=submodules.linear_q_down_proj,
+                linear_q_up_proj=submodules.linear_q_up_proj,
+                linear_kv_down_proj=submodules.linear_kv_down_proj,
+                linear_kv_up_proj=submodules.linear_kv_up_proj,
+                core_attention=submodules.core_attention_backward,  # Use backward as default
+                linear_proj=submodules.linear_proj,
+                q_layernorm=submodules.q_layernorm,
+                kv_layernorm=submodules.kv_layernorm,
+            )
+            
+            super().__init__(
+                config=config,
+                submodules=parent_submodules,
+                layer_number=layer_number,
+                attn_mask_type=attn_mask_type,
+                cp_comm_type=cp_comm_type,
+                pg_collection=pg_collection,
+            )
+            
+            # Store bidirectional attention mask types
+            self.bidir_forward_attn_mask_type = bidir_forward_attn_mask_type
+            self.bidir_backward_attn_mask_type = bidir_backward_attn_mask_type
+            
+            # Build bidirectional-specific attention modules
+            # Forward attention (for forward queries attending to combined keys/values)
+            self.core_attention_forward = build_module(
+                submodules.core_attention_backward,
+                config=config,
+                layer_number=layer_number,
+                attn_mask_type=AttnMaskType.causal,
+                attention_type="self",
+            )
+            
+            # Backward attention (for backward queries attending to backward keys/values)
+            self.core_attention_backward = build_module(
+                submodules.bidir_attention_backward,
+                config=config,
+                layer_number=layer_number,
+                attn_mask_type=bidir_backward_attn_mask_type,
+                attention_type="self",
+            )
+            
+            # Forward-to-backward attention (for backward queries attending to combined keys/values)
+            self.core_attention_forward_to_backward = build_module(
+                submodules.bidir_attention_forward,
+                config=config,
+                layer_number=layer_number,
+                attn_mask_type=bidir_forward_attn_mask_type,
+                attention_type="self",
             )
     
 
@@ -248,10 +296,10 @@ class BidirMLASelfAttention(MLASelfAttention):
         # Adjust key, value for inference
         # ===================================================
         # rotary_pos_emb = None
-        inference_context, query_backward, key_backward, _, attn_mask_type_backward, block_table_backward = self._adjust_key_value_for_inference(
+        query_backward, key_backward, value_backward, _, attn_mask_type_backward, block_table_backward = self._adjust_key_value_for_inference(
             inference_context, query_backward, key_backward, value_backward, rotary_pos_emb=None
         )
-        inference_context, query_forward, key_forward, _, attn_mask_type_backward, block_table_backward = self._adjust_key_value_for_inference(
+        query_forward, key_forward, value_forward, _, attn_mask_type_backward, block_table_backward = self._adjust_key_value_for_inference(
             inference_context, query_forward, key_forward, value_forward, rotary_pos_emb=None
         )
 
@@ -268,7 +316,7 @@ class BidirMLASelfAttention(MLASelfAttention):
         # ==================================
         # Need corresponding TE change
         if self.checkpoint_core_attention and self.training:
-            core_attn_out_backward, core_attn_out_ = self._checkpointed_attention_forward(
+            core_attn_out_backward, core_attn_out_forward = self._checkpointed_attention_forward(
                 AttentionQuery(forward=query_forward, backward=query_backward),
                 AttentionKey(forward=key_forward, backward=key_backward),
                 AttentionValue(forward=value_forward, backward=value_backward),
@@ -276,62 +324,72 @@ class BidirMLASelfAttention(MLASelfAttention):
             )
         else:
             if inference_context is None or inference_context.is_static_batching():
-                core_attn_out = self.core_attention(
-                    query,
-                    key,
-                    value,
+                # Backward attention: backward queries attend to backward keys/values
+                core_attn_out_backward_to_backward = self.core_attention_backward(
+                    query_backward,
+                    key_backward,
+                    value_backward,
                     attention_mask,
                     packed_seq_params=packed_seq_params,
-                    attn_mask_type=attn_mask_type,
+                    attn_mask_type=self.bidir_backward_attn_mask_type,
+                )
+                # Forward-to-backward attention: backward queries attend to averaged keys/values
+                key_avg = (key_forward + key_backward) / 2
+                value_avg = (value_forward + value_backward) / 2
+                core_attn_out_forward_to_backward = self.core_attention_forward_to_backward(
+                    query_backward,
+                    key_avg,
+                    value_avg,
+                    attention_mask,
+                    packed_seq_params=packed_seq_params,
+                    attn_mask_type=self.bidir_forward_attn_mask_type,
+                )
+                # Combined backward output
+                core_attn_out_backward = (core_attn_out_backward_to_backward + core_attn_out_forward_to_backward) / 2
+                
+                # Forward attention: forward queries attend to averaged keys/values
+                query_avg = (query_forward + query_backward) / 2
+                core_attn_out_forward = self.core_attention_forward(
+                    query_avg,
+                    key_avg,
+                    value_avg,
+                    attention_mask,
+                    packed_seq_params=packed_seq_params,
+                    attn_mask_type=self.bidir_forward_attn_mask_type,
                 )
             elif self.cache_mla_latents:
-                # Dynamic batching attention kernel.
-                q, k, v = (query, key, value)
-                cu_query_lengths, max_seqlen_q = inference_context.cu_query_lengths()
-                cu_kv_lengths, kv_lengths, max_seqlen_k = inference_context.cu_kv_lengths()
-
-                core_attn_out = self.flash_decode_and_prefill(
-                    q,
-                    k,
-                    v,
-                    max_seqlen_q,
-                    max_seqlen_k,
-                    cu_query_lengths,
-                    cu_kv_lengths,
-                    kv_lengths,
-                    block_table,
+                # Dynamic batching attention kernel - not yet supported for bidirectional
+                raise NotImplementedError(
+                    "Dynamic batching with cache_mla_latents is not yet supported for bidirectional attention"
                 )
-                # Only rearrange if not in absorption mode (Flash MLA handles format correctly)
-                if not inference_context.is_decode_only():
-                    core_attn_out = rearrange(core_attn_out, 's b h d -> s b (h d)')
 
-        # We are doing absorption with cache mla latents and decode mode.
-        if self.cache_mla_latents and inference_context.is_decode_only():
-            # core_attn_out = self.self.up_v_layer(core_attn_out)
-            core_attn_out = torch.einsum("sbhc,hdc->sbhd", core_attn_out, self.up_v_weight)
-            core_attn_out = core_attn_out.contiguous()
-
-            # Flatten back: [seq, batch, num_heads * v_head_dim]
-            core_attn_out = core_attn_out.view(core_attn_out.size(0), core_attn_out.size(1), -1)
+        # Handle decode mode with absorption (not supported for bidirectional yet)
+        if self.cache_mla_latents and inference_context is not None and inference_context.is_decode_only():
+            raise NotImplementedError(
+                "MLA latent caching with decode mode is not yet supported for bidirectional attention"
+            )
 
         if packed_seq_params is not None and packed_seq_params.qkv_format == 'thd':
             # reshape to same output shape as unpacked case
             # (t, np, hn) -> (t, b=1, h=np*hn)
             # t is the pack size = sum (sq_i)
             # note that batch is a dummy dimension in the packed case
-            core_attn_out = core_attn_out.reshape(core_attn_out.size(0), 1, -1)
+            core_attn_out_backward = core_attn_out_backward.reshape(core_attn_out_backward.size(0), 1, -1)
+            core_attn_out_forward = core_attn_out_forward.reshape(core_attn_out_forward.size(0), 1, -1)
 
         if self.recompute_up_proj:
             assert self.qkv_up_checkpoint is not None
-            self.qkv_up_checkpoint.discard_output_and_register_recompute(core_attn_out)
+            # For bidirectional, we need to handle both outputs
+            self.qkv_up_checkpoint.discard_output_and_register_recompute(core_attn_out_forward)
             self.qkv_up_checkpoint = None
 
         # =================
         # Output. [sq, b, h]
         # =================
-        output, bias = self.linear_proj(core_attn_out)
+        output_backward, bias_backward = self.linear_proj(core_attn_out_backward)
+        output_forward, bias_forward = self.linear_proj(core_attn_out_forward)
 
-        return output, bias
+        return output_backward, output_forward, bias_backward, bias_forward
 
 AttentionMode = Literal['backward', 'forward']
 
@@ -349,7 +407,7 @@ class FlexDotProductAttention(torch.nn.Module):
         self,
         config: TransformerConfig,
         layer_number: int,
-        attn_mask_type: AttnMaskType,
+        attn_mask_type: Union[AttnMaskType, BidirAttnMaskType],
         attention_type: str,
         look_forward_num_tokens: int = 10,
         mode: AttentionMode = 'backward',
@@ -363,6 +421,7 @@ class FlexDotProductAttention(torch.nn.Module):
         super().__init__()
         
         self.config = config
+        self.layer_number = layer_number  # Store layer_number for bidirectional masks
         self.attn_mask_type = attn_mask_type
         self.attention_type = attention_type
         self.qkv_format: str = "sbhd"
@@ -426,14 +485,14 @@ class FlexDotProductAttention(torch.nn.Module):
         self,
         query: Tensor,
         key: Tensor,
-        attn_mask_type: BidirAttnMaskType,
+        attn_mask_type: Union[AttnMaskType, BidirAttnMaskType],
         attention_mask: Optional[Tensor] = None,
         qkv_format: str = "sbhd",
     ):
         """Create mask function for flex_attention."""
         
         def no_mask(b: Tensor, h: Tensor, q_idx: Tensor, kv_idx: Tensor) -> Tensor:
-            return Tensor(True)
+            return torch.tensor(True)
         
         def causal_mask(b: Tensor, h: Tensor, q_idx: Tensor, kv_idx: Tensor)-> Tensor:
             return q_idx >= kv_idx
@@ -449,25 +508,33 @@ class FlexDotProductAttention(torch.nn.Module):
             return causal_condition & window_condition
         
         def bidir_forward_mask(b: Tensor, h: Tensor, q_idx: Tensor, kv_idx: Tensor) -> Tensor:
-            # query should not lag more than look_forward_num_tokens tokens behind
+            # Forward attention: query can attend to keys up to look_forward_num_tokens ahead
+            # q_idx >= kv_idx - look_forward means kv_idx <= q_idx + look_forward
             return q_idx >= kv_idx - self.look_forward_num_tokens
         
         def bidir_backward_mask(b: Tensor, h: Tensor, q_idx: Tensor, kv_idx: Tensor) -> Tensor:
-            # query should not lag more than look_forward_num_tokens tokens behind
+            # Backward attention: query can only attend to keys that are at least
+            # (look_forward_num_tokens * layer_number) positions behind
+            # This prevents information from flowing forward then back
             return q_idx >= kv_idx + self.look_forward_num_tokens * self.layer_number
 
         # Select mask function based on type
-        if attn_mask_type == AttnMaskType.no_mask:
+        if attn_mask_type == BidirAttnMaskType.bidir_forward:
+            mask_fn = bidir_forward_mask
+        elif attn_mask_type == BidirAttnMaskType.bidir_backward:
+            mask_fn = bidir_backward_mask
+        elif attn_mask_type in (AttnMaskType.no_mask, BidirAttnMaskType.no_mask):
             if self.window_size is not None:
                 mask_fn = sliding_window_mask
             else:
                 mask_fn = no_mask
-        elif attn_mask_type in (AttnMaskType.causal, AttnMaskType.padding_causal):
+        elif attn_mask_type in (AttnMaskType.causal, AttnMaskType.padding_causal, 
+                                 BidirAttnMaskType.causal, BidirAttnMaskType.padding_causal):
             if self.window_size is not None:
                 mask_fn = sliding_window_mask
             else:
                 mask_fn = causal_mask
-        elif attn_mask_type == AttnMaskType.causal_bottom_right:
+        elif attn_mask_type in (AttnMaskType.causal_bottom_right, BidirAttnMaskType.causal_bottom_right):
             mask_fn = causal_bottom_right_mask
         else:
             mask_fn = no_mask
@@ -502,22 +569,26 @@ class FlexDotProductAttention(torch.nn.Module):
         key: Tensor,
         value: Tensor,
         attention_mask: Tensor,
-        attn_mask_type: AttnMaskType,
+        attn_mask_type: Union[AttnMaskType, BidirAttnMaskType] = None,
         attention_bias: Optional[Tensor] = None,
         packed_seq_params: PackedSeqParams = None,
     ):
         """Forward pass using flex_attention."""
         
+        # Use default mask type if not provided
+        if attn_mask_type is None:
+            attn_mask_type = self.attn_mask_type
+        
         # Extract packed sequence parameters
         packed_seq_kwargs = (
-            {key: getattr(packed_seq_params, key) for key in self.kept_packed_seq_params}
+            {key_name: getattr(packed_seq_params, key_name) for key_name in self.kept_packed_seq_params}
             if packed_seq_params is not None
             else {}
         )
         qkv_format = packed_seq_kwargs.get('qkv_format', self.qkv_format)
         
         # Handle window attention mask type adjustment for inference
-        if attn_mask_type == AttnMaskType.no_mask and self.window_size is not None:
+        if attn_mask_type in (AttnMaskType.no_mask, BidirAttnMaskType.no_mask) and self.window_size is not None:
             if (qkv_format == "bshd" and query.size(1) == 1) or (
                 qkv_format == "sbhd" and query.size(0) == 1
             ):
