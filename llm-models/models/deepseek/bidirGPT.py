@@ -1,4 +1,5 @@
 
+# pyright: reportArgumentType=false
 import torch
 import torch.nn.functional as F
 from torch import Tensor
@@ -13,7 +14,9 @@ from megatron.core.transformer.transformer_layer import TransformerLayer, Transf
 from megatron.core.transformer.attention import SelfAttention, SelfAttentionSubmodules
 from megatron.core.transformer.identity_op import IdentityOp
 from megatron.core.fusions.fused_bias_dropout import get_bias_dropout_add
-from megatron.core.models.gpt.get_layer_specs import get_mlp_module_spec_for_backend
+from megatron.core.transformer.mlp import MLP, MLPSubmodules
+from megatron.core.models.gpt.moe_module_specs import get_moe_module_spec_for_backend
+
 from megatron.core.transformer.multi_latent_attention import (
     MLASelfAttention,
     MLASelfAttentionSubmodules,
@@ -23,7 +26,8 @@ from megatron.core.transformer.torch_norm import L2Norm
 from megatron.core.transformer.enums import AttnMaskType
 from megatron.core.transformer.transformer_block import TransformerBlockSubmodules
 
-from attention import FlexDotProductAttention, BidirMLASelfAttentionSubmodules, BidirMLASelfAttention
+from attention import FlexDotProductAttention, BidirMLASelfAttentionSubmodules, \
+    BidirMLASelfAttention, BidirAttnMaskType
 
 try:
     from megatron.core.extensions.transformer_engine import (
@@ -40,9 +44,6 @@ except ImportError:
 
 
 from megatron.core.models.backends import BackendSpecProvider, LocalSpecProvider
-
-
-mlp = get_mlp_module_spec(use_te=False)  # doesn't include norm.
 
 from megatron.core.transformer.mlp import MLP, MLPSubmodules
 from megatron.core.tensor_parallel.layers import ColumnParallelLinear, RowParallelLinear
@@ -73,11 +74,51 @@ def get_mlp_module_spec(use_te: bool = True) -> ModuleSpec:
     # Dense MLP w/ or w/o TE modules.
     return ModuleSpec(
         module=MLP,
-        submodules=MLPSubmodules(
+        submodules=MLPSubmodules( # type: ignore[arg-type]
             linear_fc1=TEColumnParallelLinear if use_te else ColumnParallelLinear,
             linear_fc2=TERowParallelLinear if use_te else RowParallelLinear,
         ),
     )
+
+
+def get_mlp_module_spec_for_backend(
+    backend: BackendSpecProvider,
+    num_experts: Optional[int] = None,
+    moe_grouped_gemm: Optional[bool] = False,
+    moe_use_legacy_grouped_gemm: Optional[bool] = False,
+    use_te_op_fuser: Optional[bool] = False,
+    use_te_activation_func: bool = False,
+) -> ModuleSpec:
+    """Helper function to get module spec for MLP/MoE"""
+
+    linear_fc2 = backend.row_parallel_linear()
+    activation_func = backend.activation_func() if use_te_activation_func else None
+
+    if num_experts is None:
+        # Dense MLP w/ or w/o TE modules.
+        module = TEFusedMLP if use_te_op_fuser else MLP
+        if backend.fuse_layernorm_and_linear():
+            linear_fc1 = backend.column_parallel_layer_norm_linear()
+            assert linear_fc1 is not None
+        else:
+            linear_fc1 = backend.column_parallel_linear()
+        return ModuleSpec(
+            module=module,
+            submodules=MLPSubmodules( # type: ignore[arg-type]
+                linear_fc1=linear_fc1, linear_fc2=linear_fc2, activation_func=activation_func
+            ),
+        )
+    else:
+        # Mixture of experts with modules in megatron core.
+        return get_moe_module_spec_for_backend(
+            backend=backend,
+            num_experts=num_experts,
+            moe_grouped_gemm=moe_grouped_gemm,
+            moe_use_legacy_grouped_gemm=moe_use_legacy_grouped_gemm,
+            use_te_activation_func=use_te_activation_func,
+        )
+
+mlp = get_mlp_module_spec(use_te=False)  # doesn't include norm.
 
 
 def get_bidirectinoal_gpt_layer_with_transformer_engine_spec(
@@ -155,7 +196,9 @@ def get_bidirectinoal_gpt_layer_with_transformer_engine_spec(
                 input_layernorm=backend.layer_norm(),
                 self_attention=ModuleSpec(
                     module=BidirMLASelfAttention,
-                    params={"attn_mask_type": AttnMaskType.causal},
+                    params={"bidir_forward_attn_mask_type": BidirAttnMaskType.bidir_forward,
+                            "bidir_backward_attn_mask_type": BidirAttnMaskType.bidir_backward
+                            },
                     submodules=BidirMLASelfAttentionSubmodules(
                         linear_q_proj=backend.column_parallel_linear(),
                         linear_q_down_proj=backend.linear(),
@@ -163,8 +206,8 @@ def get_bidirectinoal_gpt_layer_with_transformer_engine_spec(
                         linear_kv_down_proj=backend.linear(),
                         linear_kv_up_proj=linear_kv_up_proj,
                         core_attention_backward=backend.core_attention(),
-                        core_attention_forward=FlexDotProductAttention,
-                        core_attention_forward_to_backward=FlexDotProductAttention,
+                        bidir_attention_forward=FlexDotProductAttention,
+                        bidir_attention_backward=FlexDotProductAttention,
                         linear_proj=backend.row_parallel_linear(),
                         q_layernorm=IdentityOp,
                         kv_layernorm=IdentityOp,
@@ -181,11 +224,11 @@ def get_bidirectinoal_gpt_layer_with_transformer_engine_spec(
         qk_norm = backend.layer_norm(for_qk=True)
         return ModuleSpec(
             module=TransformerLayer,
-            submodules=TransformerLayerSubmodules(
-                self_attention=ModuleSpec(
+            submodules=TransformerLayerSubmodules( # type: ignore[arg-type]
+                self_attention=ModuleSpec( # type: ignore[arg-type]
                     module=SelfAttention,
                     params={"attn_mask_type": AttnMaskType.causal},
-                    submodules=SelfAttentionSubmodules(
+                    submodules=SelfAttentionSubmodules( # type: ignore[arg-type]
                         linear_qkv=backend.column_parallel_layer_norm_linear(),
                         core_attention=FlexDotProductAttention,
                         linear_proj=backend.row_parallel_linear(),

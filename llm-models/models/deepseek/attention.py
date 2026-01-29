@@ -1,3 +1,5 @@
+# pyright: reportArgumentType=false
+# pyright: reportOptionalOperand=false
 import torch
 import torch.nn.functional as F
 from torch import Tensor
@@ -6,6 +8,7 @@ import dataclasses
 from torch.nn.attention.flex_attention import flex_attention, create_block_mask
 
 from dataclasses import dataclass, field
+import enum
 
 from megatron.core.transformer.transformer_config import TransformerConfig
 from megatron.core.transformer.enums import AttnMaskType
@@ -55,8 +58,8 @@ class BidirMLASelfAttentionSubmodules:
     linear_kv_down_proj: Union[ModuleSpec, type] = None
     linear_kv_up_proj: Union[ModuleSpec, type] = None
     core_attention_backward: Union[ModuleSpec, type] = None
-    core_attention_forward: Union[ModuleSpec, type] = None
-    core_attention_forward_to_backward: Union[ModuleSpec, type] = None
+    bidir_attention_forward: Union[ModuleSpec, type] = None
+    bidir_attention_backward: Union[ModuleSpec, type] = None
     linear_proj: Union[ModuleSpec, type] = None
     q_layernorm: Union[ModuleSpec, type] = None
     kv_layernorm: Union[ModuleSpec, type] = None
@@ -76,9 +79,21 @@ class AttentionValue:
     forward: Tensor
     backward: Tensor
 
+class BidirAttnMaskType(enum.Enum):
+    """Attention Mask Type"""
+    padding = AttnMaskType.padding.value
+    causal = AttnMaskType.padding.value
+    no_mask = AttnMaskType.padding.value
+    padding_causal = AttnMaskType.padding.value
+    arbitrary = AttnMaskType.padding.value
+    causal_bottom_right = AttnMaskType.padding.value
+    bidir_forward = 7
+    bidir_backward = 8
 
 class BidirMLASelfAttention(MLASelfAttention):
 
+    config: MLATransformerConfig
+    
     def __init__(self,
         config: MLATransformerConfig,
         submodules: MLASelfAttentionSubmodules,
@@ -245,7 +260,7 @@ class BidirMLASelfAttention(MLASelfAttention):
         key_backward, key_forward = key_backward.contiguous(), key_forward.contiguous()
 
         # Value is none during decode for absorption
-        if value_backward is not None:
+        if value_backward is not None and value_forward is not None:
             value_backward, value_forward = value_backward.contiguous(), value_forward.contiguous()
 
         # ==================================
@@ -411,7 +426,7 @@ class FlexDotProductAttention(torch.nn.Module):
         self,
         query: Tensor,
         key: Tensor,
-        attn_mask_type: AttnMaskType,
+        attn_mask_type: BidirAttnMaskType,
         attention_mask: Optional[Tensor] = None,
         qkv_format: str = "sbhd",
     ):
@@ -433,6 +448,14 @@ class FlexDotProductAttention(torch.nn.Module):
             window_condition = (q_idx - kv_idx) <= Tensor(self.window_size)
             return causal_condition & window_condition
         
+        def bidir_forward_mask(b: Tensor, h: Tensor, q_idx: Tensor, kv_idx: Tensor) -> Tensor:
+            # query should not lag more than look_forward_num_tokens tokens behind
+            return q_idx >= kv_idx - self.look_forward_num_tokens
+        
+        def bidir_backward_mask(b: Tensor, h: Tensor, q_idx: Tensor, kv_idx: Tensor) -> Tensor:
+            # query should not lag more than look_forward_num_tokens tokens behind
+            return q_idx >= kv_idx + self.look_forward_num_tokens * self.layer_number
+
         # Select mask function based on type
         if attn_mask_type == AttnMaskType.no_mask:
             if self.window_size is not None:
