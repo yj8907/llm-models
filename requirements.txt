@@ -13,3 +13,31 @@ transformers
 #flash-attn
 nvidia-ml-py
 mpi4py
+
+# These three are the heaviest and most likely to "hang"
+# pip install --no-build-isolation causal-conv1d>=1.4.0
+# pip install --no-build-isolation mamba-ssm
+# pip install --no-build-isolation transformer_engine[pytorch]
+
+# Then finish the Megatron-Core install
+# pip install --no-build-isolation megatron-core[mlm,dev]
+
+nvidia-ml-py
+pybind11
+
+
+# Set the library path so the linker can find libnccl.so
+export LIBRARY_PATH=/usr/local/cuda-12.9/lib:$LIBRARY_PATH
+export LD_LIBRARY_PATH=/usr/local/cuda-12.9/lib:$LD_LIBRARY_PATH
+
+# install apex
+git clone https://github.com/NVIDIA/apex
+cd apex
+# Build with core extensions (cpp and cuda)
+APEX_CPP_EXT=1 APEX_CUDA_EXT=1 pip install -v --no-build-isolation .
+
+# To build with additional extensions, specify them with environment variables
+APEX_CPP_EXT=1 APEX_CUDA_EXT=1 APEX_FAST_MULTIHEAD_ATTN=1 APEX_FUSED_CONV_BIAS_RELU=1 pip install -v --no-build-isolation .
+
+# To build all contrib extensions at once
+APEX_CPP_EXT=1 APEX_CUDA_EXT=1 APEX_ALL_CONTRIB_EXT=1 pip install -v --no-build-isolation .

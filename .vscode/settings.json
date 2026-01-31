@@ -1,5 +1,9 @@
 {
     "python.REPL.enableREPLSmartSend": false,
     "python.analysis.typeCheckingMode": "basic",
-    "python.envFile": "/Users/yjiang/Documents/personal/workspace/projects/llm-models/.vscode/.env"
+    "python.envFile": "/Users/yjiang/Documents/personal/workspace/projects/llm-models/.vscode/.env",
+    "python.defaultInterpreterPath": "/home/ubuntu/projects/llm-dev/bin/python",
+    "python.analysis.extraPaths": [
+        "/home/ubuntu/projects/Megatron-LM"
+    ]
 }

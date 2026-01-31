@@ -26,7 +26,7 @@ from megatron.core.transformer.torch_norm import L2Norm
 from megatron.core.transformer.enums import AttnMaskType
 from megatron.core.transformer.transformer_block import TransformerBlockSubmodules
 
-from attention import FlexDotProductAttention, BidirMLASelfAttentionSubmodules, \
+from .attention import FlexDotProductAttention, BidirMLASelfAttentionSubmodules, \
     BidirMLASelfAttention, BidirAttnMaskType
 
 try:
