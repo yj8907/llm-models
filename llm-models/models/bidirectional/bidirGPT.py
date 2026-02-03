@@ -28,6 +28,7 @@ from megatron.core.transformer.transformer_block import TransformerBlockSubmodul
 
 from .attention import FlexDotProductAttention, BidirMLASelfAttentionSubmodules, \
     BidirMLASelfAttention, BidirAttnMaskType
+from .transformer_layer import BidirTransformerLayer
 
 try:
     from megatron.core.extensions.transformer_engine import (
@@ -191,7 +192,7 @@ def get_bidirectinoal_gpt_layer_with_transformer_engine_spec(
         )
 
         return ModuleSpec(
-            module=TransformerLayer,
+            module=BidirTransformerLayer,
             submodules=TransformerLayerSubmodules(
                 input_layernorm=backend.layer_norm(),
                 self_attention=ModuleSpec(
@@ -205,7 +206,7 @@ def get_bidirectinoal_gpt_layer_with_transformer_engine_spec(
                         linear_q_up_proj=linear_q_up_proj,
                         linear_kv_down_proj=backend.linear(), # type: ignore
                         linear_kv_up_proj=linear_kv_up_proj,
-                        core_attention_backward=backend.core_attention(),
+                        core_attention_backward=FlexDotProductAttention,
                         bidir_attention_forward=FlexDotProductAttention,
                         bidir_attention_backward=FlexDotProductAttention,
                         linear_proj=backend.row_parallel_linear(),

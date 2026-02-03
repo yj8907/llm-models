@@ -132,30 +132,30 @@ class BidirMLASelfAttention(MLASelfAttention):
             self.bidir_backward_attn_mask_type = bidir_backward_attn_mask_type
             
             # Build bidirectional-specific attention modules
-            # Forward attention (for forward queries attending to combined keys/values)
-            self.core_attention_forward = build_module(
+            # Backward attention (for backward queries attending to backward keys/values)
+            self.core_attention_backward = build_module(
                 submodules.core_attention_backward,
                 config=config,
                 layer_number=layer_number,
                 attn_mask_type=AttnMaskType.causal,
                 attention_type="self",
             )
-            
-            # Backward attention (for backward queries attending to backward keys/values)
-            self.core_attention_backward = build_module(
-                submodules.bidir_attention_backward,
+
+            # Forward attention (for forward queries attending to combined keys/values)
+            self.bidir_attention_forward = build_module(
+                submodules.bidir_attention_forward,
                 config=config,
                 layer_number=layer_number,
-                attn_mask_type=bidir_backward_attn_mask_type,
+                attn_mask_type=self.bidir_forward_attn_mask_type,
                 attention_type="self",
             )
             
             # Forward-to-backward attention (for backward queries attending to combined keys/values)
-            self.core_attention_forward_to_backward = build_module(
-                submodules.bidir_attention_forward,
+            self.bidir_attention_backward = build_module(
+                submodules.bidir_attention_backward,
                 config=config,
                 layer_number=layer_number,
-                attn_mask_type=bidir_forward_attn_mask_type,
+                attn_mask_type=self.bidir_backward_attn_mask_type,
                 attention_type="self",
             )
     
@@ -184,6 +184,7 @@ class BidirMLASelfAttention(MLASelfAttention):
             attention_mask = inputs[3]
             attn_mask_type = inputs[5]
             attn_mask_type = AttnMaskType(attn_mask_type.item())
+            # this is purely backward attention. token only attends to preceding tokens.
             output_backward_to_backward_ = self.core_attention_backward(
                 query.backward,
                 key.backward,
@@ -193,7 +194,11 @@ class BidirMLASelfAttention(MLASelfAttention):
                 attention_bias=attention_bias,
                 packed_seq_params=packed_seq_params,
             )
-            output_forward_to_backward_ = self.core_attention_forward_to_backward(
+            # token's backward components attends to both backward and forward components. 
+            # But it only attends to tokens with information older than itsef. 
+            # e.g. if forward attention look aheads to 5 tokens, it only attends to tokens that
+            # are positioned -5*n before itself.
+            output_forward_to_backward_ = self.bidir_attention_backward(
                 query.backward,
                 (key.forward+key.backward)/2,
                 (value.forward+value.backward)/2,
@@ -204,7 +209,8 @@ class BidirMLASelfAttention(MLASelfAttention):
             )
             output_backward_ = (output_backward_to_backward_+output_forward_to_backward_)/2
 
-            output_forward_ = self.core_attention_forward(
+            # token attend to tokens generated later than itself.
+            output_forward_ = self.bidir_attention_forward(
                 (query.forward+query.backward)/2,
                 (key.forward+key.backward)/2,
                 (value.forward+value.backward)/2,
@@ -229,8 +235,7 @@ class BidirMLASelfAttention(MLASelfAttention):
     
     def forward(
         self,
-        hidden_states_backward,
-        hidden_states_forward,
+        hidden_states,
         attention_mask,
         key_value_states=None,
         inference_context=None,
@@ -262,6 +267,8 @@ class BidirMLASelfAttention(MLASelfAttention):
 
         # hidden_states: [sq, b, h]
 
+        hidden_states_backward, hidden_states_forward = torch.chunk(hidden_states, 2, dim=1)
+
         inference_context = deprecate_inference_params(inference_context, inference_params)
         if inference_context and not inference_context.is_static_batching():
             assert (
@@ -277,21 +284,24 @@ class BidirMLASelfAttention(MLASelfAttention):
         # Get the query, key and value tensors based on the type of attention -
         # self or cross attn.
         # query: [96, 1, 16, 128], key:[96, 1, 16, 128], value:[96, 1, 16, 128]
-        query_backward, key_backward, value_backward = self.get_query_key_value_tensors(
+        print(hidden_states_forward.shape)
+        query_backward, key_backward, value_backward, _, _ = self.get_query_key_value_tensors(
             hidden_states_forward,
             key_value_states,
             position_ids,
             packed_seq_params,
             inference_context=inference_context,
         )
-        query_forward, key_forward, value_forward = self.get_query_key_value_tensors(
+        query_forward, key_forward, value_forward, _, _ = self.get_query_key_value_tensors(
             hidden_states_backward,
             key_value_states,
             position_ids,
             packed_seq_params,
             inference_context=inference_context,
         )
-
+        print(query_backward.shape)
+        print(key_backward.shape)
+        print(value_backward.shape)
         # ===================================================
         # Adjust key, value for inference
         # ===================================================
@@ -316,7 +326,7 @@ class BidirMLASelfAttention(MLASelfAttention):
         # ==================================
         # Need corresponding TE change
         if self.checkpoint_core_attention and self.training:
-            core_attn_out_backward, core_attn_out_forward = self._checkpointed_attention_forward(
+            attn_out_backward, attn_out_forward = self._checkpointed_attention_forward(
                 AttentionQuery(forward=query_forward, backward=query_backward),
                 AttentionKey(forward=key_forward, backward=key_backward),
                 AttentionValue(forward=value_forward, backward=value_backward),
@@ -336,7 +346,7 @@ class BidirMLASelfAttention(MLASelfAttention):
                 # Forward-to-backward attention: backward queries attend to averaged keys/values
                 key_avg = (key_forward + key_backward) / 2
                 value_avg = (value_forward + value_backward) / 2
-                core_attn_out_forward_to_backward = self.core_attention_forward_to_backward(
+                attn_out_forward_to_backward = self.bidir_attention_backward(
                     query_backward,
                     key_avg,
                     value_avg,
@@ -345,11 +355,11 @@ class BidirMLASelfAttention(MLASelfAttention):
                     attn_mask_type=self.bidir_forward_attn_mask_type,
                 )
                 # Combined backward output
-                core_attn_out_backward = (core_attn_out_backward_to_backward + core_attn_out_forward_to_backward) / 2
+                attn_out_backward = (core_attn_out_backward_to_backward + attn_out_forward_to_backward) / 2
                 
                 # Forward attention: forward queries attend to averaged keys/values
                 query_avg = (query_forward + query_backward) / 2
-                core_attn_out_forward = self.core_attention_forward(
+                attn_out_forward = self.bidir_attention_forward(
                     query_avg,
                     key_avg,
                     value_avg,
@@ -374,22 +384,30 @@ class BidirMLASelfAttention(MLASelfAttention):
             # (t, np, hn) -> (t, b=1, h=np*hn)
             # t is the pack size = sum (sq_i)
             # note that batch is a dummy dimension in the packed case
-            core_attn_out_backward = core_attn_out_backward.reshape(core_attn_out_backward.size(0), 1, -1)
-            core_attn_out_forward = core_attn_out_forward.reshape(core_attn_out_forward.size(0), 1, -1)
+            attn_out_backward = attn_out_backward.reshape(attn_out_backward.size(0), 1, -1)
+            attn_out_forward = attn_out_forward.reshape(attn_out_forward.size(0), 1, -1)
 
         if self.recompute_up_proj:
             assert self.qkv_up_checkpoint is not None
             # For bidirectional, we need to handle both outputs
-            self.qkv_up_checkpoint.discard_output_and_register_recompute(core_attn_out_forward)
+            self.qkv_up_checkpoint.discard_output_and_register_recompute(attn_out_forward)
             self.qkv_up_checkpoint = None
 
         # =================
         # Output. [sq, b, h]
         # =================
-        output_backward, bias_backward = self.linear_proj(core_attn_out_backward)
-        output_forward, bias_forward = self.linear_proj(core_attn_out_forward)
+        print('core_attn_out_backward')
+        print(attn_out_backward.shape)
+        output_backward, bias_backward = self.linear_proj(attn_out_backward)
+        output_forward, bias_forward = self.linear_proj(attn_out_forward)
 
-        return output_backward, output_forward, bias_backward, bias_forward
+        output = torch.concat((output_backward, output_forward), dim=1)
+        if bias_backward is not None and bias_forward is not None:
+            bias = torch.concat((bias_backward, bias_forward), dim=1)
+        else:
+            bias = None
+            
+        return output, bias
 
 AttentionMode = Literal['backward', 'forward']
 
@@ -480,6 +498,8 @@ class FlexDotProductAttention(torch.nn.Module):
         self.kept_packed_seq_params = set(
             field.name for field in dataclasses.fields(PackedSeqParams)
         )
+
+        self.flex_attention = torch.compile(flex_attention)
     
     def _create_attention_mask(
         self,
@@ -516,7 +536,7 @@ class FlexDotProductAttention(torch.nn.Module):
             # Backward attention: query can only attend to keys that are at least
             # (look_forward_num_tokens * layer_number) positions behind
             # This prevents information from flowing forward then back
-            return q_idx >= kv_idx + self.look_forward_num_tokens * self.layer_number
+            return q_idx > kv_idx + self.look_forward_num_tokens * self.layer_number
 
         # Select mask function based on type
         if attn_mask_type == BidirAttnMaskType.bidir_forward:
@@ -621,14 +641,14 @@ class FlexDotProductAttention(torch.nn.Module):
         block_mask = create_block_mask(mask_fn, B, H, S_q, S_kv)
         
         # Apply flex_attention
-        flex_attention_compiled = torch.compile(flex_attention)
-        output, _ = flex_attention_compiled(
+        output = self.flex_attention(
             query,
             key,
             value,
             block_mask=block_mask,
             scale=self.softmax_scale,
-            enable_gqa=(self.num_query_groups != self.num_attention_heads)
+            enable_gqa=(self.num_query_groups != self.num_attention_heads),
+            kernel_options={"BLOCK_M": 16, "BLOCK_N": 16}
         )
         
         # Apply attention bias if provided
@@ -649,4 +669,7 @@ class FlexDotProductAttention(torch.nn.Module):
             # [B, H, S, D] -> [B, S, H, D]
             output = output.transpose(1, 2)
         
+        new_output_shape = output.size()[:-2] + (-1,)
+        output = output.view(*new_output_shape)
+
         return output
