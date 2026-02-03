@@ -299,9 +299,6 @@ class BidirMLASelfAttention(MLASelfAttention):
             packed_seq_params,
             inference_context=inference_context,
         )
-        print(query_backward.shape)
-        print(key_backward.shape)
-        print(value_backward.shape)
         # ===================================================
         # Adjust key, value for inference
         # ===================================================
@@ -343,6 +340,8 @@ class BidirMLASelfAttention(MLASelfAttention):
                     packed_seq_params=packed_seq_params,
                     attn_mask_type=self.bidir_backward_attn_mask_type,
                 )
+                # print('core_attn_out_backward_to_backward')
+                # print(torch.sum(torch.abs(core_attn_out_backward_to_backward.view(128, 2, -1)[:, 0, :]), dim=-1))
                 # Forward-to-backward attention: backward queries attend to averaged keys/values
                 key_avg = (key_forward + key_backward) / 2
                 value_avg = (value_forward + value_backward) / 2
@@ -354,6 +353,8 @@ class BidirMLASelfAttention(MLASelfAttention):
                     packed_seq_params=packed_seq_params,
                     attn_mask_type=self.bidir_forward_attn_mask_type,
                 )
+                # print('attn_out_forward_to_backward')
+                # print(torch.sum(torch.abs(attn_out_forward_to_backward.view(128, 2, -1)[:, 0, :]), dim=-1))
                 # Combined backward output
                 attn_out_backward = (core_attn_out_backward_to_backward + attn_out_forward_to_backward) / 2
                 
@@ -367,6 +368,8 @@ class BidirMLASelfAttention(MLASelfAttention):
                     packed_seq_params=packed_seq_params,
                     attn_mask_type=self.bidir_forward_attn_mask_type,
                 )
+                # print('attn_out_forward')
+                # print(torch.sum(torch.abs(attn_out_forward.view(128, 2, -1)[:, 0, :]), dim=-1))
             elif self.cache_mla_latents:
                 # Dynamic batching attention kernel - not yet supported for bidirectional
                 raise NotImplementedError(
@@ -396,8 +399,6 @@ class BidirMLASelfAttention(MLASelfAttention):
         # =================
         # Output. [sq, b, h]
         # =================
-        print('core_attn_out_backward')
-        print(attn_out_backward.shape)
         output_backward, bias_backward = self.linear_proj(attn_out_backward)
         output_forward, bias_forward = self.linear_proj(attn_out_forward)
 
