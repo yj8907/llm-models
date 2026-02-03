@@ -48,20 +48,20 @@ language_model:
   attention_output_gate: False
   test_mode: False
   calculate_per_token_loss: False
-  multi_latent_attention: False
+  multi_latent_attention: True
   no_rope_freq: null
   use_legacy_models: False
-  padded_vocab_size: 0
+  padded_vocab_size: 100048
   use_rope_scaling: False
 
   ####################
   # MLA (Multi-Latent Attention) config
   ####################
-  q_lora_rank: 512
-  kv_lora_rank: 512
-  qk_head_dim: 128
-  qk_pos_emb_head_dim: 64
-  v_head_dim: 128
+  q_lora_rank: 128
+  kv_lora_rank: 128
+  qk_head_dim: 32
+  qk_pos_emb_head_dim: 32
+  v_head_dim: 32
   rope_type: "yarn"  # Options: "rope", "yarn"
   rotary_base: 10000
   rotary_percent: 1.0
@@ -100,9 +100,9 @@ language_model:
   ####################
   # initialization
   ####################
-  init_method: null  # Options: null, "xavier_uniform", or callable
-  output_layer_init_method: null
-  scaled_init_method: null  # Options: null, "xavier_uniform", or callable
+  init_method: "kaiming_uniform"  # Options: null, "xavier_uniform", or callable
+  output_layer_init_method: "kaiming_uniform"
+  # scaled_init_method: null  # Options: null, "xavier_uniform", or callable
   init_method_std: 0.02
   embedding_init_method: null  # Options: null, "xavier_uniform", or callable
   embedding_init_method_std: null
@@ -482,7 +482,7 @@ test_data_path: null
 data_cache_path: null
 mmap_bin_files: null
 mock_data: False
-vocab_size: null
+vocab_size: 100042
 vocab_file: null
 merge_file: null
 vocab_extra_ids: 0
