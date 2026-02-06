@@ -378,6 +378,7 @@ global_batch_size: 128
 rampup_batch_size: [32, 32, 65324160]
 decrease_batch_size_if_needed: False
 check_for_nan_in_loss_and_grad: True
+check_for_spiky_loss: False  # NEW: Check for unexpectedly large (spiky) loss values
 num_layers_per_virtual_pipeline_stage: null
 
 encoder_num_layers: null
@@ -540,13 +541,13 @@ tp_comm_overlap_cfg: null
 decoder_tp_comm_overlap: False  # Enable TP communication overlap for decoder
 decoder_seq_length: null  # Sequence length for decoder (used when decoder_tp_comm_overlap=True)
 
-#data, check https://github.com/yj8907/Megatron-LM/blob/c94d58f3260aa568588265e07b3c06bb58cbde41/megatron/core/datasets/gpt_dataset.py#L27
+####################
+# Data settings
+####################
 data_path: '/home/ubuntu/projects/llm-models/llm-models/dataset/work/dclm/megatron/dclm_300gb_6_text_document'
 split: '99,1,0'
 data_args_path: null  # Path to file containing data path arguments (used in get_blend_and_blend_per_split)
 per_split_data_args_path: null
-per_dataset_sequences_path: null
-mid_level_dataset_surplus: 0.005
 train_data_path: null # https://github.com/yj8907/Megatron-LM/blob/6eaf7541e030e59aa4cdcb14381eb9370fe48977/megatron/core/datasets/utils.py#L49
 valid_data_path: null
 test_data_path: null
@@ -598,6 +599,30 @@ full_validation: False
 num_dataset_builder_threads: 8
 create_attention_mask_in_dataloader: False
 object_storage_cache_path: null
+
+####################
+# NEW: Advanced dataloader settings
+####################
+mid_level_dataset_surplus: null  # NEW: Surplus for mid-level dataset blending
+allow_ambiguous_pad_tokens: False  # NEW: Allow ambiguous padding tokens in dataset
+dataloader_fast_cache_load: False  # NEW: Enable fast cache loading in dataloader
+dataloader_defer_npy_index_mmap: False  # NEW: Defer memory mapping of npy index files
+per_dataset_sequences_path: null  # NEW: Path to JSON file with per-dataset sequence configuration
+
+####################
+# NEW: FIM (Fill-in-the-Middle) settings
+####################
+fim_data: False  # NEW: Enable fill-in-the-middle data format
+fim_rate: null  # NEW: FIM sampling rate (e.g., 0.5 for 50% FIM)
+fim_spm_rate: null  # NEW: FIM SPM (Suffix-Prefix-Middle) rate
+fim_prefix_token: null  # NEW: Token ID for FIM prefix marker
+fim_middle_token: null  # NEW: Token ID for FIM middle marker
+fim_suffix_token: null  # NEW: Token ID for FIM suffix marker
+fim_pad_token: null  # NEW: Token ID for FIM padding
+fim_eod_token: null  # NEW: Token ID for FIM end-of-document
+fim_split_sample: null  # NEW: Split FIM samples across multiple documents
+fim_fragment_rate: null  # NEW: Rate of fragmenting FIM samples
+fim_no_prefix: False  # NEW: Disable prefix in FIM format
 
 ####################
 # Retro arguments
@@ -715,7 +740,6 @@ perform_rl_step: False
 rl_inference_tensor_model_parallel_size: null
 rl_inference_pipeline_model_parallel_size: null
 rl_inference_expert_model_parallel_size: null
-rl_inference_expert_tensor_parallel_size: null
 rl_inference_expert_tensor_model_parallel_size: null
 rl_inference_model_unified_memory_level: null
 rl_use_sequence_packing: False
