@@ -381,10 +381,11 @@ add_position_embedding: False
 make_vocab_size_divisible_by: 128
 group_query_attention: False
 
+# Signal handler settings (from set_global_variables)
 exit_signal_handler: False
+exit_signal: null  # Signal to listen for (e.g., signal.SIGTERM, signal.SIGINT)
 exit_duration_in_mins: null
 exit_interval: null
-disable_jit_fuser: False
 
 untie_embeddings_and_output_weights: True
 position_embedding_type: rope
@@ -399,7 +400,11 @@ use_flash_attn: False
 seed: 1234
 data_parallel_random_init: False
 
+# Experimental features (from set_global_variables)
 enable_experimental: False
+
+# JIT fuser settings (from set_global_variables)
+disable_jit_fuser: False
 
 # Optimizer
 optimizer: adam
@@ -449,7 +454,7 @@ hysteresis: 2
 accumulate_allreduce_grads_in_fp32: False
 fp16_lm_cross_entropy: False
 
-# distributed arguments
+# distributed arguments (used in set_global_variables -> init_num_microbatches_calculator)
 distributed_backend: nccl
 distributed_timeout_minutes: 10
 overlap_grad_reduce: False
@@ -457,7 +462,10 @@ align_grad_reduce: True
 overlap_param_gather: False
 align_param_gather: False
 scatter_gather_tensors_in_pipeline: True
-local_rank: null
+local_rank: null  # Set by launcher
+rank: null  # Set by launcher, used in init_num_microbatches_calculator
+world_size: null  # Set by launcher
+data_parallel_size: null  # Calculated based on parallelism settings
 lazy_mpu_init: null
 empty_unused_memory_level: 0
 standalone_embedding_stage: False
@@ -469,6 +477,7 @@ eval_iters: 32
 eval_interval: 2000
 skip_train: False
 
+# ADLR autoresume (from set_global_variables -> _set_adlr_autoresume)
 adlr_autoresume: False
 adlr_autoresume_interval: 1000
 
@@ -500,9 +509,12 @@ sample_rate: 1.0
 mask_prob: 0.15
 short_seq_prob: 0.1
 num_workers: 2
+
+# Tokenizer settings (from set_global_variables -> _build_tokenizer)
 tokenizer_type: HuggingFaceTokenizer
 tokenizer_model: NousResearch/Meta-Llama-3-8B-Alternate-Tokenizer
 trust_remote_code: False
+
 reset_position_ids: False
 reset_attention_mask: False
 eod_mask_loss: False
@@ -537,8 +549,11 @@ log_params_norm: True
 log_num_zeros_in_grad: True
 log_throughput: False
 log_progress: False
-timing_log_level: 0
-timing_log_option: minmax
+
+# Timers settings (from set_global_variables -> _set_timers)
+timing_log_level: 0  # Used in Timers initialization
+timing_log_option: minmax  # Used in Timers initialization
+
 tensorboard_log_interval: 1
 tensorboard_queue_size: 1000
 log_timers_to_tensorboard: False
@@ -546,12 +561,22 @@ log_validation_ppl_to_tensorboard: False
 log_memory_to_tensorboard: False
 log_world_size_to_tensorboard: False
 log_loss_scale_to_tensorboard: True
-wandb_project: ''
-wandb_exp_name: ''
-wandb_save_dir: ''
-enable_one_logger: True
-one_logger_async: True
-one_logger_project: megatron-lm
-one_logger_run_name: null
+
+# TensorBoard writer settings (from set_global_variables -> _set_tensorboard_writer)
+tensorboard_dir: null  # If set and rank == world_size - 1, creates SummaryWriter
+
+# WandB writer settings (from set_global_variables -> _set_wandb_writer)
+wandb_project: ''  # If set and rank == world_size - 1, initializes wandb
+wandb_exp_name: ''  # Required if wandb_project is set
+wandb_save_dir: ''  # Defaults to save/wandb if not set
+wandb_entity: null  # Optional wandb entity
+# Note: kitchen_config_file is read if present in args for wandb logging
+
+# One Logger settings (from set_global_variables -> _set_one_logger)
+enable_one_logger: True  # If True and rank == world_size - 1, initializes OneLogger
+one_logger_async: True  # Used in OneLogger config
+one_logger_project: megatron-lm  # Used in OneLogger config
+one_logger_run_name: null  # Used in OneLogger config
+
+logging_level: INFO
 log_interval: 100
-tensorboard_dir: null
