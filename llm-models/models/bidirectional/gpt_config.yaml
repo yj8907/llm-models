@@ -237,7 +237,11 @@ language_model:
   batch_invariant_mode: False
   use_te_activation_func: False
   use_te_rng_tracker: False
-  inference_rng_tracker: False
+
+  # RNG Tracker settings (used in _set_random_seed in initialize.py)
+  te_rng_tracker: False  # Use Transformer Engine RNG tracker for reproducibility
+  inference_rng_tracker: False  # Use inference RNG tracker (already exists in language_model section)
+
   inference_sampling_seed: 42
   symmetric_ar_type: null
   use_inference_optimized_layers: False
@@ -283,6 +287,8 @@ model_parallel:
   expert_model_parallel_size: 1
   expert_tensor_parallel_size: null  # Defaults to tensor_model_parallel_size if null
   moe_extended_tp: False  # Deprecated from MCore v0.10
+  use_torch_fsdp2: True
+  use_megatron_fsdp: False
 
   ###################
   # Initialization
@@ -400,8 +406,16 @@ use_flash_attn: False
 seed: 1234
 data_parallel_random_init: False
 
+fake_process_group: False
+
 # Experimental features (from set_global_variables)
 enable_experimental: False
+
+# Rerun state machine settings (from initialize_rerun_state_machine in initialize.py)
+rerun_mode: 'disabled'  # Options: 'disabled', 'validate_results', 'report_determinism_stats' - RerunMode enum
+error_injection_rate: 0.0  # Rate for error injection testing
+error_injection_type: 'correct_result'  # RerunDiagnostic enum - type of error to inject. Options: 'correct_result', 'transient_error', 'persistent_error'
+result_rejected_tracker_filename: null  # Filename for tracking rejected results
 
 # JIT fuser settings (from set_global_variables)
 disable_jit_fuser: False
@@ -440,7 +454,9 @@ no_load_rng: null
 finetune: False
 use_checkpoint_args: False
 exit_on_missing_checkpoint: False
-ckpt_convert_format: null
+ckpt_convert_format: null  # Format for checkpoint conversion
+ckpt_convert_save: null  # Save path for converted checkpoint (required if ckpt_convert_format is set)
+non_persistent_ckpt_type: null  # Options: 'local' or other - checkpoint type
 ckpt_format: 'torch'
 async_save: True
 use_persistent_ckpt_worker: False
@@ -462,7 +478,7 @@ align_grad_reduce: True
 overlap_param_gather: False
 align_param_gather: False
 scatter_gather_tensors_in_pipeline: True
-local_rank: null  # Set by launcher
+local_rank: 0  # Set by launcher
 rank: null  # Set by launcher, used in init_num_microbatches_calculator
 world_size: null  # Set by launcher
 data_parallel_size: null  # Calculated based on parallelism settings
@@ -470,7 +486,18 @@ lazy_mpu_init: null
 empty_unused_memory_level: 0
 standalone_embedding_stage: False
 use_distributed_optimizer: False
+num_distributed_optimizer_instances: 1  # Used in mpu.initialize_model_parallel
 nccl_communicator_config_path: null
+create_all_gather_group: False
+
+# SHARP (Scalable Hierarchical Aggregation and Reduction Protocol) settings
+use_sharp: False  # Used in mpu.initialize_model_parallel
+sharp_enabled_group: null  # Used in mpu.initialize_model_parallel
+
+# Process group settings (used in _initialize_distributed)
+use_tp_pp_dp_mapping: False  # If True, uses 'tp-cp-ep-pp-dp' order instead of 'tp-cp-ep-dp-pp'
+enable_gloo_process_groups: False  # Create gloo process groups in addition to NCCL
+high_priority_stream_groups: null  # List of process group names for high priority CUDA streams
 
 train_iters: null
 eval_iters: 32
@@ -487,6 +514,11 @@ manual_gc_interval: 0
 manual_gc_eval: True
 
 tp_comm_overlap_cfg: null
+
+# TP Communication Overlap (used in _initialize_tp_communicators)
+# Requires transformer_engine and yaml packages
+decoder_tp_comm_overlap: False  # Enable TP communication overlap for decoder
+decoder_seq_length: null  # Sequence length for decoder (used when decoder_tp_comm_overlap=True)
 
 #data, check https://github.com/yj8907/Megatron-LM/blob/c94d58f3260aa568588265e07b3c06bb58cbde41/megatron/core/datasets/gpt_dataset.py#L27
 data_path: '/home/ubuntu/projects/llm-models/llm-models/dataset/work/dclm/megatron/dclm_300gb_6_text_document'
@@ -580,3 +612,5 @@ one_logger_run_name: null  # Used in OneLogger config
 
 logging_level: INFO
 log_interval: 100
+
+record_memory_history: True
