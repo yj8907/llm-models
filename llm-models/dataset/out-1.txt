@@ -1,0 +1,2158 @@
+Opening work/dclm/jsonl/*_0.jsonl
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+Opening work/dclm/jsonl/*_1.jsonl
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+Opening work/dclm/jsonl/*_2.jsonl
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+Opening work/dclm/jsonl/*_3.jsonl
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+Opening work/dclm/jsonl/*_4.jsonl
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+Opening work/dclm/jsonl/*_5.jsonl
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+Opening work/dclm/jsonl/*_6.jsonl
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+Opening work/dclm/jsonl/*_7.jsonl
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+Opening work/dclm/jsonl/*_8.jsonl
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+Opening work/dclm/jsonl/*_9.jsonl
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+Opening work/dclm/jsonl/*_12.jsonl
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+Opening work/dclm/jsonl/*_14.jsonl
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+Opening work/dclm/jsonl/*_10.jsonl
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+Opening work/dclm/jsonl/*_13.jsonl
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+Opening work/dclm/jsonl/*_11.jsonl
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+Opening work/dclm/jsonl/*_15.jsonl
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+Processed 1000 documents (228.86126419714122 docs/s, 1.629001091895761 MB/s).
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+Processed 1000 documents (226.251625897126 docs/s, 1.581154227963656 MB/s).
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+Processed 1000 documents (149.05342829843252 docs/s, 1.0231688786205604 MB/s).
+Processed 2000 documents (287.47091529855726 docs/s, 1.9470626477709476 MB/s).
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+Processed 2000 documents (257.92834656145214 docs/s, 1.7973031222779854 MB/s).
+Processed 1000 documents (172.97504168379865 docs/s, 1.17577238233374 MB/s).
+Processed 1000 documents (152.81537364257755 docs/s, 1.0242542756784816 MB/s).
+Processed 1000 documents (101.92972224171103 docs/s, 0.6546642141473303 MB/s).
+Processed 1000 documents (199.1075936192398 docs/s, 1.3766774750106987 MB/s).
+Processed 1000 documents (104.0303945157286 docs/s, 0.7372938526337438 MB/s).
+Processed 1000 documents (102.33545820576587 docs/s, 0.760460327840598 MB/s).
+Processed 1000 documents (101.0109538849058 docs/s, 0.6980180433332557 MB/s).
+Processed 1000 documents (126.92836789878326 docs/s, 0.9377571331205344 MB/s).
+Processed 3000 documents (301.23699312864585 docs/s, 2.0265825849757366 MB/s).
+Processed 1000 documents (115.20599269453577 docs/s, 0.7500884926097307 MB/s).
+Processed 1000 documents (95.89644629504618 docs/s, 0.6392307476687352 MB/s).
+Processed 1000 documents (113.456750940745 docs/s, 0.7295833157845178 MB/s).
+Processed 1000 documents (117.67287309142976 docs/s, 0.7939845184135019 MB/s).
+Processed 2000 documents (179.73936124772413 docs/s, 1.1924403435738418 MB/s).
+Processed 1000 documents (85.62194156973042 docs/s, 0.5896641107287051 MB/s).
+Processed 2000 documents (166.6326757732597 docs/s, 1.075275741894205 MB/s).
+Processed 3000 documents (249.9958625127182 docs/s, 1.7043951399892248 MB/s).
+Processed 2000 documents (155.5143509060835 docs/s, 1.0418532793222766 MB/s).
+Processed 2000 documents (229.58884051396475 docs/s, 1.574897697640987 MB/s).
+Processed 2000 documents (183.12601658353535 docs/s, 1.2363079126797585 MB/s).
+Processed 2000 documents (149.78044863313642 docs/s, 1.0498709174662413 MB/s).
+Processed 2000 documents (150.93761125399084 docs/s, 1.044482163717005 MB/s).
+Processed 2000 documents (185.29257339433025 docs/s, 1.239783593606942 MB/s).
+Processed 2000 documents (166.41121909621174 docs/s, 1.1557800626075838 MB/s).
+Processed 4000 documents (282.4420320318844 docs/s, 1.8746492710069218 MB/s).
+Processed 2000 documents (157.5333433615532 docs/s, 1.0193049241752024 MB/s).
+Processed 2000 documents (130.69211274334754 docs/s, 0.9531632202028507 MB/s).
+Processed 2000 documents (156.68170263684337 docs/s, 1.059297148584752 MB/s).
+Processed 3000 documents (221.2721406455867 docs/s, 1.4902649776594994 MB/s).
+Processed 4000 documents (244.06243611936733 docs/s, 1.6809233061161954 MB/s).
+Processed 3000 documents (179.01829199022342 docs/s, 1.154167838327269 MB/s).
+Processed 2000 documents (137.3623927292288 docs/s, 0.9071360142002901 MB/s).
+Processed 2000 documents (118.80531586645986 docs/s, 0.7944114676266445 MB/s).
+Processed 3000 documents (182.66483097607244 docs/s, 1.233631578616536 MB/s).
+Processed 3000 documents (213.73741033174764 docs/s, 1.4049967511958201 MB/s).
+Processed 3000 documents (232.4965444005542 docs/s, 1.5967980994240003 MB/s).
+Processed 3000 documents (170.83523345810062 docs/s, 1.130763969564098 MB/s).
+Processed 3000 documents (196.96770920130842 docs/s, 1.3330465804887648 MB/s).
+Processed 3000 documents (172.40687990334735 docs/s, 1.1681771202536189 MB/s).
+Processed 3000 documents (162.6089759464324 docs/s, 1.1624379917290473 MB/s).
+Processed 3000 documents (180.21133381824455 docs/s, 1.2329334784944848 MB/s).
+Processed 4000 documents (241.74099574654002 docs/s, 1.6295526947160324 MB/s).
+Processed 3000 documents (182.1491116669153 docs/s, 1.2213403529533942 MB/s).
+Processed 3000 documents (153.9467711154834 docs/s, 1.0829760180500334 MB/s).
+Processed 5000 documents (244.93218375459102 docs/s, 1.6807310657231322 MB/s).
+Processed 4000 documents (199.89783739942325 docs/s, 1.3437720990487287 MB/s).
+Processed 4000 documents (191.53199949686538 docs/s, 1.242517579173551 MB/s).
+Processed 5000 documents (249.7968031828548 docs/s, 1.6881112141023076 MB/s).
+Processed 3000 documents (158.18651886162084 docs/s, 1.0535285778208379 MB/s).
+Processed 3000 documents (143.18430814634743 docs/s, 0.9674717865597368 MB/s).
+Processed 4000 documents (221.64318569857204 docs/s, 1.507221370181141 MB/s).
+Processed 4000 documents (189.82808169623854 docs/s, 1.2744401130888754 MB/s).
+Processed 4000 documents (229.58272040676877 docs/s, 1.5546491934438795 MB/s).
+Processed 4000 documents (182.6589164917528 docs/s, 1.2168479532437517 MB/s).
+Process Process-4:
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+           ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 93, in encode
+    data = json.loads(json_line)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 2131 (char 2130)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 188, in process_json_file
+    for i, (doc, sentence_lens, bytes_processed) in enumerate(encoded_docs, start=1):
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 423, in <genexpr>
+    return (item for chunk in result for item in chunk)
+                              ^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 873, in next
+    raise value
+json.decoder.JSONDecodeError: Extra data: line 1 column 2131 (char 2130)
+Time to startup: 1.521172046661377
+Processed 4000 documents (196.46280401120896 docs/s, 1.3227993840817573 MB/s).
+Processed 5000 documents (243.43955602350655 docs/s, 1.647741609393546 MB/s).
+Processed 4000 documents (191.19043819892244 docs/s, 1.3132066117650132 MB/s).
+Processed 5000 documents (243.22925283069566 docs/s, 1.6439127598397834 MB/s).
+Processed 6000 documents (258.9067513437376 docs/s, 1.758726829131738 MB/s).
+Processed 4000 documents (168.95768028653612 docs/s, 1.2259899267392536 MB/s).
+Processed 4000 documents (188.58946897679667 docs/s, 1.2694025849857378 MB/s).
+Processed 5000 documents (206.65804146207822 docs/s, 1.4084629173554275 MB/s).
+Processed 4000 documents (163.05649760551938 docs/s, 1.1270539659422836 MB/s).
+Processed 5000 documents (204.12220464463007 docs/s, 1.3585483818706172 MB/s).
+Processed 5000 documents (242.95098739732995 docs/s, 1.670704349939357 MB/s).
+Processed 4000 documents (158.0496831642524 docs/s, 1.0948359369886438 MB/s).
+Processed 5000 documents (193.60768350951741 docs/s, 1.2605556361195642 MB/s).
+Processed 5000 documents (193.50237516407526 docs/s, 1.291533723007983 MB/s).
+Processed 4000 documents (162.85087337545193 docs/s, 1.100220002611288 MB/s).
+Processed 5000 documents (203.58018688432682 docs/s, 1.3676104644125446 MB/s).
+Processed 5000 documents (183.32074671644284 docs/s, 1.3178846200259702 MB/s).
+Processed 6000 documents (259.9790864442913 docs/s, 1.8002411316175593 MB/s).
+Processed 7000 documents (257.89639796986177 docs/s, 1.7659352158815775 MB/s).
+Processed 6000 documents (236.85722838944326 docs/s, 1.6063810231590407 MB/s).
+Processed 6000 documents (240.2448670402997 docs/s, 1.6209939549344408 MB/s).
+Processed 5000 documents (193.0749913267554 docs/s, 1.340290906741402 MB/s).
+Processed 5000 documents (198.0126204681848 docs/s, 1.3362506022447338 MB/s).
+Processed 5000 documents (176.59683375816516 docs/s, 1.223479616939463 MB/s).
+Processed 6000 documents (213.86418297166557 docs/s, 1.4237595539941152 MB/s).
+Processed 6000 documents (222.50769589264596 docs/s, 1.482346486763613 MB/s).
+Processed 6000 documents (205.34951550402542 docs/s, 1.4181978005220726 MB/s).
+Processed 5000 documents (167.83957914486754 docs/s, 1.165573764994513 MB/s).
+Processed 6000 documents (192.96335340664132 docs/s, 1.2755972248354084 MB/s).
+Processed 6000 documents (194.9535284042716 docs/s, 1.3867995613569162 MB/s).
+Processed 7000 documents (264.6931820463328 docs/s, 1.8283783589709108 MB/s).
+Processed 6000 documents (192.8402391965186 docs/s, 1.289671267850912 MB/s).
+Processed 5000 documents (167.93822268861763 docs/s, 1.1323110574075184 MB/s).
+Processed 6000 documents (188.13175465919593 docs/s, 1.3151640614791602 MB/s).
+Processed 7000 documents (240.02201129589673 docs/s, 1.6246275505742813 MB/s).
+Processed 7000 documents (231.91881038112413 docs/s, 1.5778114509713568 MB/s).
+Processed 6000 documents (194.56094375041116 docs/s, 1.3534419394455404 MB/s).
+Processed 6000 documents (180.39355890566134 docs/s, 1.2612693467280347 MB/s).
+Processed 7000 documents (228.13831399993876 docs/s, 1.567242620154005 MB/s).
+Processed 8000 documents (245.04740979006206 docs/s, 1.6894187562542737 MB/s).
+Processed 7000 documents (213.32450743360735 docs/s, 1.428797348951758 MB/s).
+Processed 7000 documents (206.41664287952548 docs/s, 1.3649547253150973 MB/s).
+Processed 7000 documents (211.16780219451584 docs/s, 1.4686213278233928 MB/s).
+Processed 6000 documents (194.24345319883292 docs/s, 1.3194554062739916 MB/s).
+Processed 8000 documents (266.53211816036264 docs/s, 1.8209261796400489 MB/s).
+Processed 7000 documents (200.0513917247549 docs/s, 1.4115341171170965 MB/s).
+Processed 6000 documents (180.4742130443494 docs/s, 1.2217302426058392 MB/s).
+Processed 8000 documents (248.0144244763152 docs/s, 1.6742491846909793 MB/s).
+Processed 7000 documents (198.44433030190214 docs/s, 1.3441512688573842 MB/s).
+Processed 8000 documents (236.30505235937457 docs/s, 1.5946205566424347 MB/s).
+Processed 7000 documents (190.4967317527879 docs/s, 1.3244211184145427 MB/s).
+Processed 8000 documents (219.68484279671193 docs/s, 1.4744041220291493 MB/s).
+Processed 7000 documents (187.309559609202 docs/s, 1.3053217616509771 MB/s).
+Processed 9000 documents (245.3211323131484 docs/s, 1.6857201351829039 MB/s).
+Processed 8000 documents (214.4660026355317 docs/s, 1.499241970807893 MB/s).
+Processed 9000 documents (271.5338596005978 docs/s, 1.84626327118522 MB/s).
+Processed 7000 documents (200.91033746719833 docs/s, 1.3621923716716646 MB/s).
+Processed 8000 documents (224.57002728657352 docs/s, 1.5318778986036212 MB/s).
+Processed 10000 documents (262.4610266741197 docs/s, 1.8151022119618287 MB/s).
+Processed 8000 documents (202.27886628718616 docs/s, 1.3545707131835758 MB/s).
+Processed 7000 documents (186.76653662573142 docs/s, 1.2713879607889182 MB/s).
+Processed 9000 documents (247.82308848931598 docs/s, 1.667640187744191 MB/s).
+Processed 9000 documents (243.58459922842204 docs/s, 1.6380091630625264 MB/s).
+Processed 10000 documents (283.3952635029863 docs/s, 1.929447788406567 MB/s).
+Processed 7000 documents (184.90294561640766 docs/s, 1.3050666832625153 MB/s).
+Processed 8000 documents (199.33347176516398 docs/s, 1.3983920244255628 MB/s).
+Processed 8000 documents (194.99066289521434 docs/s, 1.3316158523031865 MB/s).
+Processed 8000 documents (194.7999735571468 docs/s, 1.3489928961159932 MB/s).
+Processed 9000 documents (216.539832984204 docs/s, 1.447890431007514 MB/s).
+Processed 8000 documents (198.04333298069946 docs/s, 1.3385541953352844 MB/s).
+Processed 10000 documents (251.2881327865067 docs/s, 1.689983700406693 MB/s).
+Processed 10000 documents (254.12420538169883 docs/s, 1.7145422609004808 MB/s).
+Processed 11000 documents (260.24367407606627 docs/s, 1.8052152924015021 MB/s).
+Processed 8000 documents (185.10710741678892 docs/s, 1.2979550104054518 MB/s).
+Processed 9000 documents (209.93940011703498 docs/s, 1.4625270732873155 MB/s).
+Processed 9000 documents (207.2096167100835 docs/s, 1.413740002254077 MB/s).
+Processed 8000 documents (196.4328628381727 docs/s, 1.3403463930741921 MB/s).
+Processed 9000 documents (216.57793759527203 docs/s, 1.4954090738568864 MB/s).
+Process Process-10:
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+           ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 93, in encode
+    data = json.loads(json_line)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 6146 (char 6145)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 188, in process_json_file
+    for i, (doc, sentence_lens, bytes_processed) in enumerate(encoded_docs, start=1):
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 423, in <genexpr>
+    return (item for chunk in result for item in chunk)
+                              ^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 873, in next
+    raise value
+json.decoder.JSONDecodeError: Extra data: line 1 column 6146 (char 6145)
+Time to startup: 1.9164519309997559
+Processed 9000 documents (200.73495275904966 docs/s, 1.3457286221111153 MB/s).
+Processed 11000 documents (274.63837154761734 docs/s, 1.8701616107707013 MB/s).
+Processed 9000 documents (200.81438892904217 docs/s, 1.417491491289234 MB/s).
+Processed 8000 documents (186.47611839590567 docs/s, 1.3073192512461698 MB/s).
+Processed 11000 documents (253.1952053306597 docs/s, 1.7053619926049024 MB/s).
+Processed 9000 documents (196.2144795977617 docs/s, 1.352911838251397 MB/s).
+Processed 9000 documents (203.21615979916425 docs/s, 1.375640998875916 MB/s).
+Processed 11000 documents (255.2254175381631 docs/s, 1.7198507010205029 MB/s).
+Processed 10000 documents (217.74007920731037 docs/s, 1.464134082824742 MB/s).
+Processed 10000 documents (216.17432898094725 docs/s, 1.4905339102429662 MB/s).
+Processed 9000 documents (190.43082474351414 docs/s, 1.346016514835164 MB/s).
+Processed 9000 documents (203.72175794352842 docs/s, 1.400154350168596 MB/s).
+Processed 9000 documents (199.4616690103713 docs/s, 1.3890608620148035 MB/s).
+Processed 10000 documents (208.70731169390436 docs/s, 1.441978584230925 MB/s).
+Processed 10000 documents (218.52241486987165 docs/s, 1.518335637594766 MB/s).
+Processed 10000 documents (202.97731131717907 docs/s, 1.3678083391941163 MB/s).
+Processed 10000 documents (203.59566503531244 docs/s, 1.4367251483811878 MB/s).
+Processed 10000 documents (200.94055400977325 docs/s, 1.4083912346559064 MB/s).
+Processed 12000 documents (255.7542842483218 docs/s, 1.7397379921006983 MB/s).
+Processed 12000 documents (263.9991398305309 docs/s, 1.8063282324596346 MB/s).
+Processed 11000 documents (222.32084335631686 docs/s, 1.50450037455316 MB/s).
+Processed 11000 documents (228.68325005798326 docs/s, 1.5863213849105442 MB/s).
+Processed 12000 documents (248.39090969967413 docs/s, 1.676830496797582 MB/s).
+Processed 10000 documents (197.5728283849653 docs/s, 1.3646049390380794 MB/s).
+Processed 11000 documents (216.34430923449258 docs/s, 1.498757901634809 MB/s).
+Processed 10000 documents (203.28826488384763 docs/s, 1.3901882193179096 MB/s).
+Processed 10000 documents (206.94377992708726 docs/s, 1.421127580484293 MB/s).
+Processed 10000 documents (201.40067329021662 docs/s, 1.3954603775488579 MB/s).
+Processed 11000 documents (210.88864288266834 docs/s, 1.4727497698912018 MB/s).
+Processed 11000 documents (212.83173770151078 docs/s, 1.4688050608119358 MB/s).
+Processed 12000 documents (229.49141206781636 docs/s, 1.5595857744969843 MB/s).
+Processed 11000 documents (205.31446182775724 docs/s, 1.3788976648741336 MB/s).
+Processed 13000 documents (266.3547445314735 docs/s, 1.834176640148586 MB/s).
+Processed 11000 documents (203.68189687059007 docs/s, 1.43393017021507 MB/s).
+Processed 13000 documents (254.3246551999757 docs/s, 1.7270147383846781 MB/s).
+Processed 12000 documents (231.5002290710143 docs/s, 1.6270529420560838 MB/s).
+Processed 11000 documents (208.2502663411992 docs/s, 1.4505156582906047 MB/s).
+Processed 13000 documents (247.3971012544241 docs/s, 1.6610140391694486 MB/s).
+Processed 12000 documents (217.9314065323452 docs/s, 1.509412432000743 MB/s).
+Processed 11000 documents (205.88128709414906 docs/s, 1.410763849668182 MB/s).
+Processed 11000 documents (209.8389639747658 docs/s, 1.4457967556801217 MB/s).
+Processed 11000 documents (198.85388829766845 docs/s, 1.3701995932587547 MB/s).
+Processed 12000 documents (214.08722053137515 docs/s, 1.498515724008575 MB/s).
+Processed 12000 documents (213.72402873104247 docs/s, 1.4905491466962193 MB/s).
+Processed 13000 documents (231.58417852331476 docs/s, 1.5763341640572544 MB/s).
+Processed 12000 documents (206.03138375393846 docs/s, 1.3901048924932289 MB/s).
+Processed 14000 documents (262.79469726829547 docs/s, 1.8161553508376485 MB/s).
+Processed 14000 documents (254.82555676201295 docs/s, 1.7270305868446854 MB/s).
+Processed 12000 documents (206.8684930110989 docs/s, 1.4592708468401747 MB/s).
+Processed 12000 documents (213.13250080200493 docs/s, 1.4786914155605786 MB/s).
+Processed 12000 documents (211.3149918429962 docs/s, 1.4431433666621543 MB/s).
+Processed 13000 documents (231.14026698788774 docs/s, 1.6297896937954683 MB/s).
+Processed 13000 documents (220.8384558995268 docs/s, 1.5260706980800216 MB/s).
+Processed 14000 documents (246.662139590411 docs/s, 1.6467885727087317 MB/s).
+Processed 12000 documents (212.74283817795921 docs/s, 1.4847735916104343 MB/s).
+Processed 12000 documents (202.70356787717517 docs/s, 1.401871626858575 MB/s).
+Processed 14000 documents (237.40718938528946 docs/s, 1.6087251839765286 MB/s).
+Processed 13000 documents (217.80164132850618 docs/s, 1.517845292369322 MB/s).
+Processed 13000 documents (214.84121216476885 docs/s, 1.4902181479872143 MB/s).
+Processed 15000 documents (256.4044807810446 docs/s, 1.7468197542468433 MB/s).
+Processed 13000 documents (217.28988442009873 docs/s, 1.5157145544846695 MB/s).
+Processed 14000 documents (224.9262807520278 docs/s, 1.5517294003387692 MB/s).
+Processed 13000 documents (208.6506730934059 docs/s, 1.4771047050569217 MB/s).
+Processed 13000 documents (205.70484325209992 docs/s, 1.3841352586100282 MB/s).
+Processed 13000 documents (207.70306932618098 docs/s, 1.4443150403586968 MB/s).
+Processed 15000 documents (240.84064450165155 docs/s, 1.6338522939702593 MB/s).
+Processed 13000 documents (215.87181860131716 docs/s, 1.503629392189805 MB/s).
+Processed 15000 documents (255.21811413446866 docs/s, 1.773637737674672 MB/s).
+Processed 13000 documents (211.02448600238165 docs/s, 1.4392149810999089 MB/s).
+Processed 14000 documents (221.29478971754023 docs/s, 1.5276847205168658 MB/s).
+Processed 14000 documents (228.44933898304657 docs/s, 1.6259131383143643 MB/s).
+Processed 14000 documents (216.75596238808762 docs/s, 1.5171887485526887 MB/s).
+Processed 15000 documents (241.2345352924759 docs/s, 1.615462022925175 MB/s).
+Processed 16000 documents (256.6500232816986 docs/s, 1.7495142096149572 MB/s).
+Processed 14000 documents (214.36354641709505 docs/s, 1.52023484855161 MB/s).
+Processed 15000 documents (229.29375280856289 docs/s, 1.5861616908559935 MB/s).
+Processed 14000 documents (219.49336688666557 docs/s, 1.5244604760125764 MB/s).
+Processed 14000 documents (211.8923836473574 docs/s, 1.475467194507346 MB/s).
+Processed 16000 documents (242.30526145120706 docs/s, 1.6451885623409257 MB/s).
+Processed 15000 documents (224.9714177205384 docs/s, 1.5507832857615194 MB/s).
+Processed 14000 documents (218.9527402600881 docs/s, 1.5199358080495633 MB/s).
+Processed 15000 documents (231.88204185840866 docs/s, 1.645762854112366 MB/s).
+Processed 16000 documents (252.96369456069772 docs/s, 1.7595010414545722 MB/s).
+Processed 15000 documents (220.54987431215932 docs/s, 1.5644030749526365 MB/s).
+Processed 14000 documents (210.7077403158129 docs/s, 1.4506004494930544 MB/s).
+Processed 14000 documents (203.29666610743016 docs/s, 1.3769411228590245 MB/s).
+Processed 16000 documents (241.91914029299653 docs/s, 1.6211300014790087 MB/s).
+Processed 15000 documents (225.24489713720558 docs/s, 1.5605990270884704 MB/s).
+Processed 15000 documents (214.92992806607288 docs/s, 1.502993214401374 MB/s).
+Processed 15000 documents (215.47220504875028 docs/s, 1.504427641441085 MB/s).
+Processed 17000 documents (253.83570358592897 docs/s, 1.7314425509245133 MB/s).
+Processed 16000 documents (227.23019888250963 docs/s, 1.5743696737174413 MB/s).
+Processed 16000 documents (227.38149666674462 docs/s, 1.5776698550659496 MB/s).
+Processed 16000 documents (234.1327411443557 docs/s, 1.6656010114761455 MB/s).
+Processed 15000 documents (219.35700651121977 docs/s, 1.5231836298719814 MB/s).
+Processed 15000 documents (214.92341695430048 docs/s, 1.473520400945675 MB/s).
+Processed 17000 documents (251.8518269438173 docs/s, 1.7499943591935827 MB/s).
+Processed 17000 documents (237.51576265949154 docs/s, 1.6171842460922257 MB/s).
+Processed 16000 documents (220.73162500390052 docs/s, 1.5389669402863089 MB/s).
+Processed 15000 documents (204.79814535012903 docs/s, 1.3991950762997973 MB/s).
+Processed 17000 documents (234.57984533591076 docs/s, 1.623277387791216 MB/s).
+Processed 16000 documents (219.52616599595507 docs/s, 1.5318903513041413 MB/s).
+Processed 16000 documents (224.07453255803813 docs/s, 1.5564111608689353 MB/s).
+Processed 16000 documents (217.7078215293524 docs/s, 1.5529976019682548 MB/s).
+Processed 17000 documents (230.62696794417872 docs/s, 1.5948661548096734 MB/s).
+Processed 17000 documents (237.62526910949165 docs/s, 1.6893483650154948 MB/s).
+Processed 18000 documents (252.7775482521707 docs/s, 1.727717235267396 MB/s).
+Processed 17000 documents (236.88821283103445 docs/s, 1.5946220698383664 MB/s).
+Process Process-14:
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+           ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 93, in encode
+    data = json.loads(json_line)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 7573 (char 7572)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 188, in process_json_file
+    for i, (doc, sentence_lens, bytes_processed) in enumerate(encoded_docs, start=1):
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 423, in <genexpr>
+    return (item for chunk in result for item in chunk)
+                              ^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 873, in next
+    raise value
+json.decoder.JSONDecodeError: Extra data: line 1 column 7573 (char 7572)
+Time to startup: 5.53886079788208
+Processed 16000 documents (219.41443498285005 docs/s, 1.5018896558453958 MB/s).
+Processed 16000 documents (220.33574147313416 docs/s, 1.5279431473864644 MB/s).
+Processed 18000 documents (244.68521858436546 docs/s, 1.7430275681839165 MB/s).
+Processed 17000 documents (224.01803113594784 docs/s, 1.558719449559182 MB/s).
+Processed 18000 documents (238.13817079081957 docs/s, 1.6205207738257112 MB/s).
+Processed 17000 documents (221.88105920564539 docs/s, 1.5804761682712887 MB/s).
+Processed 17000 documents (221.01882560290326 docs/s, 1.5432905001141808 MB/s).
+Processed 16000 documents (205.49293285562302 docs/s, 1.407705033286591 MB/s).
+Processed 18000 documents (233.28616232182495 docs/s, 1.6133072909690862 MB/s).
+Processed 17000 documents (225.35779064057417 docs/s, 1.5716740510573464 MB/s).
+Processed 17000 documents (223.80280455330148 docs/s, 1.5375335405234634 MB/s).
+Processed 19000 documents (253.44935727022076 docs/s, 1.7283652026844425 MB/s).
+Processed 18000 documents (236.84923376393547 docs/s, 1.5922248608354357 MB/s).
+Processed 18000 documents (228.59287108443974 docs/s, 1.5882609445748883 MB/s).
+Processed 19000 documents (241.58618101333545 docs/s, 1.6371844946150642 MB/s).
+Processed 18000 documents (226.80274021010894 docs/s, 1.6056016901461525 MB/s).
+Processed 17000 documents (221.80935301605928 docs/s, 1.5478766675212117 MB/s).
+Processed 18000 documents (225.9796652019212 docs/s, 1.5754475570123208 MB/s).
+Processed 19000 documents (244.81882262545656 docs/s, 1.7347693644884623 MB/s).
+Processed 18000 documents (224.1830598941371 docs/s, 1.5679839408526015 MB/s).
+Processed 19000 documents (237.8560365695939 docs/s, 1.6370310858107253 MB/s).
+Processed 20000 documents (255.95065794963782 docs/s, 1.7345280452373728 MB/s).
+Processed 18000 documents (227.51647379148025 docs/s, 1.5843566319781628 MB/s).
+Processed 17000 documents (207.33346595688496 docs/s, 1.4314278649642176 MB/s).
+Processed 18000 documents (225.30685493424568 docs/s, 1.5493615085318893 MB/s).
+Processed 19000 documents (239.46316373730477 docs/s, 1.6053184097229793 MB/s).
+Processed 20000 documents (245.5585784178231 docs/s, 1.6603298849753558 MB/s).
+Processed 19000 documents (230.10053283731975 docs/s, 1.6037228968748718 MB/s).
+Processed 20000 documents (243.62903535581177 docs/s, 1.670794911417205 MB/s).
+Processed 19000 documents (230.38947410754523 docs/s, 1.6246998169966615 MB/s).
+Processed 19000 documents (229.2780437840586 docs/s, 1.5848049626159677 MB/s).
+Processed 18000 documents (224.65629047770523 docs/s, 1.5703991244288804 MB/s).
+Processed 19000 documents (228.45168934954955 docs/s, 1.5849752487040694 MB/s).
+Processed 20000 documents (244.33227916314837 docs/s, 1.7266486140685127 MB/s).
+Processed 19000 documents (230.29151939010802 docs/s, 1.5998935706421886 MB/s).
+Processed 21000 documents (249.30651314162267 docs/s, 1.6907246063346177 MB/s).
+Processed 21000 documents (256.90253681749056 docs/s, 1.7367986884447668 MB/s).
+Processed 18000 documents (210.9560222271378 docs/s, 1.4516305792373494 MB/s).
+Processed 19000 documents (228.66838511810306 docs/s, 1.565977542447255 MB/s).
+Processed 19000 documents (230.82761918330513 docs/s, 1.6079707666883643 MB/s).
+Processed 20000 documents (241.3062422637225 docs/s, 1.6174538618250465 MB/s).
+Processed 21000 documents (246.80687640300923 docs/s, 1.6913137368238857 MB/s).
+Processed 20000 documents (231.79751099957392 docs/s, 1.6081888953988712 MB/s).
+Processed 20000 documents (231.58313518393808 docs/s, 1.591931696098318 MB/s).
+Processed 20000 documents (231.37320273073297 docs/s, 1.6246287495336222 MB/s).
+Processed 20000 documents (235.34830542451937 docs/s, 1.6265661977681272 MB/s).
+Processed 20000 documents (229.7403876391409 docs/s, 1.5864009157048853 MB/s).
+Processed 22000 documents (259.7336049985733 docs/s, 1.747983691269688 MB/s).
+Processed 19000 documents (214.6849041231285 docs/s, 1.4732403359025938 MB/s).
+Processed 22000 documents (251.06178202549478 docs/s, 1.7029213639571172 MB/s).
+Processed 21000 documents (244.97971227491863 docs/s, 1.7272217421417093 MB/s).
+Processed 20000 documents (230.95287141699995 docs/s, 1.5790162554120803 MB/s).
+Processed 20000 documents (233.7889176929267 docs/s, 1.6241454743255206 MB/s).
+Processed 22000 documents (249.2873289498166 docs/s, 1.7014118752710088 MB/s).
+Processed 21000 documents (242.30558103081725 docs/s, 1.6296560535139115 MB/s).
+Processed 21000 documents (234.19181995628338 docs/s, 1.6218418697408388 MB/s).
+Processed 21000 documents (234.22270081306036 docs/s, 1.6086436862331277 MB/s).
+Processed 21000 documents (234.41424397998009 docs/s, 1.6106906672876027 MB/s).
+Processed 23000 documents (263.57212401270414 docs/s, 1.7671757939520398 MB/s).
+Processed 21000 documents (232.7262722642379 docs/s, 1.6239667931918256 MB/s).
+Processed 21000 documents (237.05017724833 docs/s, 1.6326436069845551 MB/s).
+Processed 20000 documents (218.85433660070115 docs/s, 1.4977332829288252 MB/s).
+Processed 21000 documents (234.97044372547631 docs/s, 1.6086359008554005 MB/s).
+Processed 23000 documents (252.60825924570162 docs/s, 1.7131115488722433 MB/s).
+Processed 23000 documents (252.58341240666186 docs/s, 1.7084065295916264 MB/s).
+Processed 22000 documents (245.4468621879264 docs/s, 1.728351384549218 MB/s).
+Processed 21000 documents (235.10938480502358 docs/s, 1.6258428546613612 MB/s).
+Processed 22000 documents (237.1191855252863 docs/s, 1.6234634461005584 MB/s).
+Processed 21000 documents (223.97274273775488 docs/s, 1.5303399940743092 MB/s).
+Processed 22000 documents (241.57363696192658 docs/s, 1.625877896356619 MB/s).
+Processed 24000 documents (264.6606101860558 docs/s, 1.7762795732871517 MB/s).
+Processed 22000 documents (234.82507218735446 docs/s, 1.6299151016505633 MB/s).
+Processed 22000 documents (240.08901018898274 docs/s, 1.652335169419217 MB/s).
+Processed 22000 documents (233.87855358753413 docs/s, 1.6156410151510703 MB/s).
+Processed 22000 documents (238.21715555889466 docs/s, 1.6308754001103323 MB/s).
+Processed 22000 documents (240.9315914476957 docs/s, 1.6617611166434105 MB/s).
+Processed 22000 documents (233.78764246814376 docs/s, 1.6103382124212875 MB/s).
+Processed 24000 documents (253.37755621165425 docs/s, 1.7161399520975535 MB/s).
+Processed 24000 documents (253.75545268984578 docs/s, 1.7124123140519452 MB/s).
+Processed 23000 documents (240.49840505784374 docs/s, 1.642094675989769 MB/s).
+Processed 23000 documents (246.62067915422617 docs/s, 1.7310920280675008 MB/s).
+Processed 22000 documents (228.43175365943335 docs/s, 1.5569183647927647 MB/s).
+Processed 23000 documents (239.68640332681346 docs/s, 1.6575928393566155 MB/s).
+Processed 25000 documents (265.43848578474 docs/s, 1.7811414605201237 MB/s).
+Processed 23000 documents (240.69478689639698 docs/s, 1.648114671577913 MB/s).
+Processed 23000 documents (236.01457788251375 docs/s, 1.6223775297173215 MB/s).
+Processed 23000 documents (240.61601396145173 docs/s, 1.6542875746190868 MB/s).
+Processed 23000 documents (240.35460375787872 docs/s, 1.6199927747858864 MB/s).
+Processed 23000 documents (233.797812549105 docs/s, 1.612665945014683 MB/s).
+Processed 24000 documents (243.854896717073 docs/s, 1.670208887462683 MB/s).
+Processed 25000 documents (254.25094160291283 docs/s, 1.7239680411908562 MB/s).
+Processed 23000 documents (231.36713003900815 docs/s, 1.573925982116422 MB/s).
+Processed 25000 documents (253.44177505768215 docs/s, 1.7137013256782594 MB/s).
+Processed 23000 documents (238.88778588235544 docs/s, 1.6479288363605085 MB/s).
+Processed 24000 documents (246.2139250656043 docs/s, 1.6878201472674526 MB/s).
+Processed 24000 documents (247.0140776875112 docs/s, 1.7299462459901587 MB/s).
+Processed 24000 documents (240.71330337640455 docs/s, 1.656775752645274 MB/s).
+Processed 24000 documents (240.16780752581005 docs/s, 1.6579504083315506 MB/s).
+Processed 24000 documents (242.69999801453503 docs/s, 1.6638438064239882 MB/s).
+Processed 26000 documents (264.1859618861582 docs/s, 1.7706630490125712 MB/s).
+Processed 25000 documents (245.97745117712628 docs/s, 1.6817034995053044 MB/s).
+Processed 25000 documents (249.68235610368848 docs/s, 1.7053677334758954 MB/s).
+Processed 25000 documents (245.28040208006098 docs/s, 1.6869672868313994 MB/s).
+Processed 26000 documents (255.30625650290906 docs/s, 1.732111515657225 MB/s).
+Processed 24000 documents (234.02009402864067 docs/s, 1.6143843652281908 MB/s).
+Processed 24000 documents (239.9073506528106 docs/s, 1.6179397481382758 MB/s).
+Processed 24000 documents (232.24742414177916 docs/s, 1.5764787805919034 MB/s).
+Processed 24000 documents (240.25698015146364 docs/s, 1.6650335685842184 MB/s).
+Processed 25000 documents (241.71165737162337 docs/s, 1.6613228995537488 MB/s).
+Processed 25000 documents (247.35814405828754 docs/s, 1.7290448727921959 MB/s).
+Processed 26000 documents (251.73473075979396 docs/s, 1.7067462273338503 MB/s).
+Processed 27000 documents (258.79069973939283 docs/s, 1.7569068471714657 MB/s).
+Processed 25000 documents (243.6083939495583 docs/s, 1.664886955799881 MB/s).
+Processed 27000 documents (264.796131238498 docs/s, 1.775602018847115 MB/s).
+Processed 26000 documents (247.0183419027117 docs/s, 1.696234369773922 MB/s).
+Processed 26000 documents (247.21767317656096 docs/s, 1.698160820130096 MB/s).
+Processed 25000 documents (241.9925953740471 docs/s, 1.6314612861396323 MB/s).
+Processed 26000 documents (251.04703259059156 docs/s, 1.7493985732918187 MB/s).
+Processed 28000 documents (271.78173585358513 docs/s, 1.827759696024562 MB/s).
+Processed 26000 documents (249.20628042884385 docs/s, 1.7023988328547084 MB/s).
+Processed 25000 documents (241.78443859013157 docs/s, 1.6795668496124707 MB/s).
+Processed 25000 documents (234.50285688872617 docs/s, 1.6155403156817498 MB/s).
+Processed 26000 documents (242.1717467586416 docs/s, 1.6598228341962833 MB/s).
+Processed 25000 documents (230.79705562512214 docs/s, 1.563823441951659 MB/s).
+Processed 27000 documents (250.98801220946746 docs/s, 1.701628682612496 MB/s).
+Processed 27000 documents (254.48668818480405 docs/s, 1.7711278984765597 MB/s).
+Processed 27000 documents (248.4959152201237 docs/s, 1.7065696124614071 MB/s).
+Processed 26000 documents (238.26909632723417 docs/s, 1.6417597866705327 MB/s).
+Processed 28000 documents (257.65809209841285 docs/s, 1.7478694748058479 MB/s).
+Processed 29000 documents (273.42427214864546 docs/s, 1.8432741750003274 MB/s).
+Processed 26000 documents (242.05377736847396 docs/s, 1.653380195014296 MB/s).
+Processed 27000 documents (246.13979027779044 docs/s, 1.6872380811058396 MB/s).
+Processed 26000 documents (241.74456288285225 docs/s, 1.6289898866614427 MB/s).
+Processed 26000 documents (242.11897297913293 docs/s, 1.680468517099158 MB/s).
+Processed 27000 documents (248.35473731975412 docs/s, 1.6959302651109252 MB/s).
+Processed 27000 documents (244.131659315751 docs/s, 1.6737384113961775 MB/s).
+Processed 28000 documents (254.1738314524833 docs/s, 1.72707576190687 MB/s).
+Processed 27000 documents (242.29319037101425 docs/s, 1.6626819081582167 MB/s).
+Processed 26000 documents (232.22463469935266 docs/s, 1.5721860963471752 MB/s).
+Processed 27000 documents (246.01587252408342 docs/s, 1.6762116591844707 MB/s).
+Processed 28000 documents (255.56806260972417 docs/s, 1.7822665437055387 MB/s).
+Processed 28000 documents (249.14406847817065 docs/s, 1.711000097565444 MB/s).
+Processed 27000 documents (243.68490143337613 docs/s, 1.642137008727646 MB/s).
+Processed 30000 documents (271.13096398264236 docs/s, 1.8306293161755398 MB/s).
+Processed 29000 documents (255.73256738347317 docs/s, 1.7397951261039202 MB/s).
+Processed 28000 documents (246.10774564380816 docs/s, 1.6893183647779104 MB/s).
+Processed 28000 documents (245.59840187072894 docs/s, 1.6850610814197564 MB/s).
+Processed 28000 documents (249.21278313657785 docs/s, 1.7043981359381009 MB/s).
+Processed 29000 documents (254.60695002313696 docs/s, 1.7321361326005467 MB/s).
+Processed 28000 documents (248.44605644652023 docs/s, 1.6958243258456016 MB/s).
+Processed 29000 documents (258.0265896320243 docs/s, 1.798592219561764 MB/s).
+Processed 27000 documents (240.66567178840765 docs/s, 1.6698658230245922 MB/s).
+Processed 27000 documents (233.227082637606 docs/s, 1.5703265097165338 MB/s).
+Processed 28000 documents (241.8239456992957 docs/s, 1.6623342172450086 MB/s).
+Processed 29000 documents (250.27185302910055 docs/s, 1.7187284306477406 MB/s).
+Processed 31000 documents (274.54607192096705 docs/s, 1.8533109701084423 MB/s).
+Processed 28000 documents (245.62887913739797 docs/s, 1.6588315244217289 MB/s).
+Processed 30000 documents (257.2714476165304 docs/s, 1.744176671785654 MB/s).
+Processed 30000 documents (260.8362247703345 docs/s, 1.8152129398458041 MB/s).
+Processed 29000 documents (246.92393587341073 docs/s, 1.6990265729513445 MB/s).
+Processed 29000 documents (246.15848047948356 docs/s, 1.6910515901134355 MB/s).
+Processed 30000 documents (254.894713627767 docs/s, 1.736371494835894 MB/s).
+Processed 30000 documents (252.61444174240106 docs/s, 1.7338096945998125 MB/s).
+Processed 29000 documents (247.81347343489128 docs/s, 1.6968022961593627 MB/s).
+Processed 29000 documents (248.05348535159922 docs/s, 1.6964432055852245 MB/s).
+Processed 32000 documents (275.27700176176364 docs/s, 1.8578040678487215 MB/s).
+Processed 28000 documents (233.67990415170235 docs/s, 1.57338230036173 MB/s).
+Processed 28000 documents (239.575962513347 docs/s, 1.6627837210948444 MB/s).
+Processed 31000 documents (259.4316307930109 docs/s, 1.7623230760082618 MB/s).
+Processed 29000 documents (241.58102796441025 docs/s, 1.661743999147781 MB/s).
+Processed 31000 documents (263.68199968956026 docs/s, 1.8305327440737298 MB/s).
+Processed 29000 documents (245.21229946919172 docs/s, 1.6590958523900161 MB/s).
+Processed 30000 documents (247.97585020345554 docs/s, 1.7097329808587083 MB/s).
+Processed 30000 documents (249.81770456417559 docs/s, 1.7100030247749283 MB/s).
+Processed 31000 documents (255.34295381017878 docs/s, 1.7430877868777264 MB/s).
+Processed 31000 documents (253.1537956989002 docs/s, 1.7419199985486387 MB/s).
+Processed 30000 documents (244.97763187498742 docs/s, 1.6855083039791792 MB/s).
+Processed 32000 documents (261.4780817167865 docs/s, 1.7758723509023409 MB/s).
+Processed 30000 documents (243.93863645886373 docs/s, 1.6720457079257012 MB/s).
+Processed 30000 documents (248.25171213200142 docs/s, 1.701712845806518 MB/s).
+Processed 32000 documents (265.08631938909866 docs/s, 1.8471540998890443 MB/s).
+Processed 31000 documents (252.00007631513384 docs/s, 1.73407526466114 MB/s).
+Processed 33000 documents (273.9894865872476 docs/s, 1.8497673820651284 MB/s).
+Processed 29000 documents (240.5863055698143 docs/s, 1.669755952331975 MB/s).
+Processed 29000 documents (233.29386591388737 docs/s, 1.5723841925752393 MB/s).
+Processed 30000 documents (245.96328433092614 docs/s, 1.6636967113998031 MB/s).
+Processed 31000 documents (247.62107818139035 docs/s, 1.6982344851620956 MB/s).
+Processed 32000 documents (255.77859009679884 docs/s, 1.7574519843891236 MB/s).
+Processed 31000 documents (251.0880208864818 docs/s, 1.7199714847064165 MB/s).
+Processed 31000 documents (249.80317519024965 docs/s, 1.7063227288113774 MB/s).
+Processed 32000 documents (254.16677472535457 docs/s, 1.735549969485552 MB/s).
+Processed 33000 documents (261.58328780041063 docs/s, 1.7784134211480038 MB/s).
+Processed 31000 documents (244.82647105116195 docs/s, 1.6887031488671633 MB/s).
+Processed 32000 documents (252.89485283825408 docs/s, 1.7429944188993667 MB/s).
+Processed 33000 documents (265.0633586346361 docs/s, 1.8496469178474944 MB/s).
+Processed 30000 documents (240.78449641640873 docs/s, 1.671685163123165 MB/s).
+Processed 34000 documents (272.67025474071437 docs/s, 1.8469200528857366 MB/s).
+Processed 31000 documents (247.46571717042178 docs/s, 1.6767952816226066 MB/s).
+Processed 30000 documents (233.30985347957147 docs/s, 1.569309824168692 MB/s).
+Processed 33000 documents (257.0633880016975 docs/s, 1.7616965332787407 MB/s).
+Processed 32000 documents (248.356223401881 docs/s, 1.7053051943029078 MB/s).
+Processed 32000 documents (252.87783883918613 docs/s, 1.7225695192767054 MB/s).
+Processed 32000 documents (251.32714664355473 docs/s, 1.7217521481550635 MB/s).
+Processed 34000 documents (263.37045618146544 docs/s, 1.7902696201921302 MB/s).
+Processed 34000 documents (266.88108479967883 docs/s, 1.8655106914802322 MB/s).
+Processed 32000 documents (246.31407873937 docs/s, 1.6990972865633522 MB/s).
+Processed 32000 documents (250.44030574871644 docs/s, 1.6995976942942932 MB/s).
+Processed 35000 documents (274.3472211053814 docs/s, 1.862508903070477 MB/s).
+Processed 33000 documents (252.50891775212224 docs/s, 1.7391115725022603 MB/s).
+Processed 33000 documents (252.51370455093016 docs/s, 1.7309929612395805 MB/s).
+Processed 34000 documents (258.77780593237475 docs/s, 1.7741944874291091 MB/s).
+Processed 31000 documents (240.87492435041656 docs/s, 1.665941906407091 MB/s).
+Processed 31000 documents (233.8298112181338 docs/s, 1.5800403597393995 MB/s).
+Processed 33000 documents (249.18346759566094 docs/s, 1.7100665366440504 MB/s).
+Processed 35000 documents (269.2008917860484 docs/s, 1.8796379966497325 MB/s).
+Processed 33000 documents (251.97498859543646 docs/s, 1.7187469524758865 MB/s).
+Processed 33000 documents (251.18964936278135 docs/s, 1.7188992584355596 MB/s).
+Processed 34000 documents (254.48611198129538 docs/s, 1.7463384399235051 MB/s).
+Processed 35000 documents (262.17276737506586 docs/s, 1.7870103328998672 MB/s).
+Processed 33000 documents (246.14563442495887 docs/s, 1.6983754763559888 MB/s).
+Processed 33000 documents (250.49471935529132 docs/s, 1.6998992298843758 MB/s).
+Processed 36000 documents (273.179916578698 docs/s, 1.8593972670571308 MB/s).
+Processed 32000 documents (236.31237490787586 docs/s, 1.5962181647139995 MB/s).
+Processed 34000 documents (252.78361734872323 docs/s, 1.7334235081981326 MB/s).
+Processed 34000 documents (251.7293852396175 docs/s, 1.731109809378502 MB/s).
+Processed 36000 documents (270.8000643492714 docs/s, 1.8921413031762628 MB/s).
+Processed 35000 documents (257.7407026065197 docs/s, 1.7644121476385681 MB/s).
+Processed 32000 documents (240.45560641312156 docs/s, 1.6619911137949084 MB/s).
+Processed 34000 documents (252.6693118574433 docs/s, 1.7318351960916878 MB/s).
+Processed 35000 documents (256.0381034383882 docs/s, 1.755581095729507 MB/s).
+Processed 37000 documents (276.2833339821041 docs/s, 1.8816522613884443 MB/s).
+Processed 36000 documents (263.1098415123098 docs/s, 1.7969488900557495 MB/s).
+Processed 34000 documents (250.73411061591878 docs/s, 1.7100166079001151 MB/s).
+Processed 34000 documents (251.34157917983097 docs/s, 1.7026589841104895 MB/s).
+Processed 35000 documents (253.9149932216581 docs/s, 1.7409748341484828 MB/s).
+Processed 33000 documents (237.12316714136318 docs/s, 1.6035542193692123 MB/s).
+Processed 34000 documents (244.99653068714935 docs/s, 1.6935396288848865 MB/s).
+Processed 35000 documents (252.09579734542703 docs/s, 1.7293831417550436 MB/s).
+Processed 37000 documents (270.8910259261214 docs/s, 1.8936201789073268 MB/s).
+Processed 38000 documents (278.25033142571766 docs/s, 1.8982887676976854 MB/s).
+Processed 33000 documents (241.25223202970997 docs/s, 1.6681167721468364 MB/s).
+Processed 36000 documents (257.6680153547498 docs/s, 1.767524217777712 MB/s).
+Processed 36000 documents (256.7470543389074 docs/s, 1.7608657814168234 MB/s).
+Processed 37000 documents (264.690510498179 docs/s, 1.8077228192706813 MB/s).
+Processed 35000 documents (250.89259222324986 docs/s, 1.7253074608232113 MB/s).
+Processed 36000 documents (255.56669039928263 docs/s, 1.7580987725485875 MB/s).
+Processed 35000 documents (250.7074894374005 docs/s, 1.7070501666624567 MB/s).
+Processed 34000 documents (238.69092314818468 docs/s, 1.6151810858869868 MB/s).
+Processed 34000 documents (244.19135418614067 docs/s, 1.6863994571891352 MB/s).
+Processed 35000 documents (250.35487563636548 docs/s, 1.6988738544468271 MB/s).
+Processed 35000 documents (246.07497376932676 docs/s, 1.7005467493879063 MB/s).
+Processed 39000 documents (279.760227600088 docs/s, 1.910284966138042 MB/s).
+Processed 38000 documents (270.71053239055425 docs/s, 1.8866880561380461 MB/s).
+Processed 36000 documents (251.46492131244264 docs/s, 1.7298368000299076 MB/s).
+Processed 38000 documents (265.03417677396936 docs/s, 1.8123953705371254 MB/s).
+Processed 37000 documents (257.27681547537605 docs/s, 1.768485453633644 MB/s).
+Processed 37000 documents (257.7029087004652 docs/s, 1.7745690413574222 MB/s).
+Processed 35000 documents (247.1245209344548 docs/s, 1.703365697739525 MB/s).
+Processed 36000 documents (250.97607656655558 docs/s, 1.7219309000664984 MB/s).
+Processed 37000 documents (254.36625254862074 docs/s, 1.7487669044846668 MB/s).
+Processed 36000 documents (250.71106279749006 docs/s, 1.7080353583773469 MB/s).
+Processed 36000 documents (246.91989979910056 docs/s, 1.7109935586220029 MB/s).
+Processed 35000 documents (238.99809621588997 docs/s, 1.6149881577936438 MB/s).
+Processed 40000 documents (278.5726343819569 docs/s, 1.8977013660073356 MB/s).
+Processed 36000 documents (249.64638513462668 docs/s, 1.6955125655853966 MB/s).
+Processed 38000 documents (258.94120142394144 docs/s, 1.7827502297950408 MB/s).
+Processed 39000 documents (270.01684345812953 docs/s, 1.8831444520288843 MB/s).
+Processed 39000 documents (265.23850189644287 docs/s, 1.8123222543909059 MB/s).
+Processed 38000 documents (257.8117374995127 docs/s, 1.7771362150163958 MB/s).
+Processed 37000 documents (250.31172380196682 docs/s, 1.7206487335171072 MB/s).
+Processed 36000 documents (247.62604238700482 docs/s, 1.7126391329200887 MB/s).
+Processed 38000 documents (255.47603104938204 docs/s, 1.7564614640371257 MB/s).
+Processed 37000 documents (251.76074595271388 docs/s, 1.7208791769245122 MB/s).
+Processed 37000 documents (250.21018426424024 docs/s, 1.7196110322198452 MB/s).
+Processed 37000 documents (250.90706155470087 docs/s, 1.707893281930469 MB/s).
+Processed 36000 documents (239.09377334740796 docs/s, 1.616894297076262 MB/s).
+Processed 37000 documents (246.1103114738287 docs/s, 1.7086476731555238 MB/s).
+Processed 41000 documents (278.0294135558441 docs/s, 1.8944887479367023 MB/s).
+Processed 40000 documents (270.16764602076563 docs/s, 1.8829905672221905 MB/s).
+Processed 39000 documents (259.11411758180935 docs/s, 1.7834654795428568 MB/s).
+Processed 40000 documents (265.12726165955485 docs/s, 1.8124520692681685 MB/s).
+Processed 37000 documents (248.43352729198477 docs/s, 1.7194460471233604 MB/s).
+Processed 39000 documents (257.5614254301192 docs/s, 1.772219209488026 MB/s).
+Processed 38000 documents (253.35142343202406 docs/s, 1.7297766920063258 MB/s).
+Processed 38000 documents (249.94871837173565 docs/s, 1.7149992972015196 MB/s).
+Processed 38000 documents (253.36532608922403 docs/s, 1.7256059254193832 MB/s).
+Processed 41000 documents (268.4343426652902 docs/s, 1.832942819700961 MB/s).
+Processed 41000 documents (272.0419093821616 docs/s, 1.8904317093304948 MB/s).
+Processed 38000 documents (250.9993707470419 docs/s, 1.7236274954205486 MB/s).
+Processed 39000 documents (253.77760864840747 docs/s, 1.7469626721072782 MB/s).
+Processed 42000 documents (278.2748550052709 docs/s, 1.8963091656682491 MB/s).
+Processed 37000 documents (239.52829363773034 docs/s, 1.6201386734005288 MB/s).
+Processed 38000 documents (245.92851943372327 docs/s, 1.7088259926993292 MB/s).
+Processed 40000 documents (258.22774942374645 docs/s, 1.7749705319864275 MB/s).
+Processed 40000 documents (258.96221542183196 docs/s, 1.7831093523976298 MB/s).
+Processed 38000 documents (249.42260376572227 docs/s, 1.7239528449611754 MB/s).
+Processed 39000 documents (254.47166898492546 docs/s, 1.7379602929231626 MB/s).
+Processed 39000 documents (250.51492150168716 docs/s, 1.7231769546872846 MB/s).
+Processed 39000 documents (253.12965777712287 docs/s, 1.7233970821656857 MB/s).
+Processed 42000 documents (268.8847137012657 docs/s, 1.8362142766460732 MB/s).
+Processed 42000 documents (271.6524296828338 docs/s, 1.8877941601054922 MB/s).
+Processed 38000 documents (240.48700705255058 docs/s, 1.6289104459607222 MB/s).
+Processed 43000 documents (278.18238118575425 docs/s, 1.893236194335501 MB/s).
+Processed 40000 documents (256.9759057625043 docs/s, 1.7565040125090896 MB/s).
+Processed 40000 documents (252.87756059632605 docs/s, 1.7419281567022442 MB/s).
+Processed 39000 documents (249.6142426681371 docs/s, 1.7153857072954386 MB/s).
+Processed 41000 documents (259.0093133317079 docs/s, 1.7815614763715142 MB/s).
+Processed 39000 documents (250.04928135738422 docs/s, 1.7278795432347172 MB/s).
+Processed 40000 documents (251.77093556612516 docs/s, 1.7338159259473371 MB/s).
+Processed 41000 documents (258.42634750475213 docs/s, 1.7759681159678635 MB/s).
+Processed 39000 documents (244.9073291562926 docs/s, 1.7004178317827425 MB/s).
+Processed 43000 documents (273.92845634041294 docs/s, 1.9018416502508626 MB/s).
+Processed 41000 documents (260.3834297444874 docs/s, 1.7758181395675492 MB/s).
+Processed 39000 documents (242.21100219858894 docs/s, 1.6394842169485817 MB/s).
+Processed 43000 documents (268.31774882243957 docs/s, 1.8312685428794562 MB/s).
+Processed 44000 documents (277.89221456180576 docs/s, 1.8903933294283335 MB/s).
+Processed 40000 documents (247.27878120300196 docs/s, 1.7135632052212861 MB/s).
+Processed 42000 documents (259.4782402593588 docs/s, 1.783155757712943 MB/s).
+Processed 40000 documents (250.53034898670217 docs/s, 1.710828716024271 MB/s).
+Processed 40000 documents (249.3745679552422 docs/s, 1.7170808538073357 MB/s).
+Processed 41000 documents (252.38810071116626 docs/s, 1.735221004624891 MB/s).
+Processed 41000 documents (252.57845798710338 docs/s, 1.7389699288242564 MB/s).
+Processed 42000 documents (259.08059937894166 docs/s, 1.7833754898791125 MB/s).
+Processed 40000 documents (250.0538058872991 docs/s, 1.7256863866616683 MB/s).
+Processed 42000 documents (260.82200774051967 docs/s, 1.7826127245971624 MB/s).
+Processed 40000 documents (244.0871905114985 docs/s, 1.6571295525368508 MB/s).
+Processed 44000 documents (269.40013890788174 docs/s, 1.8365682815784503 MB/s).
+Processed 44000 documents (272.5374369831469 docs/s, 1.8951182697374143 MB/s).
+Processed 42000 documents (255.55958265178242 docs/s, 1.7571833900771492 MB/s).
+Processed 41000 documents (251.14627219860432 docs/s, 1.7279955520915602 MB/s).
+Processed 45000 documents (277.4812120993363 docs/s, 1.8879939831179158 MB/s).
+Processed 42000 documents (253.40746904153465 docs/s, 1.7408450973934189 MB/s).
+Processed 41000 documents (251.32149604379285 docs/s, 1.7124610383203422 MB/s).
+Processed 43000 documents (259.35786696283395 docs/s, 1.7817779093680548 MB/s).
+Processed 41000 documents (247.23087709023704 docs/s, 1.7111091260095215 MB/s).
+Processed 41000 documents (245.98797057041654 docs/s, 1.6690449931248117 MB/s).
+Processed 43000 documents (258.3670977592304 docs/s, 1.7753168844221268 MB/s).
+Processed 41000 documents (249.2980290298701 docs/s, 1.7222738902942778 MB/s).
+Processed 45000 documents (269.05448162777395 docs/s, 1.8346009459639414 MB/s).
+Processed 45000 documents (272.4925254674303 docs/s, 1.8931394633832834 MB/s).
+Process Process-7:
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+           ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 93, in encode
+    data = json.loads(json_line)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 2025 (char 2024)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 188, in process_json_file
+    for i, (doc, sentence_lens, bytes_processed) in enumerate(encoded_docs, start=1):
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 423, in <genexpr>
+    return (item for chunk in result for item in chunk)
+                              ^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 873, in next
+    raise value
+json.decoder.JSONDecodeError: Extra data: line 1 column 2025 (char 2024)
+Time to startup: 3.4251773357391357
+Processed 43000 documents (259.20528979039943 docs/s, 1.7721842563462273 MB/s).
+Processed 44000 documents (260.9527078905901 docs/s, 1.7963483058129364 MB/s).
+Processed 42000 documents (252.55810887147666 docs/s, 1.7246308894241191 MB/s).
+Processed 43000 documents (254.4094168068717 docs/s, 1.7465330240260741 MB/s).
+Processed 46000 documents (277.1461357171142 docs/s, 1.890661814018009 MB/s).
+Processed 43000 documents (254.60460657283872 docs/s, 1.7518214047432392 MB/s).
+Processed 42000 documents (248.47257594351478 docs/s, 1.721723748074212 MB/s).
+Processed 44000 documents (259.8105660205531 docs/s, 1.7816306193667761 MB/s).
+Processed 42000 documents (251.55375211798275 docs/s, 1.7358898662833848 MB/s).
+Processed 42000 documents (246.42172552787713 docs/s, 1.6733519020768872 MB/s).
+Processed 46000 documents (270.4463513321494 docs/s, 1.8456603175407231 MB/s).
+Processed 45000 documents (263.7152775233199 docs/s, 1.814338113456559 MB/s).
+Processed 46000 documents (272.6709684374403 docs/s, 1.8898137935599304 MB/s).
+Processed 44000 documents (260.11714027063726 docs/s, 1.7774590423317673 MB/s).
+Processed 43000 documents (253.09040869924635 docs/s, 1.7283884185897667 MB/s).
+Processed 43000 documents (249.51733346439116 docs/s, 1.7250857287564232 MB/s).
+Processed 43000 documents (253.736397983646 docs/s, 1.7492528999200652 MB/s).
+Processed 45000 documents (261.65193700386504 docs/s, 1.7945417933221703 MB/s).
+Processed 47000 documents (276.63708493543317 docs/s, 1.8887186866378465 MB/s).
+Processed 44000 documents (254.60659068530055 docs/s, 1.7554590027749728 MB/s).
+Processed 44000 documents (253.92174902431458 docs/s, 1.7484583788182266 MB/s).
+Processed 43000 documents (247.62073712122938 docs/s, 1.677742043349114 MB/s).
+Processed 47000 documents (271.4864834855386 docs/s, 1.8533388370004116 MB/s).
+Processed 45000 documents (262.5869257911595 docs/s, 1.7935804828121746 MB/s).
+Processed 46000 documents (264.20501124143544 docs/s, 1.8189327172998793 MB/s).
+Processed 47000 documents (272.05717896808477 docs/s, 1.8901003492780037 MB/s).
+Processed 48000 documents (274.29441805061725 docs/s, 1.8722566042335635 MB/s).
+Processed 44000 documents (254.08121587382934 docs/s, 1.7329648772896267 MB/s).
+Processed 45000 documents (256.4646104367245 docs/s, 1.768139445696618 MB/s).
+Processed 44000 documents (254.23461067134315 docs/s, 1.7547530974287064 MB/s).
+Processed 46000 documents (262.0843444754602 docs/s, 1.7996805748813196 MB/s).
+Processed 44000 documents (249.63518578814222 docs/s, 1.7240382945430235 MB/s).
+Processed 47000 documents (266.6176743948513 docs/s, 1.834678776024169 MB/s).
+Processed 44000 documents (248.5293403311424 docs/s, 1.6827139522661798 MB/s).
+Processed 45000 documents (254.58270416365954 docs/s, 1.7518284519492595 MB/s).
+Processed 46000 documents (263.19790017882747 docs/s, 1.7981439756939779 MB/s).
+Processed 48000 documents (275.45380294321154 docs/s, 1.8840844944633492 MB/s).
+Processed 48000 documents (273.06305486258816 docs/s, 1.8916076077509347 MB/s).
+Processed 49000 documents (275.0012524665489 docs/s, 1.8735086326741097 MB/s).
+Processed 45000 documents (251.93125487773594 docs/s, 1.7385365004764617 MB/s).
+Processed 45000 documents (251.05082186702387 docs/s, 1.6965687633528843 MB/s).
+Processed 48000 documents (268.0712672437435 docs/s, 1.842643707372728 MB/s).
+Processed 46000 documents (256.76665730209606 docs/s, 1.7722409373158887 MB/s).
+Processed 45000 documents (254.22536365647338 docs/s, 1.734479955278544 MB/s).
+Processed 46000 documents (255.94024153428745 docs/s, 1.7625894472005776 MB/s).
+Processed 47000 documents (262.0612252438185 docs/s, 1.8007886224479732 MB/s).
+Processed 45000 documents (254.3189235610197 docs/s, 1.755100898580546 MB/s).
+Processed 46000 documents (254.25749256882412 docs/s, 1.7573500723118685 MB/s).
+Processed 49000 documents (274.4687030833525 docs/s, 1.9033846946413506 MB/s).
+Processed 47000 documents (262.6666647479551 docs/s, 1.7959565445945072 MB/s).
+Processed 46000 documents (252.91088905001243 docs/s, 1.7085809297143635 MB/s).
+Processed 49000 documents (274.48107057001766 docs/s, 1.8779087504480299 MB/s).
+Processed 49000 documents (269.09491242567367 docs/s, 1.8468576217221935 MB/s).
+Processed 50000 documents (274.71840283647714 docs/s, 1.8782647868223186 MB/s).
+Processed 47000 documents (257.4338008430818 docs/s, 1.7756036575615288 MB/s).
+Processed 47000 documents (256.4622086798819 docs/s, 1.7649106793462082 MB/s).
+Processed 50000 documents (276.72478017419553 docs/s, 1.9160440183615712 MB/s).
+Processed 46000 documents (255.1899365782365 docs/s, 1.7578920795772328 MB/s).
+Processed 48000 documents (262.4552124194204 docs/s, 1.8016487587001047 MB/s).
+Processed 46000 documents (254.2221865886384 docs/s, 1.7375606245347524 MB/s).
+Processed 47000 documents (256.04100058149845 docs/s, 1.7699999879208965 MB/s).
+Processed 48000 documents (262.9387958485737 docs/s, 1.7941133324313447 MB/s).
+Processed 51000 documents (276.0773754514061 docs/s, 1.8877259901057077 MB/s).
+Processed 48000 documents (259.42229430675246 docs/s, 1.7875265446053608 MB/s).
+Processed 47000 documents (253.02681823775652 docs/s, 1.7112015554008084 MB/s).
+Processed 50000 documents (274.19501270427185 docs/s, 1.8755981388233218 MB/s).
+Processed 50000 documents (269.5910479767983 docs/s, 1.8500452424420413 MB/s).
+Processed 47000 documents (256.48571636135256 docs/s, 1.7665638551621972 MB/s).
+Processed 48000 documents (256.82331251496373 docs/s, 1.7670312660995657 MB/s).
+Processed 48000 documents (256.9325527270435 docs/s, 1.772471172082873 MB/s).
+Processed 51000 documents (276.31265358575945 docs/s, 1.9122395159950063 MB/s).
+Processed 49000 documents (262.1947002279965 docs/s, 1.802141202051495 MB/s).
+Processed 51000 documents (272.1497312845643 docs/s, 1.865711418343579 MB/s).
+Processed 47000 documents (254.0190320271862 docs/s, 1.7382366563233425 MB/s).
+Processed 52000 documents (277.5818758342814 docs/s, 1.89792846095675 MB/s).
+Processed 49000 documents (261.28416513621204 docs/s, 1.799923387321358 MB/s).
+Processed 48000 documents (254.2699197663596 docs/s, 1.7144997671704152 MB/s).
+Processed 49000 documents (262.55100697287315 docs/s, 1.7927742889978673 MB/s).
+Processed 48000 documents (257.4853444836474 docs/s, 1.7720280324370368 MB/s).
+Processed 53000 documents (279.97530246729997 docs/s, 1.9120610358194565 MB/s).
+Processed 52000 documents (274.2255404634856 docs/s, 1.8773176561844571 MB/s).
+Processed 51000 documents (272.50171748073893 docs/s, 1.865444971877378 MB/s).
+Processed 49000 documents (257.15796358797746 docs/s, 1.7682543176267234 MB/s).
+Processed 52000 documents (276.3363555640644 docs/s, 1.9127193847780137 MB/s).
+Processed 50000 documents (262.69143713387234 docs/s, 1.8049870918750486 MB/s).
+Processed 48000 documents (254.74588301705526 docs/s, 1.7401057260001345 MB/s).
+Processed 50000 documents (264.1360919539489 docs/s, 1.802350640329561 MB/s).
+Processed 50000 documents (261.3346762345211 docs/s, 1.800331542999045 MB/s).
+Processed 49000 documents (255.85120006063917 docs/s, 1.7684549264678242 MB/s).
+Processed 53000 documents (276.1376323932968 docs/s, 1.8893177083123132 MB/s).
+Processed 49000 documents (254.3143765775045 docs/s, 1.7142973374895651 MB/s).
+Processed 50000 documents (259.5708022816211 docs/s, 1.7848937309063975 MB/s).
+Processed 49000 documents (256.69790061476505 docs/s, 1.75335004974949 MB/s).
+Processed 49000 documents (257.0354441527598 docs/s, 1.7691003741645346 MB/s).
+Processed 50000 documents (258.16442507635685 docs/s, 1.7856991972301055 MB/s).
+Processed 54000 documents (278.72402440463753 docs/s, 1.903147382004017 MB/s).
+Processed 52000 documents (272.1081412781713 docs/s, 1.8603559636591287 MB/s).
+Processed 51000 documents (265.1323012941306 docs/s, 1.8090530239667129 MB/s).
+Processed 51000 documents (262.89312846735055 docs/s, 1.8055514350516977 MB/s).
+Processed 51000 documents (261.57336808086364 docs/s, 1.8008832970745656 MB/s).
+Processed 53000 documents (275.44047649153805 docs/s, 1.9042263298872915 MB/s).
+Processed 51000 documents (261.7621794421236 docs/s, 1.8009416318766658 MB/s).
+Processed 54000 documents (276.5819440125548 docs/s, 1.8886078365395556 MB/s).
+Processed 50000 documents (258.6510057849031 docs/s, 1.778423739834576 MB/s).
+Processed 52000 documents (264.11821348943306 docs/s, 1.8159433528564954 MB/s).
+Processed 50000 documents (257.3590932021898 docs/s, 1.758130388643006 MB/s).
+Processed 50000 documents (252.96266291663812 docs/s, 1.7095840597577008 MB/s).
+Processed 51000 documents (258.4226723479114 docs/s, 1.7858955064637652 MB/s).
+Processed 52000 documents (263.99819832666896 docs/s, 1.8091764089237987 MB/s).
+Processed 52000 documents (265.54432896374965 docs/s, 1.8115655682869507 MB/s).
+Processed 54000 documents (276.0914659705837 docs/s, 1.9084607243728025 MB/s).
+Processed 53000 documents (271.37944941266414 docs/s, 1.8607334100576634 MB/s).
+Processed 55000 documents (277.4955264743043 docs/s, 1.8968530312454361 MB/s).
+Processed 52000 documents (261.83487340552324 docs/s, 1.8003144131735922 MB/s).
+Processed 55000 documents (276.2442647470183 docs/s, 1.8854493933902117 MB/s).
+Processed 51000 documents (259.6957173516491 docs/s, 1.7851257088255097 MB/s).
+Processed 51000 documents (255.18445566391773 docs/s, 1.7259507233820284 MB/s).
+Processed 53000 documents (264.90967133887796 docs/s, 1.8179282220827637 MB/s).
+Processed 55000 documents (278.179047993948 docs/s, 1.923228352521668 MB/s).
+Processed 54000 documents (273.36730214627045 docs/s, 1.8739771182385783 MB/s).
+Processed 51000 documents (257.3980685461635 docs/s, 1.7608271479819955 MB/s).
+Processed 52000 documents (259.1057127100559 docs/s, 1.7904722127601251 MB/s).
+Processed 53000 documents (263.9539869602227 docs/s, 1.8089286878837154 MB/s).
+Processed 53000 documents (266.0238929132894 docs/s, 1.8120928665250018 MB/s).
+Processed 52000 documents (261.00279445583305 docs/s, 1.7832366557049122 MB/s).
+Processed 52000 documents (260.0273235183789 docs/s, 1.7854473135761617 MB/s).
+Processed 56000 documents (276.36454720915555 docs/s, 1.886783815143723 MB/s).
+Processed 54000 documents (265.4868297894482 docs/s, 1.8192293190488775 MB/s).
+Processed 56000 documents (278.93019237455275 docs/s, 1.9292064886380387 MB/s).
+Processed 56000 documents (275.59950513067344 docs/s, 1.882757813427512 MB/s).
+Processed 53000 documents (260.83122108507945 docs/s, 1.792191844660925 MB/s).
+Processed 52000 documents (254.8242565388515 docs/s, 1.7244436506643224 MB/s).
+Processed 53000 documents (263.45269754696034 docs/s, 1.802586279381702 MB/s).
+Processed 54000 documents (265.374309323538 docs/s, 1.8211285160150874 MB/s).
+Processed 55000 documents (273.52914202108644 docs/s, 1.877006345041464 MB/s).
+Processed 54000 documents (265.8139329922157 docs/s, 1.8125578490340184 MB/s).
+Processed 53000 documents (258.17319907876936 docs/s, 1.7849445511554558 MB/s).
+Processed 57000 documents (280.00060114404005 docs/s, 1.9347370305890497 MB/s).
+Processed 53000 documents (260.5063080480044 docs/s, 1.7864173210514531 MB/s).
+Processed 55000 documents (266.22574621587796 docs/s, 1.8220890624995076 MB/s).
+Processed 57000 documents (276.3219428474219 docs/s, 1.886232660394231 MB/s).
+Processed 53000 documents (255.78053147195263 docs/s, 1.7295060465719483 MB/s).
+Processed 54000 documents (261.1618395414629 docs/s, 1.7950206530873145 MB/s).
+Processed 54000 documents (263.99778142123233 docs/s, 1.806250662260318 MB/s).
+Processed 57000 documents (274.6795487596415 docs/s, 1.8786842186238162 MB/s).
+Processed 55000 documents (265.4007772718969 docs/s, 1.8241103077502847 MB/s).
+Processed 56000 documents (273.3398797530184 docs/s, 1.8751688395608603 MB/s).
+Processed 55000 documents (266.54176465307523 docs/s, 1.819677556807468 MB/s).
+Processed 58000 documents (281.11587875210563 docs/s, 1.944335139926504 MB/s).
+Processed 58000 documents (278.02888048651 docs/s, 1.8978667345570022 MB/s).
+Processed 56000 documents (267.5265039754137 docs/s, 1.8298278092777562 MB/s).
+Processed 54000 documents (258.0764801929497 docs/s, 1.7825056196895817 MB/s).
+Processed 58000 documents (276.91441402126424 docs/s, 1.895349430463411 MB/s).
+Processed 59000 documents (284.3949529655913 docs/s, 1.9661790089456443 MB/s).
+Processed 54000 documents (255.80663834761864 docs/s, 1.7289767663018547 MB/s).
+Processed 55000 documents (263.90023718561235 docs/s, 1.8074073025682964 MB/s).
+Processed 54000 documents (259.33748456054434 docs/s, 1.7794994953753323 MB/s).
+Processed 59000 documents (279.51423065346245 docs/s, 1.9098947109930948 MB/s).
+Processed 56000 documents (267.182460035739 docs/s, 1.821902850078205 MB/s).
+Processed 59000 documents (278.5617452545787 docs/s, 1.9085923076049733 MB/s).
+Processed 55000 documents (259.7336820559892 docs/s, 1.7848951505666342 MB/s).
+Processed 56000 documents (264.6934144138497 docs/s, 1.8189325013651096 MB/s).
+Processed 60000 documents (285.78250820370226 docs/s, 1.9748291667352427 MB/s).
+Processed 57000 documents (271.6080228193097 docs/s, 1.8648247096030819 MB/s).
+Processed 57000 documents (266.85281692382654 docs/s, 1.827077910802982 MB/s).
+Processed 55000 documents (257.20529159162163 docs/s, 1.7760330775011681 MB/s).
+Processed 60000 documents (280.57747449079875 docs/s, 1.9176188827120124 MB/s).
+Processed 55000 documents (260.30949104731206 docs/s, 1.7863524063891887 MB/s).
+Processed 55000 documents (255.9227761429543 docs/s, 1.7315666345396865 MB/s).
+Processed 56000 documents (264.1499262380741 docs/s, 1.808806327881828 MB/s).
+Processed 61000 documents (287.38340515709126 docs/s, 1.9822111924004242 MB/s).
+Processed 60000 documents (279.3815646099837 docs/s, 1.9146868888260031 MB/s).
+Processed 56000 documents (259.96065544508065 docs/s, 1.7858606944567175 MB/s).
+Processed 57000 documents (266.8968839054839 docs/s, 1.8191830308923282 MB/s).
+Processed 57000 documents (264.5687274217405 docs/s, 1.8199689384622506 MB/s).
+Processed 58000 documents (271.6049310489641 docs/s, 1.8660187316380437 MB/s).
+Processed 58000 documents (267.55566065547583 docs/s, 1.8337168826024046 MB/s).
+Processed 56000 documents (257.7874804820097 docs/s, 1.7811317159312312 MB/s).
+Processed 56000 documents (261.04179008111447 docs/s, 1.791047120498332 MB/s).
+Processed 61000 documents (280.9067113399453 docs/s, 1.919169921137375 MB/s).
+Processed 57000 documents (264.64990817078666 docs/s, 1.8136993286823757 MB/s).
+Processed 56000 documents (256.2261136025099 docs/s, 1.7334110601518244 MB/s).
+Processed 61000 documents (279.5476502691731 docs/s, 1.9149474487765956 MB/s).
+Processed 62000 documents (287.2917385703375 docs/s, 1.9814020883299028 MB/s).
+Processed 57000 documents (261.2893291937408 docs/s, 1.7917241400852102 MB/s).
+Processed 58000 documents (266.2811642514889 docs/s, 1.8312514130849746 MB/s).
+Processed 58000 documents (267.487346252627 docs/s, 1.8281682702491542 MB/s).
+Processed 57000 documents (260.2020071416007 docs/s, 1.7952049964811692 MB/s).
+Processed 59000 documents (267.91685760329125 docs/s, 1.8372669766831649 MB/s).
+Processed 59000 documents (271.7869028638065 docs/s, 1.8664095747994704 MB/s).
+Processed 62000 documents (280.3707398496047 docs/s, 1.9196820977106341 MB/s).
+Processed 59000 documents (267.09319733534466 docs/s, 1.8377327759629702 MB/s).
+Processed 63000 documents (287.6061273983207 docs/s, 1.9811736161594207 MB/s).
+Processed 62000 documents (280.13986919236766 docs/s, 1.9103172502734935 MB/s).
+Processed 59000 documents (268.6385282231506 docs/s, 1.8384457383435524 MB/s).
+Processed 60000 documents (274.1974953991924 docs/s, 1.882981433390735 MB/s).
+Processed 57000 documents (260.2336402554555 docs/s, 1.7870865246892218 MB/s).
+Processed 58000 documents (264.1882439359359 docs/s, 1.8112309556050972 MB/s).
+Processed 58000 documents (261.1346862979448 docs/s, 1.7918956560591959 MB/s).
+Processed 57000 documents (255.76448714984173 docs/s, 1.7320977209490342 MB/s).
+Processed 60000 documents (269.4247667878463 docs/s, 1.8482416242616158 MB/s).
+Processed 58000 documents (259.9328884471271 docs/s, 1.7933693420762964 MB/s).
+Processed 61000 documents (276.0577370445698 docs/s, 1.894759468489318 MB/s).
+Processed 63000 documents (281.11048092145666 docs/s, 1.921650856868596 MB/s).
+Processed 63000 documents (281.01772588787816 docs/s, 1.917706878639038 MB/s).
+Processed 59000 documents (265.1891728907188 docs/s, 1.8182645945910576 MB/s).
+Processed 61000 documents (270.8660849803428 docs/s, 1.8571386626509365 MB/s).
+Processed 64000 documents (287.50775409296585 docs/s, 1.9788923001338594 MB/s).
+Processed 60000 documents (266.4908279423028 docs/s, 1.8355106677164257 MB/s).
+Processed 59000 documents (261.44581449150667 docs/s, 1.7958059273009295 MB/s).
+Processed 58000 documents (260.1505682374144 docs/s, 1.786635463237569 MB/s).
+Processed 58000 documents (256.12377290645776 docs/s, 1.7349228183734993 MB/s).
+Processed 60000 documents (267.74482058725624 docs/s, 1.83544935532999 MB/s).
+Processed 59000 documents (260.5548220421182 docs/s, 1.7992686033131324 MB/s).
+Processed 64000 documents (281.71974432478225 docs/s, 1.9224433237005882 MB/s).
+Processed 62000 documents (275.99138210841704 docs/s, 1.8934282418405153 MB/s).
+Processed 65000 documents (288.37216824598863 docs/s, 1.9839769417144735 MB/s).
+Processed 62000 documents (271.32595589621536 docs/s, 1.8597105292470097 MB/s).
+Processed 64000 documents (280.35956168898605 docs/s, 1.9208792853007883 MB/s).
+Processed 59000 documents (261.59663287760026 docs/s, 1.7975105593514935 MB/s).
+Processed 60000 documents (265.4083378759052 docs/s, 1.8191948432151344 MB/s).
+Processed 61000 documents (269.2296125275 docs/s, 1.8430038477027602 MB/s).
+Processed 61000 documents (266.70912871451486 docs/s, 1.8387019585394404 MB/s).
+Processed 60000 documents (261.7965275590454 docs/s, 1.7951500248933663 MB/s).
+Processed 66000 documents (290.5374487213576 docs/s, 1.9949636751709245 MB/s).
+Processed 59000 documents (256.09299642919257 docs/s, 1.736301725521597 MB/s).
+Processed 62000 documents (271.6513472305245 docs/s, 1.8573627740608414 MB/s).
+Processed 63000 documents (276.84365343055066 docs/s, 1.9010379172619742 MB/s).
+Processed 60000 documents (260.1697519740244 docs/s, 1.7978509668985538 MB/s).
+Processed 65000 documents (281.7891908432231 docs/s, 1.9199298477321005 MB/s).
+Processed 65000 documents (281.34985842866786 docs/s, 1.9267283003274045 MB/s).
+Process Process-8:
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+           ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 93, in encode
+    data = json.loads(json_line)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 4097 (char 4096)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 188, in process_json_file
+    for i, (doc, sentence_lens, bytes_processed) in enumerate(encoded_docs, start=1):
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 423, in <genexpr>
+    return (item for chunk in result for item in chunk)
+                              ^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 873, in next
+    raise value
+json.decoder.JSONDecodeError: Extra data: line 1 column 4097 (char 4096)
+Time to startup: 1.6289253234863281
+Processed 67000 documents (292.57880950694334 docs/s, 2.007767197293691 MB/s).
+Processed 60000 documents (261.7284877592149 docs/s, 1.7955723410925293 MB/s).
+Processed 63000 documents (271.08137573309205 docs/s, 1.8598912148739264 MB/s).
+Processed 61000 documents (265.3410365133969 docs/s, 1.8174217361241667 MB/s).
+Processed 62000 documents (266.90890677288394 docs/s, 1.8369152258524124 MB/s).
+Processed 63000 documents (272.6895408190686 docs/s, 1.864895928568894 MB/s).
+Processed 61000 documents (261.68873078434973 docs/s, 1.7945191872146056 MB/s).
+Processed 64000 documents (277.83491513025365 docs/s, 1.9075429529502992 MB/s).
+Processed 66000 documents (283.03832293775446 docs/s, 1.9305187353849755 MB/s).
+Processed 60000 documents (255.94632766142195 docs/s, 1.73867649387021 MB/s).
+Processed 68000 documents (293.2683464196839 docs/s, 2.0119266402535896 MB/s).
+Processed 66000 documents (281.67955705328035 docs/s, 1.9307191368681977 MB/s).
+Processed 61000 documents (263.5761645852806 docs/s, 1.8067070266286862 MB/s).
+Processed 62000 documents (267.14849463512013 docs/s, 1.8279099721816303 MB/s).
+Processed 64000 documents (271.24488575399243 docs/s, 1.8623739486682898 MB/s).
+Processed 62000 documents (263.1172084882436 docs/s, 1.8067321032846142 MB/s).
+Processed 63000 documents (267.40822863143575 docs/s, 1.8372769246594505 MB/s).
+Processed 65000 documents (278.7255829879184 docs/s, 1.9105875085000616 MB/s).
+Processed 64000 documents (273.3735506131905 docs/s, 1.871496279650307 MB/s).
+Processed 67000 documents (284.00035439714844 docs/s, 1.9348753450961131 MB/s).
+Processed 62000 documents (265.52635365482524 docs/s, 1.8189527031936104 MB/s).
+Processed 61000 documents (256.62155334038385 docs/s, 1.7418623654691434 MB/s).
+Processed 68000 documents (286.87881654460756 docs/s, 1.9538220219691411 MB/s).
+Processed 63000 documents (268.49746292341973 docs/s, 1.8364746417302895 MB/s).
+Processed 67000 documents (281.2639432052438 docs/s, 1.92967506438449 MB/s).
+Processed 63000 documents (267.0227968324395 docs/s, 1.8263735205148242 MB/s).
+Processed 66000 documents (280.1024828961985 docs/s, 1.922879917172963 MB/s).
+Processed 69000 documents (291.98014033260404 docs/s, 2.002936159806762 MB/s).
+Processed 65000 documents (271.94442089933705 docs/s, 1.8651023933939028 MB/s).
+Processed 63000 documents (263.5136154146065 docs/s, 1.8083647530946279 MB/s).
+Processed 64000 documents (267.551384088696 docs/s, 1.8390925974565762 MB/s).
+Processed 65000 documents (273.5236753053545 docs/s, 1.8727134529805045 MB/s).
+Processed 62000 documents (257.77140290451433 docs/s, 1.7495147712962142 MB/s).
+Processed 66000 documents (273.7996568364053 docs/s, 1.8786713098695733 MB/s).
+Processed 69000 documents (286.6696875548079 docs/s, 1.950395298461021 MB/s).
+Processed 68000 documents (282.1107757202827 docs/s, 1.9345109980742314 MB/s).
+Processed 64000 documents (268.05048136256613 docs/s, 1.8349813880605048 MB/s).
+Processed 64000 documents (268.5595597896148 docs/s, 1.8366250129481085 MB/s).
+Processed 67000 documents (281.01699270283774 docs/s, 1.9272915238352823 MB/s).
+Processed 70000 documents (292.56472289422106 docs/s, 2.004667672431906 MB/s).
+Processed 64000 documents (264.8839899989385 docs/s, 1.8203726250223173 MB/s).
+Processed 66000 documents (274.87299677750946 docs/s, 1.8814399433442266 MB/s).
+Processed 65000 documents (267.99555829434723 docs/s, 1.8395709053802094 MB/s).
+Processed 67000 documents (277.8438799756587 docs/s, 1.8997325910642164 MB/s).
+Processed 67000 documents (274.7186332125286 docs/s, 1.8851731990065663 MB/s).
+Processed 63000 documents (257.8963768267284 docs/s, 1.751126308764605 MB/s).
+Processed 65000 documents (266.74553697525533 docs/s, 1.8327725622248427 MB/s).
+Processed 70000 documents (287.02347827641336 docs/s, 1.950060801347581 MB/s).
+Processed 68000 documents (281.7481652652534 docs/s, 1.931094154387772 MB/s).
+Processed 65000 documents (269.13911210959355 docs/s, 1.839307436960312 MB/s).
+Processed 65000 documents (268.28223009607706 docs/s, 1.8342488101424639 MB/s).
+Processed 69000 documents (281.70580743101135 docs/s, 1.9295567084981726 MB/s).
+Processed 68000 documents (277.09085475200186 docs/s, 1.8998928046069528 MB/s).
+Processed 71000 documents (292.19583462067476 docs/s, 2.000210488127435 MB/s).
+Process Process-9:
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+           ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 93, in encode
+    data = json.loads(json_line)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 18872 (char 18871)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 188, in process_json_file
+    for i, (doc, sentence_lens, bytes_processed) in enumerate(encoded_docs, start=1):
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 423, in <genexpr>
+    return (item for chunk in result for item in chunk)
+                              ^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 873, in next
+    raise value
+json.decoder.JSONDecodeError: Extra data: line 1 column 18872 (char 18871)
+Time to startup: 1.9904718399047852
+Processed 64000 documents (259.6877776449284 docs/s, 1.7654076032156818 MB/s).
+Processed 66000 documents (268.2094645907297 docs/s, 1.8422901506648472 MB/s).
+Processed 68000 documents (278.46798036034244 docs/s, 1.9019736437510106 MB/s).
+Processed 71000 documents (288.22399374314307 docs/s, 1.9592475736222394 MB/s).
+Processed 69000 documents (282.34908518828325 docs/s, 1.9345285951938527 MB/s).
+Processed 66000 documents (269.7756698742567 docs/s, 1.8453280325411145 MB/s).
+Processed 69000 documents (280.63782824991995 docs/s, 1.9162035469468255 MB/s).
+Processed 72000 documents (293.11002141622816 docs/s, 2.006740063511265 MB/s).
+Processed 69000 documents (277.8927358685715 docs/s, 1.9038753269497508 MB/s).
+Processed 70000 documents (281.90348000484374 docs/s, 1.9314736588131467 MB/s).
+Processed 66000 documents (268.36740271090355 docs/s, 1.8356495096278165 MB/s).
+Processed 67000 documents (269.6108589047195 docs/s, 1.848588185552275 MB/s).
+Processed 65000 documents (260.7276531808205 docs/s, 1.7705217985953643 MB/s).
+Processed 73000 documents (295.2754256511827 docs/s, 2.0211117900889217 MB/s).
+Processed 70000 documents (283.603547364549 docs/s, 1.9443051755214558 MB/s).
+Processed 70000 documents (282.49199418677114 docs/s, 1.929473444723341 MB/s).
+Processed 72000 documents (288.355437973893 docs/s, 1.9600087095806729 MB/s).
+Processed 67000 documents (270.8251318516082 docs/s, 1.8534648582893052 MB/s).
+Processed 74000 documents (297.86987105925465 docs/s, 2.036093866984435 MB/s).
+Processed 70000 documents (278.43756201930194 docs/s, 1.9046126120114766 MB/s).
+Processed 71000 documents (282.4294733011965 docs/s, 1.9334189236309953 MB/s).
+Processed 68000 documents (270.4279551751066 docs/s, 1.8528134135560335 MB/s).
+Processed 68000 documents (273.2665700266418 docs/s, 1.8681060562792273 MB/s).
+Processed 67000 documents (268.6461538793629 docs/s, 1.839142641306678 MB/s).
+Processed 66000 documents (261.1953316298865 docs/s, 1.774076167410974 MB/s).
+Processed 75000 documents (300.20355159904767 docs/s, 2.0518830107562573 MB/s).
+Processed 71000 documents (284.3151708244055 docs/s, 1.9465789687941295 MB/s).
+Processed 71000 documents (283.1530085610176 docs/s, 1.9332369121871975 MB/s).
+Processed 73000 documents (288.90529254917175 docs/s, 1.9637146016024472 MB/s).
+Processed 69000 documents (275.47269074787073 docs/s, 1.8831577716994141 MB/s).
+Processed 71000 documents (279.7126916192084 docs/s, 1.911505083669459 MB/s).
+Processed 72000 documents (283.2926740637411 docs/s, 1.9356196892066861 MB/s).
+Processed 76000 documents (301.7243663969505 docs/s, 2.061096771892979 MB/s).
+Processed 72000 documents (285.02077324545826 docs/s, 1.94256400139165 MB/s).
+Processed 68000 documents (269.4331925973984 docs/s, 1.8426706765159886 MB/s).
+Processed 69000 documents (270.7288366689894 docs/s, 1.854140081791085 MB/s).
+Processed 67000 documents (262.1083535084269 docs/s, 1.7780277309319774 MB/s).
+Processed 70000 documents (277.45111343325465 docs/s, 1.8962101886308471 MB/s).
+Processed 72000 documents (281.67784455567454 docs/s, 1.922871344890027 MB/s).
+Processed 74000 documents (289.77188911541396 docs/s, 1.9668027096168683 MB/s).
+Processed 72000 documents (284.7673967573341 docs/s, 1.9486008567029314 MB/s).
+Processed 73000 documents (286.5611155240037 docs/s, 1.9524366199142185 MB/s).
+Processed 77000 documents (302.6396948229706 docs/s, 2.065154286423166 MB/s).
+Processed 69000 documents (271.1968670826146 docs/s, 1.853153785406333 MB/s).
+Processed 73000 documents (283.45396025239097 docs/s, 1.9378345317659411 MB/s).
+Processed 73000 documents (286.5196075302947 docs/s, 1.9604881414266724 MB/s).
+Processed 70000 documents (271.62774244826403 docs/s, 1.861050344485664 MB/s).
+Processed 68000 documents (262.78725271437287 docs/s, 1.7833364673067817 MB/s).
+Processed 75000 documents (290.765116539996 docs/s, 1.9776763905305215 MB/s).
+Processed 71000 documents (277.90814919023865 docs/s, 1.8991294271215848 MB/s).
+Processed 73000 documents (282.2790770096185 docs/s, 1.9259706031284887 MB/s).
+Processed 74000 documents (287.96733291949636 docs/s, 1.9604243086630047 MB/s).
+Processed 78000 documents (303.46302732343037 docs/s, 2.0687662280664365 MB/s).
+Processed 74000 documents (288.1579152986387 docs/s, 1.9695290959539054 MB/s).
+Processed 70000 documents (271.9040867775665 docs/s, 1.8551047645722292 MB/s).
+Processed 74000 documents (284.5939395772578 docs/s, 1.9446829774022238 MB/s).
+Processed 69000 documents (264.67412932413237 docs/s, 1.7944268997955317 MB/s).
+Processed 74000 documents (284.1593718974821 docs/s, 1.9381086847774647 MB/s).
+Processed 76000 documents (291.9534720541621 docs/s, 1.9841429659564678 MB/s).
+Processed 71000 documents (272.0012488787329 docs/s, 1.8614021854586837 MB/s).
+Processed 70000 documents (267.11893319844785 docs/s, 1.810619779656991 MB/s).
+Processed 75000 documents (288.9367018727964 docs/s, 1.9650982762962448 MB/s).
+Processed 75000 documents (286.3809292307577 docs/s, 1.956498394838118 MB/s).
+Process Process-11:
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+           ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 93, in encode
+    data = json.loads(json_line)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 6459 (char 6458)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 188, in process_json_file
+    for i, (doc, sentence_lens, bytes_processed) in enumerate(encoded_docs, start=1):
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 423, in <genexpr>
+    return (item for chunk in result for item in chunk)
+                              ^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 873, in next
+    raise value
+json.decoder.JSONDecodeError: Extra data: line 1 column 6459 (char 6458)
+Time to startup: 4.1892664432525635
+Processed 75000 documents (285.90210777878207 docs/s, 1.9503817668478476 MB/s).
+Processed 79000 documents (303.58044389058523 docs/s, 2.0696759898768082 MB/s).
+Processed 71000 documents (272.5187706469603 docs/s, 1.8594773970234189 MB/s).
+Processed 77000 documents (292.8391772224109 docs/s, 1.9890335651824398 MB/s).
+Processed 76000 documents (290.95262539206396 docs/s, 1.9779214157064644 MB/s).
+Processed 75000 documents (287.72102238467284 docs/s, 1.970272166124734 MB/s).
+Processed 72000 documents (272.9564649859422 docs/s, 1.8669623217992293 MB/s).
+Processed 72000 documents (275.2000498424027 docs/s, 1.8764884877622523 MB/s).
+Processed 71000 documents (268.1555981217909 docs/s, 1.8169140594523356 MB/s).
+Processed 76000 documents (287.1637177207926 docs/s, 1.9638416272474797 MB/s).
+Processed 76000 documents (286.5088479049375 docs/s, 1.9558744952215292 MB/s).
+Processed 77000 documents (292.1769643129043 docs/s, 1.9855387743300166 MB/s).
+Processed 76000 documents (289.2580471669635 docs/s, 1.9811849020504526 MB/s).
+Processed 73000 documents (277.0644616293244 docs/s, 1.8894660518616417 MB/s).
+Processed 80000 documents (303.4172886619904 docs/s, 2.069062343885071 MB/s).
+Processed 72000 documents (269.93858031098586 docs/s, 1.8292906444199126 MB/s).
+Processed 78000 documents (293.27170062365724 docs/s, 1.991788731175135 MB/s).
+Processed 73000 documents (273.82865654229494 docs/s, 1.8734324434021454 MB/s).
+Processed 77000 documents (291.42692279924313 docs/s, 1.9978312520929806 MB/s).
+Processed 77000 documents (287.7375374115524 docs/s, 1.9634084265042293 MB/s).
+Processed 77000 documents (287.7288910611878 docs/s, 1.9674962224633612 MB/s).
+Processed 81000 documents (305.1385788193157 docs/s, 2.0793940583964585 MB/s).
+Processed 74000 documents (278.52717997387373 docs/s, 1.8984766434947047 MB/s).
+Processed 78000 documents (292.9250910438534 docs/s, 1.9928983877371103 MB/s).
+Processed 73000 documents (270.7837965902092 docs/s, 1.834474644848627 MB/s).
+Processed 74000 documents (274.92428495534443 docs/s, 1.8797812829332443 MB/s).
+Processed 79000 documents (293.54239123470467 docs/s, 1.9923477635015594 MB/s).
+Processed 78000 documents (292.48869033303043 docs/s, 2.004224918436395 MB/s).
+Processed 78000 documents (289.2488089551622 docs/s, 1.9763832643350738 MB/s).
+Processed 82000 documents (306.81527181660493 docs/s, 2.090630434688979 MB/s).
+Processed 75000 documents (280.5335725134309 docs/s, 1.912634611229567 MB/s).
+Processed 78000 documents (288.54560443452743 docs/s, 1.9697364595001052 MB/s).
+Processed 79000 documents (291.4162692538867 docs/s, 1.990786512965833 MB/s).
+Processed 79000 documents (293.45085300672423 docs/s, 1.9946956593320488 MB/s).
+Processed 76000 documents (282.5060052923426 docs/s, 1.9254751249890834 MB/s).
+Processed 75000 documents (276.05780038123174 docs/s, 1.8882206536535948 MB/s).
+Processed 74000 documents (271.6298788167456 docs/s, 1.8378402967921657 MB/s).
+Processed 83000 documents (307.73766024027066 docs/s, 2.0988400565261993 MB/s).
+Processed 79000 documents (289.73996756872975 docs/s, 1.9772112806572666 MB/s).
+Processed 79000 documents (293.1202238152866 docs/s, 2.0085998859873406 MB/s).
+Processed 80000 documents (293.80445044162605 docs/s, 1.993299161013465 MB/s).
+Processed 77000 documents (283.76985562306777 docs/s, 1.9316695640190051 MB/s).
+Processed 80000 documents (292.1158737033771 docs/s, 2.0005647686570267 MB/s).
+Processed 76000 documents (277.50487499846616 docs/s, 1.897653853299276 MB/s).
+Processed 80000 documents (294.19997142560163 docs/s, 1.9986312065309553 MB/s).
+Processed 80000 documents (291.61579363816884 docs/s, 1.9905720734420322 MB/s).
+Processed 75000 documents (272.9196229279854 docs/s, 1.8457881123813782 MB/s).
+Processed 81000 documents (294.7168531844978 docs/s, 2.0002040575915636 MB/s).
+Processed 84000 documents (307.92611123878237 docs/s, 2.0998191958435766 MB/s).
+Processed 80000 documents (293.792870740831 docs/s, 2.0120885375313584 MB/s).
+Processed 77000 documents (279.1099278170825 docs/s, 1.9076219909217575 MB/s).
+Processed 81000 documents (296.10486616440755 docs/s, 2.0289422857239665 MB/s).
+Processed 78000 documents (284.53313790751736 docs/s, 1.9375287392803 MB/s).
+Processed 76000 documents (273.88209490625684 docs/s, 1.8532652807915446 MB/s).
+Processed 81000 documents (292.21184058441037 docs/s, 1.994043710477149 MB/s).
+Processed 82000 documents (296.1071469272885 docs/s, 2.0097917847249303 MB/s).
+Processed 81000 documents (294.27483724636056 docs/s, 1.999902572061711 MB/s).
+Processed 81000 documents (291.7090355493273 docs/s, 2.0007342761910016 MB/s).
+Processed 85000 documents (308.6442218082743 docs/s, 2.10431518658605 MB/s).
+Processed 82000 documents (294.0974400630984 docs/s, 2.015132808738644 MB/s).
+Processed 83000 documents (297.99240051277735 docs/s, 2.022536200933303 MB/s).
+Processed 79000 documents (285.6976960457711 docs/s, 1.9461364739864417 MB/s).
+Processed 82000 documents (296.95470060097455 docs/s, 2.034729510213538 MB/s).
+Processed 78000 documents (279.40154970073246 docs/s, 1.9093184594792267 MB/s).
+Processed 77000 documents (275.0769830405192 docs/s, 1.8622449586973275 MB/s).
+Processed 82000 documents (295.157781675509 docs/s, 2.0060332026600953 MB/s).
+Process Process-1:
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+           ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 93, in encode
+    data = json.loads(json_line)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 4032 (char 4031)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 188, in process_json_file
+    for i, (doc, sentence_lens, bytes_processed) in enumerate(encoded_docs, start=1):
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 423, in <genexpr>
+    return (item for chunk in result for item in chunk)
+                              ^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 873, in next
+    raise value
+json.decoder.JSONDecodeError: Extra data: line 1 column 4032 (char 4031)
+Time to startup: 1.3403761386871338
+Processed 84000 documents (299.93831830109343 docs/s, 2.0363594691065194 MB/s).
+Processed 82000 documents (292.22157291350516 docs/s, 1.9942613364719428 MB/s).
+Processed 86000 documents (308.8459370353691 docs/s, 2.1048788959105416 MB/s).
+Processed 83000 documents (295.37253772116236 docs/s, 2.025992993384943 MB/s).
+Processed 85000 documents (302.33255091647356 docs/s, 2.0515093620340106 MB/s).
+Processed 80000 documents (286.4704962273088 docs/s, 1.9517147755942614 MB/s).
+Processed 83000 documents (297.55341623739605 docs/s, 2.0409537853193895 MB/s).
+Processed 79000 documents (280.26245580073726 docs/s, 1.9144223982347048 MB/s).
+Processed 83000 documents (296.2975768831002 docs/s, 2.0119809349764677 MB/s).
+Processed 84000 documents (296.6168822505593 docs/s, 2.0362374352596295 MB/s).
+Processed 83000 documents (292.8089167402113 docs/s, 2.0010093993318 MB/s).
+Processed 86000 documents (303.7062044530913 docs/s, 2.0619432178103487 MB/s).
+Processed 87000 documents (309.3511105955228 docs/s, 2.1093137023721344 MB/s).
+Processed 84000 documents (298.744324621338 docs/s, 2.0502056150658867 MB/s).
+Processed 84000 documents (297.77650437106274 docs/s, 2.0199045432860223 MB/s).
+Processed 80000 documents (281.59627040486527 docs/s, 1.9235900766456508 MB/s).
+Processed 81000 documents (287.1339634070563 docs/s, 1.956906899858185 MB/s).
+Processed 87000 documents (305.9283339226637 docs/s, 2.07644701239799 MB/s).
+Processed 84000 documents (294.4565420314944 docs/s, 2.013189922378771 MB/s).
+Processed 88000 documents (310.8677766294731 docs/s, 2.1174699368661374 MB/s).
+Processed 85000 documents (297.48254991282784 docs/s, 2.040261158315192 MB/s).
+Processed 81000 documents (283.038802096826 docs/s, 1.932585737691977 MB/s).
+Processed 85000 documents (299.66264066712984 docs/s, 2.0556757476228635 MB/s).
+Processed 82000 documents (288.208454016087 docs/s, 1.9644208808420724 MB/s).
+Processed 85000 documents (298.32998786667605 docs/s, 2.0258406974938765 MB/s).
+Processed 88000 documents (306.9277992154205 docs/s, 2.084849158966548 MB/s).
+Processed 86000 documents (299.0880583953517 docs/s, 2.0511568332353436 MB/s).
+Processed 85000 documents (295.2581290150418 docs/s, 2.0179701020690657 MB/s).
+Processed 89000 documents (311.4891416695374 docs/s, 2.1240711916511055 MB/s).
+Processed 82000 documents (284.71137807949214 docs/s, 1.9433789278723361 MB/s).
+Processed 86000 documents (299.9451780992989 docs/s, 2.0380629672030848 MB/s).
+Processed 83000 documents (289.8050187519065 docs/s, 1.9736503282622149 MB/s).
+Processed 86000 documents (300.8159614895278 docs/s, 2.0616507218383884 MB/s).
+Processed 86000 documents (296.6816796178286 docs/s, 2.0255113884426215 MB/s).
+Processed 87000 documents (302.21752215609445 docs/s, 2.053760273900849 MB/s).
+Processed 89000 documents (307.2179865586693 docs/s, 2.0860195682782923 MB/s).
+Processed 90000 documents (312.7600736286225 docs/s, 2.131086039978318 MB/s).
+Processed 87000 documents (299.5996755075387 docs/s, 2.056317825688682 MB/s).
+Processed 83000 documents (285.9214438660026 docs/s, 1.9512090169359468 MB/s).
+Processed 87000 documents (301.7833164457619 docs/s, 2.068863144357532 MB/s).
+Processed 84000 documents (290.63701903283805 docs/s, 1.9796014436667744 MB/s).
+Processed 87000 documents (297.7626712822881 docs/s, 2.0354682785823965 MB/s).
+Processed 88000 documents (303.5587800601332 docs/s, 2.063601084141602 MB/s).
+Processed 84000 documents (287.75086607267184 docs/s, 1.9619395241822668 MB/s).
+Processed 90000 documents (308.07315347714206 docs/s, 2.091859324419797 MB/s).
+Processed 88000 documents (300.76311479144425 docs/s, 2.0635873913893743 MB/s).
+Processed 91000 documents (313.38315689991066 docs/s, 2.1353818958452795 MB/s).
+Processed 85000 documents (289.9972368843024 docs/s, 1.9774513064437267 MB/s).
+Processed 88000 documents (299.5468463359541 docs/s, 2.0443096322356387 MB/s).
+Processed 88000 documents (302.7395481546851 docs/s, 2.0754357080079866 MB/s).
+Processed 89000 documents (304.50100277520426 docs/s, 2.070459079055893 MB/s).
+Processed 91000 documents (309.32399700631953 docs/s, 2.1015257940969962 MB/s).
+Processed 85000 documents (291.0003433749436 docs/s, 1.9805212877993201 MB/s).
+Processed 86000 documents (291.560735642385 docs/s, 1.98766390538798 MB/s).
+Processed 89000 documents (301.2302594492358 docs/s, 2.068293007377376 MB/s).
+Processed 92000 documents (313.9199075848143 docs/s, 2.1394942318180292 MB/s).
+Processed 89000 documents (303.9764483558922 docs/s, 2.0832831469033137 MB/s).
+Processed 89000 documents (300.5105828545388 docs/s, 2.051637337372288 MB/s).
+Processed 92000 documents (310.8674431348299 docs/s, 2.112598561559548 MB/s).
+Processed 90000 documents (304.8100584505414 docs/s, 2.072629891912866 MB/s).
+Processed 90000 documents (305.6938210691074 docs/s, 2.093673103484913 MB/s).
+Processed 87000 documents (292.66390043542447 docs/s, 1.9958341064791343 MB/s).
+Processed 90000 documents (302.3441853169944 docs/s, 2.0645483231455244 MB/s).
+Processed 86000 documents (291.4546173773255 docs/s, 1.9841637985575473 MB/s).
+Processed 93000 documents (315.1543797927073 docs/s, 2.147587286980931 MB/s).
+Processed 90000 documents (302.2987086218812 docs/s, 2.07504520185706 MB/s).
+Processed 93000 documents (311.83045160464513 docs/s, 2.1187035127718645 MB/s).
+Processed 91000 documents (303.8780913289791 docs/s, 2.076664823255363 MB/s).
+Processed 91000 documents (306.0237574713092 docs/s, 2.0811166504865035 MB/s).
+Processed 94000 documents (316.38954901229147 docs/s, 2.155246089591014 MB/s).
+Processed 88000 documents (293.7471866309857 docs/s, 2.0025302135959766 MB/s).
+Processed 91000 documents (303.53139021699593 docs/s, 2.081948365670713 MB/s).
+Processed 91000 documents (306.5380656636578 docs/s, 2.101125559452922 MB/s).
+Processed 87000 documents (292.25562391598334 docs/s, 1.9915383953894559 MB/s).
+Processed 94000 documents (312.60345220843806 docs/s, 2.1241355118508576 MB/s).
+Process Process-5:
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+           ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 93, in encode
+    data = json.loads(json_line)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 38041 (char 38040)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 188, in process_json_file
+    for i, (doc, sentence_lens, bytes_processed) in enumerate(encoded_docs, start=1):
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 423, in <genexpr>
+    return (item for chunk in result for item in chunk)
+                              ^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 873, in next
+    raise value
+json.decoder.JSONDecodeError: Extra data: line 1 column 38041 (char 38040)
+Time to startup: 1.7484924793243408
+Processed 92000 documents (305.078613365138 docs/s, 2.08526496984941 MB/s).
+Processed 95000 documents (317.4460325270064 docs/s, 2.163505282563881 MB/s).
+Processed 89000 documents (294.995706740857 docs/s, 2.0131901711582705 MB/s).
+Processed 92000 documents (306.92432904026356 docs/s, 2.0861350514867643 MB/s).
+Processed 88000 documents (293.6244723293439 docs/s, 2.0001369626363625 MB/s).
+Processed 92000 documents (307.3451719675256 docs/s, 2.10905965870829 MB/s).
+Processed 93000 documents (306.53710746976105 docs/s, 2.096261478888992 MB/s).
+Processed 95000 documents (313.4954460874101 docs/s, 2.1333631109998357 MB/s).
+Processed 93000 documents (308.56486221936683 docs/s, 2.096267507435546 MB/s).
+Processed 96000 documents (318.35610918131124 docs/s, 2.1689661723869715 MB/s).
+Processed 90000 documents (296.20429304865047 docs/s, 2.021817931978169 MB/s).
+Processed 93000 documents (308.8783127014597 docs/s, 2.1191979368219567 MB/s).
+Processed 89000 documents (294.527773369247 docs/s, 2.0069847034041075 MB/s).
+Processed 94000 documents (308.23196385562557 docs/s, 2.1080909621511146 MB/s).
+Processed 97000 documents (320.4409380224326 docs/s, 2.1809011451985563 MB/s).
+Processed 96000 documents (314.70340855282444 docs/s, 2.1405211395495307 MB/s).
+Processed 94000 documents (309.4854156875063 docs/s, 2.1021092614141472 MB/s).
+Processed 91000 documents (297.63304910704545 docs/s, 2.0314402265162284 MB/s).
+Processed 94000 documents (310.2255922741017 docs/s, 2.1271777125870437 MB/s).
+Processed 95000 documents (309.4788920258858 docs/s, 2.11485655779635 MB/s).
+Processed 90000 documents (295.6977664533239 docs/s, 2.0171643739003327 MB/s).
+Processed 97000 documents (316.3235437702288 docs/s, 2.150221433562412 MB/s).
+Processed 98000 documents (321.3507944897413 docs/s, 2.189138890066903 MB/s).
+Processed 95000 documents (312.067683405554 docs/s, 2.1388894061836843 MB/s).
+Processed 92000 documents (299.19495339959667 docs/s, 2.041527201655288 MB/s).
+Processed 91000 documents (297.7556220968929 docs/s, 2.0309260007275496 MB/s).
+Process Process-12:
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+           ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 93, in encode
+    data = json.loads(json_line)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 3709 (char 3708)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 188, in process_json_file
+    for i, (doc, sentence_lens, bytes_processed) in enumerate(encoded_docs, start=1):
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 423, in <genexpr>
+    return (item for chunk in result for item in chunk)
+                              ^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 873, in next
+    raise value
+json.decoder.JSONDecodeError: Extra data: line 1 column 3709 (char 3708)
+Time to startup: 3.6013057231903076
+Processed 95000 documents (310.36508562776817 docs/s, 2.1075132354536965 MB/s).
+Processed 96000 documents (314.2366863028951 docs/s, 2.1506861934169317 MB/s).
+Processed 96000 documents (310.9066497529639 docs/s, 2.1219187532813124 MB/s).
+Processed 98000 documents (317.3437250268016 docs/s, 2.156488387544366 MB/s).
+Processed 93000 documents (300.6437266581268 docs/s, 2.0505580133509693 MB/s).
+Processed 97000 documents (313.0127961775215 docs/s, 2.1348741929140065 MB/s).
+Processed 92000 documents (299.3427287200315 docs/s, 2.0406515986340965 MB/s).
+Processed 97000 documents (316.14379895813886 docs/s, 2.160667455705643 MB/s).
+Processed 96000 documents (311.8225668614395 docs/s, 2.115175467850264 MB/s).
+Processed 99000 documents (319.25507326714484 docs/s, 2.168526065859506 MB/s).
+Processed 98000 documents (314.91418336315684 docs/s, 2.149448156517845 MB/s).
+Processed 94000 documents (301.8694458419975 docs/s, 2.06001135051469 MB/s).
+Processed 98000 documents (317.5353591335018 docs/s, 2.172574785116372 MB/s).
+Processed 93000 documents (300.5335474123257 docs/s, 2.0496117663543947 MB/s).
+Processed 97000 documents (313.0516927173489 docs/s, 2.1225925338445424 MB/s).
+Processed 100000 documents (320.85646217995554 docs/s, 2.179491903090517 MB/s).
+Processed 99000 documents (316.9757741330497 docs/s, 2.1644198813984645 MB/s).
+Processed 99000 documents (319.34467702783513 docs/s, 2.1848333641055273 MB/s).
+Processed 95000 documents (303.38663112461154 docs/s, 2.0689185762425724 MB/s).
+Processed 94000 documents (302.3633566418398 docs/s, 2.060583705938264 MB/s).
+Processed 100000 documents (318.79791645622134 docs/s, 2.175025174773192 MB/s).
+Processed 98000 documents (314.6999923440741 docs/s, 2.1350585310149075 MB/s).
+Processed 101000 documents (322.24985047577474 docs/s, 2.1890400011146944 MB/s).
+Processed 100000 documents (321.2938091251611 docs/s, 2.1983976769833995 MB/s).
+Processed 95000 documents (304.15602754959394 docs/s, 2.072170692543222 MB/s).
+Processed 96000 documents (304.9333297684222 docs/s, 2.078286344127556 MB/s).
+Processed 101000 documents (320.34934518079064 docs/s, 2.1843906861851017 MB/s).
+Processed 99000 documents (316.33307710600747 docs/s, 2.146468269264229 MB/s).
+Processed 102000 documents (323.90512394594236 docs/s, 2.1997942501911667 MB/s).
+Processed 101000 documents (322.85235167535853 docs/s, 2.208567615035643 MB/s).
+Processed 96000 documents (305.8398408223505 docs/s, 2.083547396299077 MB/s).
+Processed 100000 documents (318.1119560783818 docs/s, 2.1564043194995124 MB/s).
+Processed 103000 documents (325.7047182305196 docs/s, 2.209693724554297 MB/s).
+Processed 97000 documents (306.55550484274977 docs/s, 2.0879256422031816 MB/s).
+Processed 102000 documents (321.7960233040915 docs/s, 2.1941389154035376 MB/s).
+Processed 97000 documents (307.8114483154249 docs/s, 2.095796398619075 MB/s).
+Processed 102000 documents (324.1988615845233 docs/s, 2.2162102392252896 MB/s).
+Processed 101000 documents (319.74753892647567 docs/s, 2.1674096345422824 MB/s).
+Processed 103000 documents (323.51024809533726 docs/s, 2.2045752729896986 MB/s).
+Processed 104000 documents (327.0861155975815 docs/s, 2.219826393999364 MB/s).
+Processed 98000 documents (308.00326379229085 docs/s, 2.099585166206964 MB/s).
+Processed 103000 documents (325.78112796073924 docs/s, 2.226148911756699 MB/s).
+Processed 98000 documents (309.17775023965254 docs/s, 2.1055616558631525 MB/s).
+Processed 102000 documents (321.42574458866744 docs/s, 2.1782288909800003 MB/s).
+Processed 104000 documents (325.1315887127577 docs/s, 2.216295771642555 MB/s).
+Processed 99000 documents (309.75214935765445 docs/s, 2.1106951650891608 MB/s).
+Processed 105000 documents (328.2509833045525 docs/s, 2.2288413636771374 MB/s).
+Processed 103000 documents (323.39451056291006 docs/s, 2.189408382406489 MB/s).
+Processed 104000 documents (327.30463503615834 docs/s, 2.2355968746656782 MB/s).
+Processed 105000 documents (326.7289787303011 docs/s, 2.2281049681590237 MB/s).
+Processed 99000 documents (310.5049406373939 docs/s, 2.113646621536294 MB/s).
+Processed 100000 documents (311.22279418650857 docs/s, 2.1202025488517795 MB/s).
+Processed 106000 documents (329.46424069469293 docs/s, 2.23748592111979 MB/s).
+Processed 100000 documents (312.5220033464955 docs/s, 2.1274135814616137 MB/s).
+Process Process-16:
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+           ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 93, in encode
+    data = json.loads(json_line)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 3237 (char 3236)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 188, in process_json_file
+    for i, (doc, sentence_lens, bytes_processed) in enumerate(encoded_docs, start=1):
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 423, in <genexpr>
+    return (item for chunk in result for item in chunk)
+                              ^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 873, in next
+    raise value
+json.decoder.JSONDecodeError: Extra data: line 1 column 3237 (char 3236)
+Time to startup: 2.981156587600708
+Processed 105000 documents (328.5241021037179 docs/s, 2.2449686279424803 MB/s).
+Processed 106000 documents (328.218113694164 docs/s, 2.2379584348108175 MB/s).
+Processed 101000 documents (313.0301997279418 docs/s, 2.1311263403951433 MB/s).
+Processed 101000 documents (314.50589587697164 docs/s, 2.139762946764429 MB/s).
+Processed 107000 documents (330.91262029724874 docs/s, 2.2489419334138776 MB/s).
+Processed 106000 documents (330.28225145416 docs/s, 2.2586009491838337 MB/s).
+Processed 102000 documents (314.92568047717566 docs/s, 2.145073120546995 MB/s).
+Processed 107000 documents (329.7889032377687 docs/s, 2.249144191123875 MB/s).
+Processed 108000 documents (332.5767482683865 docs/s, 2.261951255806589 MB/s).
+Processed 107000 documents (332.22295313061255 docs/s, 2.2725661313016925 MB/s).
+Processed 103000 documents (316.9359647878971 docs/s, 2.15698310245393 MB/s).
+Processed 102000 documents (315.99457670446594 docs/s, 2.1496818771769384 MB/s).
+Processed 108000 documents (331.3252386457984 docs/s, 2.261318274687507 MB/s).
+Processed 104000 documents (318.8186262058601 docs/s, 2.1689802024844598 MB/s).
+Processed 108000 documents (333.9464091898559 docs/s, 2.2844322702297424 MB/s).
+Processed 103000 documents (317.83607201539706 docs/s, 2.1621674712767516 MB/s).
+Processed 109000 documents (334.0913865972627 docs/s, 2.274302162721491 MB/s).
+Processed 109000 documents (332.92611911533567 docs/s, 2.271900449533836 MB/s).
+Processed 105000 documents (320.4464418244267 docs/s, 2.181706753146043 MB/s).
+Processed 109000 documents (335.5288445477805 docs/s, 2.297411665362294 MB/s).
+Processed 110000 documents (335.804242252354 docs/s, 2.286332908546354 MB/s).
+Processed 104000 documents (319.4252012082026 docs/s, 2.1749288771601956 MB/s).
+Processed 110000 documents (334.82234416207984 docs/s, 2.2845352724824766 MB/s).
+Processed 106000 documents (322.1579851424461 docs/s, 2.1941935003722324 MB/s).
+Processed 110000 documents (337.18795556384515 docs/s, 2.3096297763488587 MB/s).
+Processed 111000 documents (337.4590984337226 docs/s, 2.2980154727728803 MB/s).
+Processed 105000 documents (321.24240826313104 docs/s, 2.1867778811788683 MB/s).
+Processed 111000 documents (336.3429883031707 docs/s, 2.2937378354523283 MB/s).
+Processed 111000 documents (339.12443008953585 docs/s, 2.322076933797052 MB/s).
+Processed 107000 documents (324.0400261619323 docs/s, 2.208749830999054 MB/s).
+Processed 106000 documents (323.11333572890305 docs/s, 2.197992657123855 MB/s).
+Processed 112000 documents (338.7409491370698 docs/s, 2.3058880977758567 MB/s).
+Processed 112000 documents (337.9210179646737 docs/s, 2.3063003576983694 MB/s).
+Processed 108000 documents (326.02027192549957 docs/s, 2.220854730503541 MB/s).
+Processed 112000 documents (340.64672174013145 docs/s, 2.3327924647510097 MB/s).
+Processed 107000 documents (324.88937156731265 docs/s, 2.2107861751633626 MB/s).
+Processed 113000 documents (340.6086370335346 docs/s, 2.317641588385168 MB/s).
+Processed 113000 documents (339.49871328345466 docs/s, 2.3158797515613303 MB/s).
+Processed 108000 documents (326.8232908072404 docs/s, 2.2227105181799067 MB/s).
+Processed 114000 documents (342.5264726412991 docs/s, 2.3286754001979006 MB/s).
+Processed 109000 documents (327.2120185661043 docs/s, 2.232904047430725 MB/s).
+Processed 113000 documents (342.11436565894763 docs/s, 2.343480575780455 MB/s).
+Processed 114000 documents (341.2618748558244 docs/s, 2.327373585475127 MB/s).
+Processed 109000 documents (328.5987009207681 docs/s, 2.234517599980358 MB/s).
+Processed 115000 documents (344.26646819676427 docs/s, 2.3398054661508723 MB/s).
+Processed 114000 documents (343.9284038933692 docs/s, 2.3542697136861643 MB/s).
+Processed 110000 documents (328.9052915794602 docs/s, 2.245131728802227 MB/s).
+Processed 115000 documents (342.88905288890396 docs/s, 2.337946336052073 MB/s).
+Processed 115000 documents (345.7079472680034 docs/s, 2.3660859533114516 MB/s).
+Processed 110000 documents (330.0663336455232 docs/s, 2.2453880103603243 MB/s).
+Processed 116000 documents (345.8269380740731 docs/s, 2.350344847531447 MB/s).
+Processed 111000 documents (330.56487301036134 docs/s, 2.2582988865450835 MB/s).
+Processed 116000 documents (344.9110220020544 docs/s, 2.3489267723642353 MB/s).
+Processed 116000 documents (347.57463486661084 docs/s, 2.3781986468739116 MB/s).
+Processed 117000 documents (347.5089864460237 docs/s, 2.3631090190123354 MB/s).
+Processed 111000 documents (331.6969180811133 docs/s, 2.2572478427250755 MB/s).
+Processed 112000 documents (331.9988236963192 docs/s, 2.266928470136973 MB/s).
+Processed 117000 documents (346.25396239631834 docs/s, 2.3586584075319093 MB/s).
+Processed 118000 documents (349.5092223404233 docs/s, 2.376122554893077 MB/s).
+Processed 117000 documents (348.90764652028804 docs/s, 2.386573355544231 MB/s).
+Processed 112000 documents (333.2639802587356 docs/s, 2.26877315504507 MB/s).
+Processed 113000 documents (333.7567173677627 docs/s, 2.278046575852072 MB/s).
+Processed 119000 documents (351.37443910457637 docs/s, 2.388479706742223 MB/s).
+Processed 118000 documents (347.80369741677384 docs/s, 2.368003933208498 MB/s).
+Processed 113000 documents (335.09909630906293 docs/s, 2.27998184478003 MB/s).
+Processed 118000 documents (350.42689784691834 docs/s, 2.396062806702428 MB/s).
+Processed 114000 documents (335.2823703544036 docs/s, 2.2866485312448783 MB/s).
+Processed 119000 documents (349.61565144444313 docs/s, 2.380073028067418 MB/s).
+Processed 120000 documents (352.83263206200604 docs/s, 2.3999468181633974 MB/s).
+Processed 114000 documents (336.95500518401906 docs/s, 2.2909410368379155 MB/s).
+Processed 119000 documents (352.0418271716402 docs/s, 2.4059302538650136 MB/s).
+Processed 120000 documents (351.14323995469397 docs/s, 2.3919313087355656 MB/s).
+Processed 115000 documents (336.7783238059425 docs/s, 2.2968143638967575 MB/s).
+Processed 121000 documents (354.4983313866643 docs/s, 2.410173519068919 MB/s).
+Processed 120000 documents (353.77019065038183 docs/s, 2.416514401513954 MB/s).
+Processed 115000 documents (338.4015254131341 docs/s, 2.3012181174847828 MB/s).
+Processed 122000 documents (356.3266784042121 docs/s, 2.4218804476677027 MB/s).
+Processed 121000 documents (352.7958808964892 docs/s, 2.403394132626296 MB/s).
+Processed 116000 documents (338.34441450635114 docs/s, 2.3080938217643436 MB/s).
+Processed 121000 documents (355.39612311488395 docs/s, 2.4269640887453594 MB/s).
+Processed 116000 documents (339.93754411272545 docs/s, 2.310016205160392 MB/s).
+Processed 123000 documents (357.8961633021277 docs/s, 2.4329748334322305 MB/s).
+Processed 122000 documents (354.3152360611136 docs/s, 2.414347673135722 MB/s).
+Processed 117000 documents (339.99667868068445 docs/s, 2.318744293680008 MB/s).
+Processed 122000 documents (357.12630271515843 docs/s, 2.438324115623123 MB/s).
+Process Process-13:
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+           ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 93, in encode
+    data = json.loads(json_line)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 5993 (char 5992)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 188, in process_json_file
+    for i, (doc, sentence_lens, bytes_processed) in enumerate(encoded_docs, start=1):
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 423, in <genexpr>
+    return (item for chunk in result for item in chunk)
+                              ^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 873, in next
+    raise value
+json.decoder.JSONDecodeError: Extra data: line 1 column 5993 (char 5992)
+Time to startup: 4.082046031951904
+Processed 117000 documents (341.5376523823173 docs/s, 2.320392778765457 MB/s).
+Processed 123000 documents (356.04063132467604 docs/s, 2.4252893196550205 MB/s).
+Processed 118000 documents (341.8560733451163 docs/s, 2.3309918705995796 MB/s).
+Processed 124000 documents (359.3008558654269 docs/s, 2.4444120407317063 MB/s).
+Processed 118000 documents (343.266706620319 docs/s, 2.333108911924768 MB/s).
+Processed 124000 documents (357.92771901038304 docs/s, 2.4382414582613112 MB/s).
+Processed 119000 documents (343.82124308364655 docs/s, 2.343678397249572 MB/s).
+Processed 125000 documents (361.1301873829579 docs/s, 2.4568703235532183 MB/s).
+Processed 125000 documents (359.77867268181336 docs/s, 2.451293341669236 MB/s).
+Processed 119000 documents (345.10869675883976 docs/s, 2.346673302083971 MB/s).
+Processed 120000 documents (345.6861753183861 docs/s, 2.3557582106892494 MB/s).
+Processed 126000 documents (362.8768352096815 docs/s, 2.4691877447312423 MB/s).
+Processed 126000 documents (361.5898059049558 docs/s, 2.464083806802632 MB/s).
+Processed 120000 documents (346.94305305473426 docs/s, 2.3588589359398866 MB/s).
+Processed 121000 documents (347.4131886745869 docs/s, 2.367810649298461 MB/s).
+Processed 127000 documents (364.81310389180624 docs/s, 2.4811431704671767 MB/s).
+Processed 127000 documents (363.54111970872844 docs/s, 2.4759969819370413 MB/s).
+Processed 121000 documents (348.8016558966541 docs/s, 2.37091789412218 MB/s).
+Processed 128000 documents (366.6636832508141 docs/s, 2.493810947864955 MB/s).
+Processed 122000 documents (349.229268972581 docs/s, 2.3802772017193883 MB/s).
+Processed 128000 documents (365.45640232911063 docs/s, 2.487525961939714 MB/s).
+Processed 122000 documents (350.6014984061617 docs/s, 2.382264915478493 MB/s).
+Processed 129000 documents (368.4246641844556 docs/s, 2.506550964669753 MB/s).
+Processed 123000 documents (351.0523021546831 docs/s, 2.3931012304287456 MB/s).
+Processed 129000 documents (367.22344972057044 docs/s, 2.5000352485232784 MB/s).
+Processed 123000 documents (352.52574708037594 docs/s, 2.394168628794101 MB/s).
+Processed 124000 documents (352.94988557675265 docs/s, 2.4041953148474784 MB/s).
+Processed 130000 documents (370.18783581959633 docs/s, 2.518412329929597 MB/s).
+Processed 130000 documents (368.93737987982485 docs/s, 2.5119720339292613 MB/s).
+Processed 124000 documents (354.34968474575584 docs/s, 2.406485253680747 MB/s).
+Processed 125000 documents (354.7438650920221 docs/s, 2.4164067738494226 MB/s).
+Processed 131000 documents (371.8640181805635 docs/s, 2.5308133341694647 MB/s).
+Processed 131000 documents (370.6121762102514 docs/s, 2.524467009860439 MB/s).
+Processed 125000 documents (356.3008115623441 docs/s, 2.417646346257565 MB/s).
+Processed 126000 documents (356.5453947552026 docs/s, 2.4288421282098054 MB/s).
+Processed 132000 documents (373.6855142373471 docs/s, 2.543186228333442 MB/s).
+Processed 126000 documents (358.14193771984804 docs/s, 2.429833710851633 MB/s).
+Processed 132000 documents (372.20933393978373 docs/s, 2.5347459462029405 MB/s).
+Processed 127000 documents (358.3197265021775 docs/s, 2.4411078631708327 MB/s).
+Processed 133000 documents (375.3592836274811 docs/s, 2.5562962898426593 MB/s).
+Processed 127000 documents (359.98996841570715 docs/s, 2.4417706608209206 MB/s).
+Processed 133000 documents (373.8641820561041 docs/s, 2.5459114017596525 MB/s).
+Processed 134000 documents (377.10644922211975 docs/s, 2.5671801454853784 MB/s).
+Processed 128000 documents (359.9883086842463 docs/s, 2.4527735347242476 MB/s).
+Processed 128000 documents (361.7920847557725 docs/s, 2.4535424474148764 MB/s).
+Processed 134000 documents (375.61287577246003 docs/s, 2.5576028218718063 MB/s).
+Processed 135000 documents (378.9393991894102 docs/s, 2.5787961216378954 MB/s).
+Processed 129000 documents (361.6630574403745 docs/s, 2.4657249968790267 MB/s).
+Process Process-3:
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+           ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 93, in encode
+    data = json.loads(json_line)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 13094 (char 13093)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 188, in process_json_file
+    for i, (doc, sentence_lens, bytes_processed) in enumerate(encoded_docs, start=1):
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 423, in <genexpr>
+    return (item for chunk in result for item in chunk)
+                              ^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 873, in next
+    raise value
+json.decoder.JSONDecodeError: Extra data: line 1 column 13094 (char 13093)
+Time to startup: 1.5957283973693848
+Processed 129000 documents (363.60580145964275 docs/s, 2.4652166492119174 MB/s).
+Processed 136000 documents (380.75106989851395 docs/s, 2.591635390669823 MB/s).
+Processed 130000 documents (363.5633313408455 docs/s, 2.4804345389893516 MB/s).
+Processed 130000 documents (365.5938522221159 docs/s, 2.4792051068368783 MB/s).
+Processed 137000 documents (382.73108200838044 docs/s, 2.604041651227399 MB/s).
+Processed 131000 documents (365.4947083190296 docs/s, 2.4940550582438954 MB/s).
+Processed 131000 documents (367.5241051275905 docs/s, 2.4922994490116563 MB/s).
+Processed 138000 documents (384.6626772924897 docs/s, 2.6181097752597218 MB/s).
+Processed 132000 documents (367.4125717676507 docs/s, 2.50812530025619 MB/s).
+Processed 132000 documents (369.4962817182814 docs/s, 2.5069662107324966 MB/s).
+Processed 139000 documents (386.6136596385282 docs/s, 2.630450083718179 MB/s).
+Processed 133000 documents (369.33414069982416 docs/s, 2.522078667756175 MB/s).
+Processed 133000 documents (371.4363251499331 docs/s, 2.5200624030281107 MB/s).
+Processed 140000 documents (388.4821365306551 docs/s, 2.6444716181103978 MB/s).
+Processed 134000 documents (371.233637214705 docs/s, 2.5361484552253404 MB/s).
+Processed 134000 documents (373.32883586070324 docs/s, 2.5336561198025436 MB/s).
+Processed 141000 documents (390.45220303230576 docs/s, 2.656557107013133 MB/s).
+Processed 135000 documents (373.17392101352806 docs/s, 2.549797411181608 MB/s).
+Processed 142000 documents (392.32745127987056 docs/s, 2.6689431622359887 MB/s).
+Processed 135000 documents (375.15789359195105 docs/s, 2.5483669208054436 MB/s).
+Processed 136000 documents (375.0952368484206 docs/s, 2.563073467040892 MB/s).
+Processed 143000 documents (394.33233640311596 docs/s, 2.680951691694681 MB/s).
+Processed 136000 documents (377.14145464852 docs/s, 2.5612417190889007 MB/s).
+Processed 137000 documents (377.0680730185297 docs/s, 2.57610429451794 MB/s).
+Processed 144000 documents (396.25653573397534 docs/s, 2.693404006836987 MB/s).
+Processed 137000 documents (379.1982122950589 docs/s, 2.572532169055747 MB/s).
+Processed 138000 documents (379.00963787406965 docs/s, 2.587982321797909 MB/s).
+Processed 145000 documents (398.1461290490017 docs/s, 2.7056677498322115 MB/s).
+Processed 138000 documents (381.0943522639795 docs/s, 2.585544958483635 MB/s).
+Processed 139000 documents (380.9235467892116 docs/s, 2.601394211662886 MB/s).
+Processed 139000 documents (383.1172262968466 docs/s, 2.598025456234898 MB/s).
+Processed 146000 documents (399.9221360250247 docs/s, 2.7185358479744126 MB/s).
+Processed 140000 documents (382.80151655208124 docs/s, 2.6147214157517547 MB/s).
+Processed 147000 documents (401.8665763340728 docs/s, 2.7308161125420067 MB/s).
+Processed 140000 documents (384.9395466156422 docs/s, 2.6119481979408365 MB/s).
+Processed 141000 documents (384.7651069401243 docs/s, 2.627243376182651 MB/s).
+Processed 148000 documents (403.75661065951823 docs/s, 2.7431726207488514 MB/s).
+Processed 141000 documents (386.87373526116994 docs/s, 2.6240836304194084 MB/s).
+Processed 142000 documents (386.75535327866936 docs/s, 2.6384411939531427 MB/s).
+Processed 149000 documents (405.5254462936009 docs/s, 2.756421260042368 MB/s).
+Processed 142000 documents (388.672288538381 docs/s, 2.6379486915161205 MB/s).
+Processed 143000 documents (388.70657963271907 docs/s, 2.650154878761879 MB/s).
+Processed 150000 documents (407.4142000060164 docs/s, 2.7679140382935348 MB/s).
+Processed 143000 documents (390.60656479426757 docs/s, 2.6506591620041324 MB/s).
+Processed 144000 documents (390.62521336757356 docs/s, 2.6619851771626992 MB/s).
+Processed 144000 documents (392.5725383394726 docs/s, 2.663114353809925 MB/s).
+Processed 151000 documents (409.23066366228227 docs/s, 2.779367828963536 MB/s).
+Processed 145000 documents (392.56069851057987 docs/s, 2.6745005585182047 MB/s).
+Processed 145000 documents (394.4646486003515 docs/s, 2.6743289745825827 MB/s).
+Processed 152000 documents (411.1154096249896 docs/s, 2.7905471202388465 MB/s).
+Processed 146000 documents (394.5083844729955 docs/s, 2.6855253059632322 MB/s).
+Process Process-2:
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+           ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 93, in encode
+    data = json.loads(json_line)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 7356 (char 7355)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 188, in process_json_file
+    for i, (doc, sentence_lens, bytes_processed) in enumerate(encoded_docs, start=1):
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 423, in <genexpr>
+    return (item for chunk in result for item in chunk)
+                              ^^^^^^
+  File "/usr/local/lib/python3.12/multiprocessing/pool.py", line 873, in next
+    raise value
+json.decoder.JSONDecodeError: Extra data: line 1 column 7356 (char 7355)
+Time to startup: 2.1549055576324463
+Processed 146000 documents (396.42227104965946 docs/s, 2.6860732205745874 MB/s).
+Processed 147000 documents (396.49444516958005 docs/s, 2.6982115790110868 MB/s).
+Processed 147000 documents (398.43749336610864 docs/s, 2.699852343932428 MB/s).
+Processed 148000 documents (398.5296480540313 docs/s, 2.7112420612817263 MB/s).
+Processed 148000 documents (400.4168535354359 docs/s, 2.713583698123438 MB/s).
+Processed 149000 documents (400.5087703724689 docs/s, 2.724622642069585 MB/s).
+Processed 149000 documents (402.3997128421851 docs/s, 2.7268020882597805 MB/s).
+Processed 150000 documents (402.4952476983697 docs/s, 2.7380532411040854 MB/s).
+Processed 150000 documents (404.3979417733082 docs/s, 2.7399541005929544 MB/s).
+Processed 151000 documents (404.4101795596283 docs/s, 2.753202596558178 MB/s).
+Processed 151000 documents (406.4211635066028 docs/s, 2.752660722821811 MB/s).
+Processed 152000 documents (406.30488300904034 docs/s, 2.766057519080903 MB/s).
+Processed 152000 documents (408.4840251495021 docs/s, 2.7655872411020597 MB/s).
+Processed 153000 documents (408.3416276864886 docs/s, 2.778903638105429 MB/s).
+Processed 153000 documents (410.4577186180188 docs/s, 2.7785197929198557 MB/s).
+Processed 154000 documents (410.2855473011392 docs/s, 2.791336759601195 MB/s).
+Processed 154000 documents (412.36814196391185 docs/s, 2.792959963690515 MB/s).
+Processed 155000 documents (412.32014107109165 docs/s, 2.802749069259677 MB/s).
+Processed 155000 documents (414.4243102096818 docs/s, 2.8047351804145344 MB/s).
+Processed 156000 documents (414.33471539231385 docs/s, 2.8143620955808615 MB/s).
+Processed 156000 documents (416.4472156088275 docs/s, 2.816951908489212 MB/s).
+Processed 157000 documents (416.2511540194211 docs/s, 2.8267908166580455 MB/s).
+Processed 157000 documents (418.32201505469965 docs/s, 2.8307944590542693 MB/s).
+Processed 158000 documents (418.22282421146576 docs/s, 2.8411354728555542 MB/s).
+Processed 158000 documents (420.3116975966178 docs/s, 2.8435147450350073 MB/s).
+Processed 159000 documents (420.0837422415168 docs/s, 2.854455724115923 MB/s).
+Processed 159000 documents (422.1892311114253 docs/s, 2.857272610688715 MB/s).
+Processed 160000 documents (422.1130200520124 docs/s, 2.866846676669386 MB/s).
+Processed 160000 documents (424.12276893419437 docs/s, 2.870979028235219 MB/s).
+Processed 161000 documents (424.07943241423055 docs/s, 2.880589524813563 MB/s).
+Processed 161000 documents (426.0543782994113 docs/s, 2.8844006846264256 MB/s).
+Processed 162000 documents (426.0335860688063 docs/s, 2.895239762776757 MB/s).
+Processed 162000 documents (427.99349841304524 docs/s, 2.8966395974652817 MB/s).
+Processed 163000 documents (427.90172346652497 docs/s, 2.90790703765501 MB/s).
+Processed 163000 documents (429.9147597307024 docs/s, 2.9099409950170307 MB/s).
+Processed 164000 documents (429.79044172927075 docs/s, 2.9199979795659985 MB/s).
+Processed 164000 documents (431.9097642307515 docs/s, 2.9219227431260903 MB/s).
+Processed 165000 documents (431.70687347860184 docs/s, 2.933214760002068 MB/s).
+Processed 165000 documents (433.79890039770504 docs/s, 2.933469355661021 MB/s).
+Processed 166000 documents (433.60680676502346 docs/s, 2.945508245536235 MB/s).
+Processed 166000 documents (435.6366856758214 docs/s, 2.9477000379372207 MB/s).
+Processed 167000 documents (435.3685821360353 docs/s, 2.960362434350395 MB/s).
+Processed 167000 documents (437.52366564017 docs/s, 2.960383328896479 MB/s).
+Processed 168000 documents (437.34282420721524 docs/s, 2.9722587743105815 MB/s).
+Processed 168000 documents (439.39745576837305 docs/s, 2.9729595907269997 MB/s).
+Processed 169000 documents (439.2872763509898 docs/s, 2.9845289127974413 MB/s).
+Processed 169000 documents (441.27836030225257 docs/s, 2.985982871479603 MB/s).
+Processed 170000 documents (441.1750517826628 docs/s, 2.9971058637065187 MB/s).
+Processed 171000 documents (443.08958067389085 docs/s, 3.0102957895242786 MB/s).
+Processed 170000 documents (443.1171988461152 docs/s, 2.9992254674148797 MB/s).
+Processed 172000 documents (444.9220003637539 docs/s, 3.0249464851254637 MB/s).
+Processed 171000 documents (444.9144152428216 docs/s, 3.011583863226879 MB/s).
+Processed 173000 documents (446.83551512510047 docs/s, 3.036247598297398 MB/s).
+Processed 172000 documents (446.8012704864799 docs/s, 3.024224474226264 MB/s).
+Processed 173000 documents (448.7402604921314 docs/s, 3.035809774925385 MB/s).
+Processed 174000 documents (448.60994539565775 docs/s, 3.049670283731126 MB/s).
+Processed 175000 documents (450.50950595433517 docs/s, 3.0623735946958117 MB/s).
+Processed 174000 documents (450.5274253115843 docs/s, 3.048128166741543 MB/s).
+Processed 175000 documents (452.44820180285336 docs/s, 3.06048229257833 MB/s).
+Processed 176000 documents (452.31373525207067 docs/s, 3.074958052676343 MB/s).
+Processed 176000 documents (454.25286899347145 docs/s, 3.0736958532333776 MB/s).
+Processed 177000 documents (454.01547708260864 docs/s, 3.088240730380556 MB/s).
+Processed 177000 documents (456.1487979499857 docs/s, 3.0861544377170027 MB/s).
+Processed 178000 documents (455.7895948083698 docs/s, 3.10226172144422 MB/s).
+Processed 178000 documents (457.98870557863154 docs/s, 3.0978537394278134 MB/s).
+Processed 179000 documents (457.629532705611 docs/s, 3.1144763634239605 MB/s).
+Processed 179000 documents (459.6830689964183 docs/s, 3.11272248257428 MB/s).
+Processed 180000 documents (459.49823818185627 docs/s, 3.126493962859184 MB/s).
+Processed 180000 documents (461.48157031077255 docs/s, 3.1241682679075033 MB/s).
+Processed 181000 documents (461.2936070756669 docs/s, 3.1383420273196085 MB/s).
+Processed 182000 documents (463.16871704118904 docs/s, 3.151035247193816 MB/s).
+Processed 181000 documents (463.19427121574836 docs/s, 3.136808626185075 MB/s).
+Processed 183000 documents (464.92069158781067 docs/s, 3.163796125670595 MB/s).
+Processed 182000 documents (465.0292575175102 docs/s, 3.149354899509651 MB/s).
+Processed 184000 documents (466.6541389416932 docs/s, 3.1773731497629294 MB/s).
+Processed 183000 documents (466.798328819851 docs/s, 3.161505360094819 MB/s).
+Processed 185000 documents (468.5168090930352 docs/s, 3.18830656949012 MB/s).
+Processed 184000 documents (468.6219684198321 docs/s, 3.173697061229732 MB/s).
+Processed 186000 documents (470.4053377595823 docs/s, 3.1985781952805374 MB/s).
+Processed 185000 documents (470.4154430688141 docs/s, 3.1849409831367015 MB/s).
+Processed 187000 documents (472.3132150876138 docs/s, 3.2091246290415665 MB/s).
+Processed 186000 documents (472.1589228668893 docs/s, 3.195864674120362 MB/s).
+Processed 188000 documents (474.0365807220182 docs/s, 3.220569674634108 MB/s).
+Processed 187000 documents (474.03747838873755 docs/s, 3.206758297495101 MB/s).
+Processed 189000 documents (475.8218683103823 docs/s, 3.2320586532097204 MB/s).
+Processed 188000 documents (475.73439688866705 docs/s, 3.218562717728223 MB/s).
+Processed 190000 documents (477.57476692743325 docs/s, 3.243474010440212 MB/s).
+Processed 189000 documents (477.45262399240073 docs/s, 3.230661258533442 MB/s).
+Processed 191000 documents (479.3362137669223 docs/s, 3.2551160110196724 MB/s).
+Processed 190000 documents (479.2398630635174 docs/s, 3.2414395753830028 MB/s).
+Processed 191000 documents (481.1176614281938 docs/s, 3.254884923021772 MB/s).
+Time to startup: 1.8342094421386719
+Time to startup: 3.4376113414764404
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 100256
+INFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 99256 tokens
+INFO:megatron.core.datasets.indexed_dataset:Load the _IndexReader from work/dclm/megatron/dclm_300gb_0_text_document.idx
+INFO:megatron.core.datasets.indexed_dataset:	Extract the sequence lengths
+INFO:megatron.core.datasets.indexed_dataset:	Extract the sequence pointers
+INFO:megatron.core.datasets.indexed_dataset:	Extract the document indices
+INFO:megatron.core.datasets.indexed_dataset:> total number of sequences: 238169
+INFO:megatron.core.datasets.indexed_dataset:> total number of documents: 238169
+INFO:megatron.core.datasets.indexed_dataset:Load the _IndexReader from work/dclm/megatron/dclm_300gb_1_text_document.idx
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 409, in <module>
+    main()
+  File "/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py", line 403, in main
+    builders[key].add_index(full_partition_output_prefix)
+  File "/home/ubuntu/projects/llm-dev/lib/python3.12/site-packages/megatron/core/datasets/indexed_dataset.py", line 1010, in add_index
+    index = _IndexReader(get_idx_path(path_prefix), multimodal=self.multimodal)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/projects/llm-dev/lib/python3.12/site-packages/megatron/core/datasets/indexed_dataset.py", line 264, in __init__
+    with open(idx_path, "rb") as stream:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'work/dclm/megatron/dclm_300gb_1_text_document.idx'
+>> python /home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py --input work/dclm/jsonl/*.jsonl --output-prefix work/dclm/megatron/dclm_300gb --tokenizer-type TikTokenizer --append-eod --workers 32 --partitions 16 --tokenizer-type TikTokenizer --tokenizer-model /home/ubuntu/projects/llm-models/llm-models/dataset/work/dclm/megatron/gpt-4.json
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/llm-models/llm-models/dataset/utils.py", line 167, in <module>
+    main()
+  File "/home/ubuntu/projects/llm-models/llm-models/dataset/utils.py", line 160, in main
+    run_megatron_preprocess()
+  File "/home/ubuntu/projects/llm-models/llm-models/dataset/utils.py", line 129, in run_megatron_preprocess
+    run(cmd)
+  File "/home/ubuntu/projects/llm-models/llm-models/dataset/utils.py", line 37, in run
+    subprocess.run(cmd, check=True, **kwargs)
+  File "/usr/local/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['python', '/home/ubuntu/projects/Megatron-LM/tools/preprocess_data.py', '--input', 'work/dclm/jsonl/*.jsonl', '--output-prefix', 'work/dclm/megatron/dclm_300gb', '--tokenizer-type', 'TikTokenizer', '--append-eod', '--workers', '32', '--partitions', '16', '--tokenizer-type', 'TikTokenizer', '--tokenizer-model', '/home/ubuntu/projects/llm-models/llm-models/dataset/work/dclm/megatron/gpt-4.json']' returned non-zero exit status 1.

@@ -443,6 +443,11 @@ sgd_momentum: 0.9
 override_opt_param_scheduler: False
 use_checkpoint_opt_param_scheduler: False
 
+# NEW: Learning rate warm start decay (WSD)
+lr_wsd_decay_style: null
+lr_wsd_decay_iters: null
+lr_wsd_decay_samples: null
+
 # checkpointing arguments
 save: null
 save_interval: 20000
@@ -461,6 +466,15 @@ ckpt_format: 'torch'
 async_save: True
 use_persistent_ckpt_worker: False
 
+# NEW: Non-persistent checkpoint settings
+non_persistent_save_interval: null
+non_persistent_local_ckpt_dir: null
+
+# NEW: Replication settings for local checkpointing
+replication: False
+replication_jump: null
+replication_factor: null
+
 # loss arguments
 loss_scale: null
 initial_loss_scale: 4294967296
@@ -473,10 +487,12 @@ fp16_lm_cross_entropy: False
 # distributed arguments (used in set_global_variables -> init_num_microbatches_calculator)
 distributed_backend: nccl
 distributed_timeout_minutes: 10
+distributed_timeout_seconds_after_init: null  # NEW: Timeout after initialization
 overlap_grad_reduce: False
 align_grad_reduce: True
 overlap_param_gather: False
 align_param_gather: False
+overlap_param_gather_with_optimizer_step: False  # NEW
 scatter_gather_tensors_in_pipeline: True
 local_rank: 0  # Set by launcher
 rank: null  # Set by launcher, used in init_num_microbatches_calculator
@@ -543,8 +559,13 @@ short_seq_prob: 0.1
 num_workers: 2
 
 # Tokenizer settings (from set_global_variables -> _build_tokenizer)
-tokenizer_type: HuggingFaceTokenizer
-tokenizer_model: NousResearch/Meta-Llama-3-8B-Alternate-Tokenizer
+tokenizer_type: TikTokenizer
+tokenizer_model: /home/ubuntu/projects/llm-models/llm-models/dataset/work/dclm/megatron/gpt-4.json
+tiktoken_pattern: v2
+legacy_tokenizer: False
+tiktoken_num_special_tokens: null
+tokenizer_special_tokens: null
+
 trust_remote_code: False
 
 reset_position_ids: False
@@ -575,16 +596,24 @@ profile: False
 profile_ranks: [0]
 profile_step_end: 12
 profile_step_start: 10
+use_pytorch_profiler: False  # NEW
+
+# Timers settings (from set_global_variables -> _set_timers)
+timing_log_level: 0  # Used in Timers initialization
+timing_log_option: minmax  # Used in Timers initialization
 
 #logging:
 log_params_norm: True
 log_num_zeros_in_grad: True
 log_throughput: False
 log_progress: False
+log_energy: False  # NEW
+log_straggler: False  # NEW
 
-# Timers settings (from set_global_variables -> _set_timers)
-timing_log_level: 0  # Used in Timers initialization
-timing_log_option: minmax  # Used in Timers initialization
+# NEW: Straggler detection settings
+disable_straggler_on_startup: False
+straggler_minmax_count: null
+straggler_ctrlr_port: null
 
 tensorboard_log_interval: 1
 tensorboard_queue_size: 1000
@@ -612,5 +641,85 @@ one_logger_run_name: null  # Used in OneLogger config
 
 logging_level: INFO
 log_interval: 100
+log_memory_interval: null  # NEW
 
 record_memory_history: True
+memory_snapshot_path: null  # NEW
+
+# NEW: Training synchronization
+train_sync_interval: null
+
+# NEW: Weight hash checking
+check_weight_hash_across_dp_replicas_interval: null
+
+# NEW: Gradient checkpointing
+check_for_large_grads: False
+
+# NEW: DDP settings
+ddp_num_buckets: null
+ddp_bucket_size: null
+ddp_pad_buckets_for_high_nccl_busbw: False
+ddp_reduce_scatter_with_fp32_accumulation: False
+ddp_average_in_collective: False
+
+# NEW: FSDP2 settings
+torch_fsdp2_reshard_after_forward: True
+
+# NEW: Megatron FSDP settings
+fsdp_manual_registration: False
+
+# NEW: Hybrid model settings
+hybrid_override_pattern: null
+hybrid_attention_ratio: null
+hybrid_mlp_ratio: null
+
+# NEW: Vision pretraining
+vision_pretraining: False
+vision_pretraining_type: null
+
+# NEW: SFT (Supervised Fine-Tuning)
+sft: False
+
+# NEW: Workload inspector
+run_workload_inspector_server: False
+
+# NEW: Iteration skipping
+iterations_to_skip: []
+
+# NEW: Phase transition
+phase_transition_iterations: null
+
+# NEW: RL (Reinforcement Learning) settings
+perform_rl_step: False
+rl_inference_tensor_model_parallel_size: null
+rl_inference_pipeline_model_parallel_size: null
+rl_inference_expert_model_parallel_size: null
+rl_inference_expert_tensor_model_parallel_size: null
+rl_inference_model_unified_memory_level: null
+rl_use_sequence_packing: False
+grpo_iterations: null
+grpo_samples_per_iteration: null
+
+# NEW: MoE upcycling
+moe_use_upcycling: False
+moe_upcycling_granularity: null
+
+# NEW: ModelOpt
+modelopt_enabled: False
+export_kd_teacher_load: null
+
+# NEW: Pretrained checkpoint
+pretrained_checkpoint: null
+
+# NEW: Refit method for weight swapping
+refit_method: null
+
+# NEW: MXF8 parameter settings
+reuse_grad_buf_for_mxfp8_param_ag: False
+
+# NEW: Gradient saving
+save_dgrads_interval: null
+save_wgrads_interval: null
+
+# NEW: Parameter group dump
+dump_param_to_param_group_map: null

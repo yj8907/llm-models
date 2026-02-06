@@ -2,6 +2,7 @@ import os
 import subprocess
 import shutil
 from pathlib import Path
+from huggingface_hub import list_repo_files
 
 # -------------------------
 # CONFIG
@@ -15,7 +16,7 @@ RAW_DIR = WORK_DIR / "raw"
 JSONL_DIR = WORK_DIR / "jsonl"
 MEGATRON_OUT = WORK_DIR / "megatron"
 
-MEGATRON_PATH = Path("/path/to/Megatron-LM")
+MEGATRON_PATH = Path("/home/ubuntu/projects/Megatron-LM")
 PREPROCESS_SCRIPT = MEGATRON_PATH / "tools/preprocess_data.py"
 
 # Tokenizer (example: GPT-2)
@@ -39,28 +40,51 @@ def run(cmd, **kwargs):
 # STEP 1: Download shards
 # -------------------------
 
+from concurrent.futures import ThreadPoolExecutor
+
+def download_single_shard(shard):
+    """Function to handle an individual download task with flattened filenames"""
+    url = f"https://huggingface.co/datasets/{DATASET}/resolve/main/{shard}"
+    
+    # Replace slashes with underscores to create the new filename
+    flattened_filename = shard.replace("/", "_")
+    # Define the full local path
+    output_path = os.path.join(str(RAW_DIR), flattened_filename)
+    
+    print(f"Starting download: {shard} -> {flattened_filename}")
+    
+    try:
+        # Use -O to specify the exact output path and filename
+        run(["wget", "-c", url, "-O", output_path])
+    except Exception as e:
+        print(f'{url} failed: {e}')
+
 def download_shards():
     RAW_DIR.mkdir(parents=True, exist_ok=True)
 
     print("Listing dataset files...")
-    files = subprocess.check_output(
-        ["huggingface-cli", "repo", "ls", DATASET],
-        text=True
-    ).splitlines()
+
+    try:
+        repo_id = "mlfoundations/dclm-baseline-1.0"
+        repo_type = "dataset"
+        files = list_repo_files(repo_id, repo_type=repo_type)
+    except Exception as e:
+        print(f"Error accessing Hugging Face repo: {e}")
+        files = []
 
     shards = sorted(
         f for f in files
-        if f.startswith("train-") and f.endswith(".jsonl.zst")
-    )[:NUM_SHARDS]
+        if f.startswith("global-") and f.endswith(".jsonl.zst")
+    )
+    shards = shards[260:NUM_SHARDS]
+    print(f"Downloading {len(shards)} shards using multi-threading...")
 
-    print(f"Downloading {len(shards)} shards")
+    # Max_workers determines how many downloads run at once. 
+    # 4 to 8 is usually a sweet spot for bandwidth without getting rate-limited.
+    with ThreadPoolExecutor(max_workers=16) as executor:
+        executor.map(download_single_shard, shards)
 
-    for shard in shards:
-        url = (
-            "https://huggingface.co/datasets/"
-            f"{DATASET}/resolve/main/{shard}"
-        )
-        run(["wget", "-c", url, "-P", str(RAW_DIR)])
+    print("All downloads complete.")
 
 # -------------------------
 # STEP 2: Decompress
@@ -73,7 +97,10 @@ def decompress_shards():
         out = JSONL_DIR / zst_file.name.replace(".zst", "")
         if out.exists():
             continue
-        run(["zstd", "-d", str(zst_file), "-o", str(out)])
+        try:
+            run(["zstd", "-d", str(zst_file), "-o", str(out)])
+        except:
+            print(f'{zst_file} decompression failed')
 
 # -------------------------
 # STEP 3: Megatron preprocessing
@@ -84,15 +111,20 @@ def run_megatron_preprocess():
 
     input_files = sorted(JSONL_DIR.glob("*.jsonl"))
     input_args = [str(f) for f in input_files]
+    preprocess_input = JSONL_DIR / "*.jsonl"
 
     cmd = [
-        "python", str(PREPROCESS_SCRIPT),
-        "--input", *input_args,
-        "--output-prefix", str(OUTPUT_PREFIX),
-        "--tokenizer-type", TOKENIZER_TYPE,
-        "--append-eod",
-        "--workers", str(NUM_WORKERS),
+    "python", str(PREPROCESS_SCRIPT),
+    "--input", str(preprocess_input),
+    "--output-prefix", str(OUTPUT_PREFIX),
+    "--tokenizer-type", TOKENIZER_TYPE,
+    "--append-eod",
+    "--workers", str(NUM_WORKERS),
+    "--partitions", str(16),
+    "--tokenizer-type", "TikTokenizer",
+    "--tokenizer-model", "/home/ubuntu/projects/llm-models/llm-models/dataset/work/dclm/megatron/gpt-4.json",
     ]
+
 
     run(cmd)
 
@@ -123,10 +155,10 @@ def cleanup():
 def main():
     WORK_DIR.mkdir(parents=True, exist_ok=True)
 
-    download_shards()
+    # download_shards()
     decompress_shards()
     run_megatron_preprocess()
-    upload_to_s3()
+    # upload_to_s3()
     cleanup()
 
     print("✅ DCLM subset processed and uploaded to S3")

@@ -7,3 +7,4 @@ data
 **/*.egg-info
 **/*trace*.json
 **/*ckpt*
+**/dataset/work
