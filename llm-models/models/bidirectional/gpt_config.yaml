@@ -384,6 +384,7 @@ group_query_attention: False
 exit_signal_handler: False
 exit_duration_in_mins: null
 exit_interval: null
+disable_jit_fuser: False
 
 untie_embeddings_and_output_weights: True
 position_embedding_type: rope
