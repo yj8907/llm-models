@@ -539,6 +539,7 @@ decoder_seq_length: null  # Sequence length for decoder (used when decoder_tp_co
 #data, check https://github.com/yj8907/Megatron-LM/blob/c94d58f3260aa568588265e07b3c06bb58cbde41/megatron/core/datasets/gpt_dataset.py#L27
 data_path: '/home/ubuntu/projects/llm-models/llm-models/dataset/work/dclm/megatron/dclm_300gb_6_text_document'
 split: '99,1,0'
+per_split_data_args_path: null
 train_data_path: null # https://github.com/yj8907/Megatron-LM/blob/6eaf7541e030e59aa4cdcb14381eb9370fe48977/megatron/core/datasets/utils.py#L49
 valid_data_path: null
 test_data_path: null
@@ -563,9 +564,21 @@ tokenizer_type: TikTokenizer
 tokenizer_model: /home/ubuntu/projects/llm-models/llm-models/dataset/work/dclm/megatron/gpt-4.json
 tiktoken_pattern: v2
 legacy_tokenizer: False
-tiktoken_num_special_tokens: null
+tiktoken_num_special_tokens: 7
 tokenizer_special_tokens: null
+vocab_extra_ids: 0
+tokenizer_metadata: null
 
+# Additional tokenizer-specific settings (for MultimodalTokenizer)
+tokenizer_prompt_format: null
+special_tokens: null
+image_tag_type: null
+force_system_message: null
+
+# Additional tokenizer-specific settings (for SFTTokenizer)
+sft_tokenizer_prompt_format: null
+
+# huggingface tokenizer
 trust_remote_code: False
 
 reset_position_ids: False
