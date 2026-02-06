@@ -466,6 +466,10 @@ ckpt_format: 'torch'
 async_save: True
 use_persistent_ckpt_worker: False
 
+# Derived checkpointing settings
+# Note: use_dist_ckpt is automatically set to (ckpt_format != "torch") by update_use_dist_ckpt()
+# Therefore it doesn't need to be explicitly configured here
+
 # NEW: Non-persistent checkpoint settings
 non_persistent_save_interval: null
 non_persistent_local_ckpt_dir: null
@@ -539,7 +543,10 @@ decoder_seq_length: null  # Sequence length for decoder (used when decoder_tp_co
 #data, check https://github.com/yj8907/Megatron-LM/blob/c94d58f3260aa568588265e07b3c06bb58cbde41/megatron/core/datasets/gpt_dataset.py#L27
 data_path: '/home/ubuntu/projects/llm-models/llm-models/dataset/work/dclm/megatron/dclm_300gb_6_text_document'
 split: '99,1,0'
+data_args_path: null  # Path to file containing data path arguments (used in get_blend_and_blend_per_split)
 per_split_data_args_path: null
+per_dataset_sequences_path: null
+mid_level_dataset_surplus: 0.005
 train_data_path: null # https://github.com/yj8907/Megatron-LM/blob/6eaf7541e030e59aa4cdcb14381eb9370fe48977/megatron/core/datasets/utils.py#L49
 valid_data_path: null
 test_data_path: null
@@ -622,6 +629,7 @@ log_throughput: False
 log_progress: False
 log_energy: False  # NEW
 log_straggler: False  # NEW
+log_device_memory_used: False  # NEW: Log total device memory used in report_memory() function
 
 # NEW: Straggler detection settings
 disable_straggler_on_startup: False
@@ -707,6 +715,7 @@ perform_rl_step: False
 rl_inference_tensor_model_parallel_size: null
 rl_inference_pipeline_model_parallel_size: null
 rl_inference_expert_model_parallel_size: null
+rl_inference_expert_tensor_parallel_size: null
 rl_inference_expert_tensor_model_parallel_size: null
 rl_inference_model_unified_memory_level: null
 rl_use_sequence_packing: False
