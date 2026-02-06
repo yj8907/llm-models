@@ -363,7 +363,6 @@ model_parallel:
   barrier_with_L1_time: True
 
 # training:
-use_legacy_models: False
 # spec should be a tuple: [module_path, object_name]
 # Example: ["megatron.core.models.gpt.gpt_layer_specs", "get_gpt_layer_local_spec"]
 # Example: ["megatron.core.models.gpt.gpt_layer_specs", "get_gpt_layer_with_transformer_engine_spec"]
@@ -371,6 +370,7 @@ spec: ["models.bidirectional.bidirGPT", "get_bidirectinoal_gpt_layer_with_transf
 micro_batch_size: 2
 global_batch_size: 128
 rampup_batch_size: [32, 32, 65324160]
+decrease_batch_size_if_needed: False
 check_for_nan_in_loss_and_grad: True
 num_layers_per_virtual_pipeline_stage: null
 
@@ -387,7 +387,6 @@ exit_interval: null
 
 untie_embeddings_and_output_weights: True
 position_embedding_type: rope
-rotary_percent: 0.5
 openai_gelu: False
 squared_relu: False
 swiglu: True
@@ -398,6 +397,8 @@ max_position_embeddings: 4096
 use_flash_attn: False
 seed: 1234
 data_parallel_random_init: False
+
+enable_experimental: False
 
 # Optimizer
 optimizer: adam
@@ -500,6 +501,7 @@ short_seq_prob: 0.1
 num_workers: 2
 tokenizer_type: HuggingFaceTokenizer
 tokenizer_model: NousResearch/Meta-Llama-3-8B-Alternate-Tokenizer
+trust_remote_code: False
 reset_position_ids: False
 reset_attention_mask: False
 eod_mask_loss: False
@@ -510,6 +512,13 @@ full_validation: False
 num_dataset_builder_threads: 8
 create_attention_mask_in_dataloader: False
 object_storage_cache_path: null
+
+####################
+# Retro arguments
+####################
+# Retro is currently experimental and untested with YAML configs
+retro_add_retriever: False
+retro_project_dir: null
 
 # fault tolerance
 enable_msc: False
@@ -540,6 +549,7 @@ wandb_project: ''
 wandb_exp_name: ''
 wandb_save_dir: ''
 enable_one_logger: True
+one_logger_async: True
 one_logger_project: megatron-lm
 one_logger_run_name: null
 log_interval: 100
