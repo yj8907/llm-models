@@ -284,7 +284,7 @@ class BidirMLASelfAttention(MLASelfAttention):
         # Get the query, key and value tensors based on the type of attention -
         # self or cross attn.
         # query: [96, 1, 16, 128], key:[96, 1, 16, 128], value:[96, 1, 16, 128]
-        print(hidden_states_forward.shape)
+        # print(hidden_states_forward.shape)
         query_backward, key_backward, value_backward, _, _ = self.get_query_key_value_tensors(
             hidden_states_forward,
             key_value_states,
@@ -639,7 +639,7 @@ class FlexDotProductAttention(torch.nn.Module):
         # Create block mask for efficient computation
         B, H, S_q, D = query.shape
         S_kv = key.size(2)
-        block_mask = create_block_mask(mask_fn, B, H, S_q, S_kv)
+        block_mask = create_block_mask(mask_fn, B, H, S_q, S_kv, BLOCK_SIZE=128)
         
         # Apply flex_attention
         output = self.flex_attention(
@@ -649,7 +649,7 @@ class FlexDotProductAttention(torch.nn.Module):
             block_mask=block_mask,
             scale=self.softmax_scale,
             enable_gqa=(self.num_query_groups != self.num_attention_heads),
-            kernel_options={"BLOCK_M": 16, "BLOCK_N": 16}
+            kernel_options={"BLOCK_M": 128, "BLOCK_N": 128}
         )
         
         # Apply attention bias if provided

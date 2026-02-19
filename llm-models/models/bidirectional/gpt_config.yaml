@@ -16,7 +16,7 @@ language_model:
   hidden_size: 512
   num_attention_heads: 16
   attention_backend: auto  # Options: auto, local, flash, fused, unfused, cudnn
-  softmax_scale: null
+  softmax_scale: null  # NEW: Softmax scale for attention
   softmax_type: 'vanilla'  # Options: 'vanilla', 'off-by-one', 'learnable'
   num_query_groups: null
   ffn_hidden_size: null  # Defaults to 4*hidden_size if null
@@ -31,7 +31,7 @@ language_model:
   add_qkv_bias: False
   gated_linear_unit: False
   activation_func: swiglu
-  activation_func_fp8_input_store: False
+  activation_func_fp8_input_store: False  # NEW: Store FP8 input for activation function
   glu_linear_offset: 0.0
   activation_func_clamp_value: null
   num_moe_experts: null
@@ -39,19 +39,19 @@ language_model:
   window_size: null
   window_attn_skip_freq: null
   normalization: "RMSNorm"  # Options: "LayerNorm", "RMSNorm"
-  qk_layernorm: False
-  qk_l2_norm: False
-  qk_clip: False
-  qk_clip_alpha: 0.5
-  qk_clip_threshold: 100
-  log_max_attention_logit: False
-  attention_output_gate: False
+  qk_layernorm: False  # NEW: Layer normalize q and k attention embeddings
+  qk_l2_norm: False  # NEW: Use llama 4 qk l2 norm
+  qk_clip: False  # NEW: Enable QK clipping
+  qk_clip_alpha: 0.5  # NEW: QK clip alpha parameter
+  qk_clip_threshold: 100  # NEW: QK clip threshold
+  log_max_attention_logit: False  # NEW: Log maximum attention logit
+  attention_output_gate: False  # NEW: Enable attention output gating
   test_mode: False
   calculate_per_token_loss: False
   multi_latent_attention: True
   no_rope_freq: null
   use_legacy_models: False
-  padded_vocab_size: 100048
+  padded_vocab_size: 131072 # use DEFAULT_TIKTOKEN_MAX_VOCAB = 2**17  # 131072 since I didn't add vocb size to data preoprocessor. 
   use_rope_scaling: False
 
   ####################
@@ -66,9 +66,9 @@ language_model:
   rotary_base: 10000
   rotary_percent: 1.0
   rotary_scaling_factor: 40
-  original_max_position_embeddings: 4096
-  beta_fast: 32
-  beta_slow: 1
+  original_max_position_embeddings: 4096  # NEW: Original max position embeddings for RoPE scaling
+  beta_fast: 32  # NEW: Beta fast parameter for YaRN RoPE
+  beta_slow: 1  # NEW: Beta slow parameter for YaRN RoPE
   mscale: 1.0
   mscale_all_dim: 0.0
   cache_mla_latents: False
@@ -122,11 +122,12 @@ language_model:
   bias_swiglu_fusion: True
   masked_softmax_fusion: True
   persist_layer_norm: False
+  no_persist_layer_norm: True
   memory_efficient_layer_norm: False
   bias_dropout_fusion: True
   apply_rope_fusion: True
   use_fused_weighted_squared_relu: False
-  fused_single_qkv_rope: False
+  fused_single_qkv_rope: False  # NEW: Fuse single QKV RoPE operation
 
   ####################
   # activation recomputation
@@ -171,15 +172,15 @@ language_model:
   # MoE related
   ####################
   moe_shared_expert_intermediate_size: null
-  moe_shared_expert_gate: False
+  moe_shared_expert_gate: False  # NEW: Enable MoE shared expert gating
   moe_shared_expert_overlap: False
   moe_layer_freq: 1
   moe_ffn_hidden_size: null
   moe_router_load_balancing_type: "aux_loss"  # Options: "aux_loss", "seq_aux_loss", "global_aux_loss", "sinkhorn", "none"
   moe_router_topk: 2
-  moe_enable_routing_replay: False
+  moe_enable_routing_replay: False  # NEW: Enable routing replay for MoE
   moe_router_topk_limited_devices: null  # Deprecated
-  moe_router_padding_for_quantization: False
+  moe_router_padding_for_quantization: False  # NEW: Pad routing map for quantization (replaces moe_router_padding_for_fp8)
   moe_router_padding_for_fp8: False  # Deprecated, use moe_router_padding_for_quantization
   moe_router_num_groups: null
   moe_router_group_topk: null
@@ -198,7 +199,7 @@ language_model:
   moe_token_dropping: False
   moe_token_dispatcher_type: "allgather"  # Options: "allgather", "alltoall", "flex"
   moe_enable_deepep: False  # Deprecated, use moe_flex_dispatcher_backend
-  moe_flex_dispatcher_backend: "deepep"  # Options: "deepep", "hybridep"
+  moe_flex_dispatcher_backend: "deepep"  # NEW: Options: "deepep", "hybridep"
   moe_per_layer_logging: False
   moe_expert_capacity_factor: null
   moe_pad_expert_input_to_capacity: False
@@ -207,21 +208,22 @@ language_model:
   moe_permute_fusion: False
   moe_router_fusion: False
   moe_apply_probs_on_input: False
-  moe_latent_size: null
+  moe_latent_size: null  # NEW: MoE latent size
   moe_deepep_num_sms: 20
-  moe_hybridep_num_sms: 16
+  moe_hybridep_num_sms: 16  # NEW: Number of SMs for HybridEP
+  moe_pad_experts_for_cuda_graph_inference: False  # NEW: Pad experts for CUDA graph inference
 
   ##################
   # Context Parallel
   ##################
-  cp_comm_type: null  # Options: null, "p2p", "all_gather", "a2a", "a2a+p2p", or list
+  cp_comm_type: ['p2p']  # Options: null, "p2p", "all_gather", "a2a", "a2a+p2p", or list
 
   ##################
   # Cuda Graphs
   ##################
   enable_cuda_graph: False  # Deprecated, use cuda_graph_impl
-  cuda_graph_use_single_mempool: False
-  cuda_graph_retain_backward_graph: False
+  cuda_graph_use_single_mempool: False  # NEW: Use single memory pool for CUDA graphs
+  cuda_graph_retain_backward_graph: False  # NEW: Retain backward graph for CUDA graphs
   cuda_graph_warmup_steps: 3
   external_cuda_graph: False  # Deprecated, use cuda_graph_impl
   cuda_graph_impl: "none"  # Options: "none", "local", "transformer_engine"
@@ -253,6 +255,7 @@ language_model:
   mamba_num_groups: 8
   mamba_num_heads: null
   use_mamba_mem_eff_path: True
+  disable_mamba_mem_eff_path: False  # NEW: Disable Mamba memory efficient path
   mlp_chunks_for_prefill: 1
   heterogeneous_block_specs: False
   hetereogenous_dist_checkpoint: False
@@ -278,16 +281,16 @@ model_parallel:
   tensor_model_parallel_size: 1
   pipeline_model_parallel_comm_backend: "nccl"  # Options: nccl, ucc, or null for default
   pipeline_model_parallel_size: 1
-  virtual_pipeline_model_parallel_size: null
+  virtual_pipeline_model_parallel_size: 1
   sequence_parallel: False
   context_parallel_size: 1
   hierarchical_context_parallel_sizes: [1]
-  max_seqlen_per_dp_cp_rank: null
+  max_seqlen_per_dp_cp_rank: null  # NEW: Max sequence length per DP/CP rank
   hybrid_context_parallel: False
   expert_model_parallel_size: 1
   expert_tensor_parallel_size: null  # Defaults to tensor_model_parallel_size if null
   moe_extended_tp: False  # Deprecated from MCore v0.10
-  use_torch_fsdp2: True
+  use_torch_fsdp2: False
   use_megatron_fsdp: False
 
   ###################
@@ -335,7 +338,7 @@ model_parallel:
   tp_comm_bootstrap_backend: 'nccl'  # Options: 'nccl', 'mpi', 'gloo'
   overlap_moe_expert_parallel_comm: False
   delay_wgrad_compute: False
-  ep_overlap_early_attn_memory_release: False
+  ep_overlap_early_attn_memory_release: False  # NEW: Early attention memory release for EP overlap
 
   ###################
   # Pipeline Parallel
@@ -344,9 +347,9 @@ model_parallel:
   variable_seq_lengths: False
   overlap_p2p_comm: False
   batch_p2p_comm: True
-  batch_p2p_sync: True
+  batch_p2p_sync: True  # NEW: Batch P2P synchronization
   use_ring_exchange_p2p: False
-  deallocate_pipeline_outputs: False
+  deallocate_pipeline_outputs: False  # NEW: Deallocate pipeline outputs
   defer_embedding_wgrad_compute: False
   wgrad_deferral_limit: 0
   overlap_p2p_comm_warmup_flush: False
@@ -375,6 +378,7 @@ model_parallel:
 spec: ["models.bidirectional.bidirGPT", "get_bidirectinoal_gpt_layer_with_transformer_engine_spec"]
 micro_batch_size: 2
 global_batch_size: 128
+batch_size: null
 rampup_batch_size: [32, 32, 65324160]
 decrease_batch_size_if_needed: False
 check_for_nan_in_loss_and_grad: True
@@ -421,6 +425,21 @@ result_rejected_tracker_filename: null  # Filename for tracking rejected results
 # JIT fuser settings (from set_global_variables)
 disable_jit_fuser: False
 
+####################
+# NEW: Heterogeneous model settings
+####################
+heterogeneous_layers_config_path: null  # Path to heterogeneous model config JSON
+heterogeneous_layers_config_encoded_json: null  # Encoded JSON string of heterogeneous config
+
+####################
+# NEW: Precision-aware optimizer (experimental)
+####################
+use_precision_aware_optimizer: False  # Use precision-aware optimizer from TransformerEngine
+# main_grads_dtype: 'fp32'  # Dtype of main grads when enabling precision-aware-optimizer
+# main_params_dtype: 'fp32'  # Dtype of main params when enabling precision-aware-optimizer
+# exp_avg_dtype: 'fp32'  # Dtype of exp_avg (1st moment in adam optimizer)
+# exp_avg_sq_dtype: 'fp32'  # Dtype of exp_avg_sq (2nd moment in adam optimizer)
+
 # Optimizer
 optimizer: adam
 lr: 2.5e-4
@@ -449,19 +468,25 @@ lr_wsd_decay_style: null
 lr_wsd_decay_iters: null
 lr_wsd_decay_samples: null
 
-# checkpointing arguments
+####################
+# Checkpointing arguments
+####################
 save: null
 save_interval: 20000
+save_retain_interval: null  # NEW: Interval between retained checkpoints (others deleted)
 no_save_optim: null
 no_save_rng: null
 load: null
 no_load_optim: null
 no_load_rng: null
 finetune: False
-use_checkpoint_args: False
+use_checkpoint_args: False  # NEW: Override model args with checkpoint args
+use_mp_args_from_checkpoint_args: False  # NEW: Copy MP args from checkpoint
+use_tokenizer_model_from_checkpoint_args: True  # NEW: Use tokenizer model from checkpoint
 exit_on_missing_checkpoint: False
 ckpt_convert_format: null  # Format for checkpoint conversion
 ckpt_convert_save: null  # Save path for converted checkpoint (required if ckpt_convert_format is set)
+ckpt_convert_update_legacy_dist_opt_format: False  # NEW: Update legacy distributed optimizer format
 non_persistent_ckpt_type: null  # Options: 'local' or other - checkpoint type
 ckpt_format: 'torch'
 async_save: True
@@ -471,9 +496,26 @@ use_persistent_ckpt_worker: False
 # Note: use_dist_ckpt is automatically set to (ckpt_format != "torch") by update_use_dist_ckpt()
 # Therefore it doesn't need to be explicitly configured here
 
+####################
+# NEW: Advanced checkpointing settings
+####################
+ckpt_step: null  # Checkpoint step to load model from
+auto_detect_ckpt_format: False  # Auto-detect checkpoint format
+ckpt_fully_parallel_load: False  # Apply full load parallelization across DP
+ckpt_assume_constant_structure: False  # Assume constant model structure for optimization
+dist_ckpt_strictness: 'assume_ok_unexpected'  # Strictness for distributed checkpoint load
+dist_ckpt_save_pre_mcore_014: False  # Save in pre-MCore 0.14 format
+dist_ckpt_optim_fully_reshardable: False  # Make optimizer checkpoint fully reshardable
+distrib_optim_fully_reshardable_mem_efficient: False  # Memory efficient fully reshardable optimizer
+load_model_opt_format: False  # Load checkpoint for TensorRT model optimizer
+strict_fsdp_dtensor_load: True  # Strict loading for fsdp_dtensor format
+load_main_params_from_ckpt: False  # NEW: Load main params from checkpoint directly
+
 # NEW: Non-persistent checkpoint settings
 non_persistent_save_interval: null
 non_persistent_local_ckpt_dir: null
+non_persistent_global_ckpt_dir: null  # NEW: Directory for global non-persistent checkpoints
+non_persistent_local_ckpt_algo: 'fully_parallel'  # NEW: Algorithm for local checkpointing (fully_parallel, atomic)
 
 # NEW: Replication settings for local checkpointing
 replication: False
@@ -489,7 +531,9 @@ hysteresis: 2
 accumulate_allreduce_grads_in_fp32: False
 fp16_lm_cross_entropy: False
 
-# distributed arguments (used in set_global_variables -> init_num_microbatches_calculator)
+####################
+# Distributed arguments
+####################
 distributed_backend: nccl
 distributed_timeout_minutes: 10
 distributed_timeout_seconds_after_init: null  # NEW: Timeout after initialization
@@ -499,17 +543,17 @@ overlap_param_gather: False
 align_param_gather: False
 overlap_param_gather_with_optimizer_step: False  # NEW
 scatter_gather_tensors_in_pipeline: True
-local_rank: 0  # Set by launcher
+local_rank: null  # Set by launcher
 rank: null  # Set by launcher, used in init_num_microbatches_calculator
 world_size: null  # Set by launcher
 data_parallel_size: null  # Calculated based on parallelism settings
 lazy_mpu_init: null
 empty_unused_memory_level: 0
-standalone_embedding_stage: False
+standalone_embedding_stage: False  # NEW: Use standalone embedding stage
 use_distributed_optimizer: False
 num_distributed_optimizer_instances: 1  # Used in mpu.initialize_model_parallel
 nccl_communicator_config_path: null
-create_all_gather_group: False
+create_all_gather_group: False  # NEW: Create all-gather process group
 
 # SHARP (Scalable Hierarchical Aggregation and Reduction Protocol) settings
 use_sharp: False  # Used in mpu.initialize_model_parallel
@@ -544,9 +588,9 @@ decoder_seq_length: null  # Sequence length for decoder (used when decoder_tp_co
 ####################
 # Data settings
 ####################
-data_path: '/home/ubuntu/projects/llm-models/llm-models/dataset/work/dclm/megatron/dclm_300gb_6_text_document'
+data_path: ['/home/ubuntu/projects/llm-models/llm-models/dataset/work/dclm/megatron/dclm_300gb_6_text_document']
 split: '99,1,0'
-data_args_path: null  # Path to file containing data path arguments (used in get_blend_and_blend_per_split)
+data_args_path: null  # NEW: Path to file containing data path arguments (used in get_blend_and_blend_per_split)
 per_split_data_args_path: null
 train_data_path: null # https://github.com/yj8907/Megatron-LM/blob/6eaf7541e030e59aa4cdcb14381eb9370fe48977/megatron/core/datasets/utils.py#L49
 valid_data_path: null
@@ -567,7 +611,9 @@ mask_prob: 0.15
 short_seq_prob: 0.1
 num_workers: 2
 
-# Tokenizer settings (from set_global_variables -> _build_tokenizer)
+####################
+# Tokenizer settings
+####################
 tokenizer_type: TikTokenizer
 tokenizer_model: /home/ubuntu/projects/llm-models/llm-models/dataset/work/dclm/megatron/gpt-4.json
 tiktoken_pattern: v2
@@ -584,7 +630,7 @@ image_tag_type: null
 force_system_message: null
 
 # Additional tokenizer-specific settings (for SFTTokenizer)
-sft_tokenizer_prompt_format: null
+sft_tokenizer_prompt_format: "nemotron-h-aligned"  # NEW: SFT tokenizer prompt format
 
 # huggingface tokenizer
 trust_remote_code: False
@@ -603,7 +649,7 @@ object_storage_cache_path: null
 ####################
 # NEW: Advanced dataloader settings
 ####################
-mid_level_dataset_surplus: null  # NEW: Surplus for mid-level dataset blending
+mid_level_dataset_surplus: 0.005  # NEW: Surplus for mid-level dataset blending
 allow_ambiguous_pad_tokens: False  # NEW: Allow ambiguous padding tokens in dataset
 dataloader_fast_cache_load: False  # NEW: Enable fast cache loading in dataloader
 dataloader_defer_npy_index_mmap: False  # NEW: Defer memory mapping of npy index files
@@ -647,7 +693,9 @@ use_pytorch_profiler: False  # NEW
 timing_log_level: 0  # Used in Timers initialization
 timing_log_option: minmax  # Used in Timers initialization
 
-#logging:
+####################
+# Logging
+####################
 log_params_norm: True
 log_num_zeros_in_grad: True
 log_throughput: False
@@ -701,18 +749,31 @@ check_weight_hash_across_dp_replicas_interval: null
 # NEW: Gradient checkpointing
 check_for_large_grads: False
 
+####################
 # NEW: DDP settings
+####################
 ddp_num_buckets: null
 ddp_bucket_size: null
 ddp_pad_buckets_for_high_nccl_busbw: False
-ddp_reduce_scatter_with_fp32_accumulation: False
+ddp_reduce_scatter_with_fp32_accumulation: False  # NEW: Use FP32 accumulation in DDP reduce-scatter
 ddp_average_in_collective: False
 
+####################
 # NEW: FSDP2 settings
+####################
 torch_fsdp2_reshard_after_forward: True
 
+####################
 # NEW: Megatron FSDP settings
-fsdp_manual_registration: False
+####################
+fsdp_manual_registration: False  # NEW: Manual registration for FSDP
+use_nccl_ub: False  # NEW: Use NCCL userbuffer registration
+disable_symmetric_registration: False  # NEW: Disable symmetric registration for NCCL UB
+fsdp_double_buffer: False  # NEW: Enable double buffering for FSDP
+suggested_communication_unit_size: null  # NEW: Communication unit size for FSDP
+keep_fp8_transpose_cache: False  # NEW: Keep FP8 transpose cache with FSDP
+enable_full_sharding_in_hsdp: False  # NEW: Enable full sharding in HSDP
+gradient_reduce_div_fusion: True  # NEW: Fuse division in gradient reduce
 
 # NEW: Hybrid model settings
 hybrid_override_pattern: null
