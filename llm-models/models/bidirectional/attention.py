@@ -40,6 +40,10 @@ from megatron.core.transformer.transformer_config import MLATransformerConfig
 from megatron.core.utils import deprecate_inference_params, is_te_min_version
 from megatron.core.transformer.spec_utils import ModuleSpec, build_module
 
+from megatron.core.extensions.transformer_engine import (
+        TEDotProductAttention
+    )
+
 try:
     from einops import rearrange
 
@@ -98,6 +102,7 @@ class BidirMLASelfAttention(MLASelfAttention):
         config: MLATransformerConfig,
         submodules: BidirMLASelfAttentionSubmodules,
         layer_number: int,
+        input_configs: dict,
         attn_mask_type=AttnMaskType.padding,
         bidir_forward_attn_mask_type=BidirAttnMaskType.bidir_forward,
         bidir_backward_attn_mask_type=BidirAttnMaskType.bidir_backward,
@@ -112,7 +117,7 @@ class BidirMLASelfAttention(MLASelfAttention):
                 linear_q_up_proj=submodules.linear_q_up_proj,
                 linear_kv_down_proj=submodules.linear_kv_down_proj,
                 linear_kv_up_proj=submodules.linear_kv_up_proj,
-                core_attention=submodules.core_attention_backward,  # Use backward as default
+                core_attention=TEDotProductAttention,  # Use backward as default
                 linear_proj=submodules.linear_proj,
                 q_layernorm=submodules.q_layernorm,
                 kv_layernorm=submodules.kv_layernorm,
@@ -139,6 +144,12 @@ class BidirMLASelfAttention(MLASelfAttention):
                 layer_number=layer_number,
                 attn_mask_type=AttnMaskType.causal,
                 attention_type="self",
+                input_dims={
+                    'B': input_configs.get('micro_batch_size'), 
+                    'H': input_configs.get('num_heads'),
+                    'S_q': input_configs.get('seq_length'),
+                    'S_kv': input_configs.get('seq_length'),
+                }
             )
 
             # Forward attention (for forward queries attending to combined keys/values)
@@ -149,6 +160,12 @@ class BidirMLASelfAttention(MLASelfAttention):
                 layer_number=layer_number,
                 attn_mask_type=self.bidir_forward_attn_mask_type,
                 attention_type="self",
+                input_dims={
+                    'B': input_configs.get('micro_batch_size'), 
+                    'H': input_configs.get('num_heads'),
+                    'S_q': input_configs.get('seq_length'),
+                    'S_kv': input_configs.get('seq_length'),
+                }
             )
             
             # Forward-to-backward attention (for backward queries attending to combined keys/values)
@@ -159,6 +176,12 @@ class BidirMLASelfAttention(MLASelfAttention):
                 layer_number=layer_number,
                 attn_mask_type=self.bidir_backward_attn_mask_type,
                 attention_type="self",
+                input_dims={
+                    'B': input_configs.get('micro_batch_size'), 
+                    'H': input_configs.get('num_heads'),
+                    'S_q': input_configs.get('seq_length'),
+                    'S_kv': input_configs.get('seq_length'),
+                }
             )
     
 
@@ -345,31 +368,35 @@ class BidirMLASelfAttention(MLASelfAttention):
                 # print('core_attn_out_backward_to_backward')
                 # print(torch.sum(torch.abs(core_attn_out_backward_to_backward.view(128, 2, -1)[:, 0, :]), dim=-1))
                 # Forward-to-backward attention: backward queries attend to averaged keys/values
-                key_avg = (key_forward + key_backward) / 2
-                value_avg = (value_forward + value_backward) / 2
-                attn_out_forward_to_backward = self.bidir_attention_backward(
-                    query_backward,
-                    key_avg,
-                    value_avg,
-                    attention_mask,
-                    packed_seq_params=packed_seq_params,
-                    attn_mask_type=self.bidir_backward_attn_mask_type,
-                )
+                # key_avg = (key_forward + key_backward) / 2
+                # value_avg = (value_forward + value_backward) / 2
+                # attn_out_forward_to_backward = self.bidir_attention_backward(
+                #     query_backward,
+                #     key_avg,
+                #     value_avg,
+                #     attention_mask,
+                #     packed_seq_params=packed_seq_params,
+                #     attn_mask_type=self.bidir_backward_attn_mask_type,
+                # )
                 # print('attn_out_forward_to_backward')
                 # print(torch.sum(torch.abs(attn_out_forward_to_backward.view(128, 2, -1)[:, 0, :]), dim=-1))
                 # Combined backward output
-                attn_out_backward = (core_attn_out_backward_to_backward + attn_out_forward_to_backward) / 2
+
+                # attn_out_backward = (core_attn_out_backward_to_backward + attn_out_forward_to_backward) / 2
                 
+                attn_out_backward = core_attn_out_backward_to_backward
+
                 # Forward attention: forward queries attend to averaged keys/values
-                query_avg = (query_forward + query_backward) / 2
-                attn_out_forward = self.bidir_attention_forward(
-                    query_avg,
-                    key_avg,
-                    value_avg,
-                    attention_mask,
-                    packed_seq_params=packed_seq_params,
-                    attn_mask_type=self.bidir_forward_attn_mask_type,
-                )
+                # query_avg = (query_forward + query_backward) / 2
+                # attn_out_forward = self.bidir_attention_forward(
+                #     query_avg,
+                #     key_avg,
+                #     value_avg,
+                #     attention_mask,
+                #     packed_seq_params=packed_seq_params,
+                #     attn_mask_type=self.bidir_forward_attn_mask_type,
+                # )
+                attn_out_forward = attn_out_backward
                 # print('attn_out_forward')
                 # print(torch.sum(torch.abs(attn_out_forward.view(128, 2, -1)[:, 0, :]), dim=-1))
             elif self.cache_mla_latents:
@@ -430,6 +457,7 @@ class FlexDotProductAttention(torch.nn.Module):
         layer_number: int,
         attn_mask_type: Union[AttnMaskType, BidirAttnMaskType],
         attention_type: str,
+        input_dims: dict,
         look_forward_num_tokens: int = 10,
         mode: AttentionMode = 'backward',
         attention_dropout: Optional[float] = None,
@@ -503,11 +531,15 @@ class FlexDotProductAttention(torch.nn.Module):
         )
 
         self.flex_attention = torch.compile(flex_attention)
-    
+        # Create mask function
+        mask_fn = self._create_attention_mask(attn_mask_type, None, "bshd")
+
+        # Create block mask for efficient computation
+        B, H, S_q, S_kv = input_dims.get('B'), input_dims.get('H'), input_dims.get('S_q'), input_dims.get('S_kv')
+        self.block_mask = create_block_mask(mask_fn, B, H, S_q, S_kv, BLOCK_SIZE=128, _compile=True)
+
     def _create_attention_mask(
         self,
-        query: Tensor,
-        key: Tensor,
         attn_mask_type: Union[AttnMaskType, BidirAttnMaskType],
         attention_mask: Optional[Tensor] = None,
         qkv_format: str = "sbhd",
@@ -642,20 +674,12 @@ class FlexDotProductAttention(torch.nn.Module):
         # Handle GQA
         query, key, value = self._handle_gqa(query, key, value, "bshd")
         
-        # Create mask function
-        mask_fn = self._create_attention_mask(query, key, attn_mask_type, attention_mask, "bshd")
-        
-        # Create block mask for efficient computation
-        B, H, S_q, D = query.shape
-        S_kv = key.size(2)
-        block_mask = create_block_mask(mask_fn, B, H, S_q, S_kv, BLOCK_SIZE=128)
-        
         # Apply flex_attention
         output = self.flex_attention(
             query,
             key,
             value,
-            block_mask=block_mask,
+            block_mask=self.block_mask,
             scale=self.softmax_scale,
             enable_gqa=(self.num_query_groups != self.num_attention_heads),
             kernel_options={"BLOCK_M": 128, "BLOCK_N": 128}
