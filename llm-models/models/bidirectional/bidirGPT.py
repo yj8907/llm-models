@@ -124,6 +124,9 @@ mlp = get_mlp_module_spec(use_te=False)  # doesn't include norm.
 
 def get_bidirectinoal_gpt_layer_with_transformer_engine_spec(
     num_layers: int,
+    num_attention_heads: int,
+    micro_batch_size: int = 2,
+    seq_length: int = 1024,
     num_experts: Optional[int] = None,
     moe_grouped_gemm: Optional[bool] = False,
     qk_layernorm: Optional[bool] = False,
@@ -198,7 +201,12 @@ def get_bidirectinoal_gpt_layer_with_transformer_engine_spec(
                 self_attention=ModuleSpec(
                     module=BidirMLASelfAttention,
                     params={"bidir_forward_attn_mask_type": BidirAttnMaskType.bidir_forward,
-                            "bidir_backward_attn_mask_type": BidirAttnMaskType.bidir_backward
+                            "bidir_backward_attn_mask_type": BidirAttnMaskType.bidir_backward,
+                            "input_configs": {
+                                "micro_batch_size": micro_batch_size,
+                                "num_heads": num_attention_heads,
+                                "seq_length": seq_length,
+                            }
                             },
                     submodules=BidirMLASelfAttentionSubmodules(
                         linear_q_proj=backend.column_parallel_linear(),
